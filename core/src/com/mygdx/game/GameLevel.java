@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.scenes.scene2d.ui.List;
+import java.util.List;
 import com.mygdx.game.Entities.Plane;
 
 public class GameLevel {
@@ -9,7 +9,7 @@ public class GameLevel {
     private List<Plane> planes;
 
     public List<Plane> getPlanes() {
-        return planes;
+            return planes;
     }
 
     public String getBackgroundImagePath() {
