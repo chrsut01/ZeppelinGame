@@ -1,0 +1,27 @@
+
+// code for manually parsing JSON data
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+// Assuming jsonString contains your JSON data for a dilemma
+JSONObject jsonObject = new JSONObject(jsonString);
+
+// Extracting question
+String question = jsonObject.getString("question");
+
+// Extracting answer possibilities
+JSONArray answersArray = jsonObject.getJSONArray("answers");
+List<String> answers = new ArrayList<>();
+for (int i = 0; i < answersArray.length(); i++) {
+    answers.add(answersArray.getString(i));
+}
+
+// Extracting response
+String response = jsonObject.getString("response");
+
+// Extracting image path
+String imagePath = jsonObject.getString("imagePath");
+
+// Extracting consequence
+String consequence = jsonObject.getString("consequence");

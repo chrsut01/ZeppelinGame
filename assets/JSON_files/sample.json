@@ -1,0 +1,7 @@
+{
+  "question": "What is the capital of France?",
+  "answers": ["Paris", "Berlin", "London"],
+  "response": "Correct! Paris is the capital of France.",
+  "imagePath": "paris.jpg",
+  "consequence": "You advance to the next level."
+}
