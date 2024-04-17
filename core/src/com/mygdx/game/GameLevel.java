@@ -3,7 +3,7 @@ package com.mygdx.game;
 import java.util.List;
 import com.mygdx.game.Entities.Plane;
 
-public class GameLevel {
+public abstract class GameLevel {
     private String backgroundImagePath;
     private String tilemapPath;
     private List<Plane> planes;

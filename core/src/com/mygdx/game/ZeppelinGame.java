@@ -20,16 +20,17 @@ public class ZeppelinGame extends Game {
     private ClosingScreen closingScreen;
     private DilemmaScreen dilemmaScreen;
     public int playerProgress;
+    private int currentLevelIndex;
     public GameLevel level1;
     private List<GameLevel> levels;
-    private int currentLevelIndex;
+
 
     // Other game-related variables and methods to track player progress
 
     @Override
     public void create() {
         levels = new ArrayList<>();
-        GameLevel level1 = new GameLevel(/* parameters for level 1 */);
+       // GameLevel level1 = new GameLevel(/* parameters for level 1 */);
         levels.add(level1);
 
         introScreen = new IntroScreen(this);
