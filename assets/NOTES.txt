@@ -25,3 +25,44 @@ String imagePath = jsonObject.getString("imagePath");
 
 // Extracting consequence
 String consequence = jsonObject.getString("consequence");
+
+
+
+
+ // code for consequence handling of correct and incorrect answers
+
+ public class Dilemma {
+     private String question;
+     private Map<String, String> answerConsequences;
+     // Other attributes and methods
+
+     public void setAnswerConsequences(Map<String, String> answerConsequences) {
+         this.answerConsequences = answerConsequences;
+     }
+
+     public String getConsequenceForAnswer(String answer) {
+         return answerConsequences.get(answer);
+     }
+ }
+
+
+ // And also...
+// When player selects an answer
+String selectedAnswer = ...; // Retrieve selected answer
+String consequence = currentDilemma.getConsequenceForAnswer(selectedAnswer);
+
+if (consequence != null) {
+    // Handle consequence
+    if (isCorrectAnswer(selectedAnswer)) {
+        // Proceed to next level or game screen
+        proceedToNextLevel();
+    } else {
+        // Display consequence message
+        displayConsequence(consequence);
+        // If applicable, load and display the next dilemma
+        if (consequenceLeadsToNextDilemma(consequence)) {
+            loadNextDilemma(consequence);
+        }
+    }
+}
+
