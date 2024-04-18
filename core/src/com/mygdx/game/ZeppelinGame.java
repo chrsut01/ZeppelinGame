@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.ClosingScreen;
@@ -21,26 +22,39 @@ public class ZeppelinGame extends Game {
     private DilemmaScreen dilemmaScreen;
     public int playerProgress;
     private int currentLevelIndex;
-    public GameLevel level1;
+    public GameLevel GameLevelBulgaria;
     private List<GameLevel> levels;
+    private OrthographicCamera camera;
 
 
     // Other game-related variables and methods to track player progress
 
     @Override
     public void create() {
+        camera = new OrthographicCamera();
         levels = new ArrayList<>();
        // GameLevel level1 = new GameLevel(/* parameters for level 1 */);
-        levels.add(level1);
+        levels.add(GameLevelBulgaria);
 
         introScreen = new IntroScreen(this);
         dilemmaScreen = new DilemmaScreen(this);
         gameScreen = new GameScreen(this);
         closingScreen = new ClosingScreen(this);
 
-        setScreen(introScreen);
+        // Set the initial screen based on player progress
+        if (playerProgress == 0) {
+            setScreen(introScreen); // Show intro screen if game hasn't started yet
+        } else if (playerProgress < levels.size()) {
+            // Show the appropriate game screen if there are levels to play
+            createGameScreen(levels.get(playerProgress));
+        } else {
+            setScreen(closingScreen); // Show closing screen if all levels are completed
+        }
     }
 
+    public void createGameScreen(GameLevel gameLevel) {
+        setScreen(new GameScreen(this));
+    }
 
 
     // Methods to switch between screens
@@ -57,28 +71,15 @@ public class ZeppelinGame extends Game {
     }
 
     public GameLevel getCurrentLevel() {
-        if (playerProgress == 0) {
-            // If the game has just started, return the first level
-            return levels.get(0);
-        } else {
-            // Increment the current level index to get the next level
-            currentLevelIndex++;
-            // Ensure that the currentLevelIndex does not exceed the number of levels
-            if (currentLevelIndex >= levels.size()) {
-                // Reset the index to the last level if it exceeds the size
-                currentLevelIndex = levels.size() - 1;
-            }
-            return levels.get(currentLevelIndex);
-        }
+        // Ensure that playerProgress does not exceed the bounds of the levels list
+        int index = Math.min(playerProgress, levels.size() - 1);
+        return levels.get(index);
     }
 
     // Method for progressing to the next level
     public void progressToNextLevel() {
         playerProgress++;
-
-        // Check if the current level index exceeds the number of levels
         if (playerProgress >= levels.size()) {
-            // If it does, set the index to the last level
             playerProgress = levels.size() - 1;
         }
 
