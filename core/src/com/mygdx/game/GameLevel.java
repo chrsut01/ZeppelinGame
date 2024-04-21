@@ -1,16 +1,16 @@
 package com.mygdx.game;
 
-import java.util.Collections;
 import java.util.List;
-import com.mygdx.game.Entities.Plane;
 
-public abstract class GameLevel {
-    private String tilemapFileName;
+public class GameLevel {
+    private SideScroller sideScroller;
+    private List<Dilemma> dilemmas;
 
-    public String getTilemapFileName() {
-        return tilemapFileName;
+    public GameLevel(SideScroller sideScroller, List<Dilemma> dilemmas) {
+        this.sideScroller = sideScroller;
+        this.dilemmas = dilemmas;
     }
 
-    // Constructor, getters, setters
-
+    // Methods to interact with the side-scroller and dilemmas
+    // (e.g., startSideScroller, showNextDilemma, etc.)
 }

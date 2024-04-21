@@ -3,7 +3,6 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -56,7 +55,7 @@ public class IntroScreen extends ScreenAdapter {
             game.batch.end();
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new SideScrollerScreen());
                 dispose();
             }
 

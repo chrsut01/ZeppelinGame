@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DilemmaFactory {
-    private AssetManager assetManager;
+    private static AssetManager assetManager;
     private JsonValue dilemmaData;
 
     public DilemmaFactory() {
         assetManager = new AssetManager();
     }
 
-    public Dilemma createDilemma(String question, List<String> answers, String imagePath, String consequence) {
+    public static Dilemma createDilemma(String question, List<String> answers, String imagePath, String consequence) {
         Dilemma dilemma = new Dilemma();
         dilemma.setQuestion(question);
         dilemma.setAnswers(answers);
@@ -27,7 +27,7 @@ public class DilemmaFactory {
     }
     private List<Dilemma> dilemmas;
 
-    public List<Dilemma> loadDilemmasFromJson(String jsonFileName) {
+    public static List<Dilemma> loadDilemmasFromJson(String jsonFileName) {
         List<Dilemma> dilemmas = new ArrayList<>();
         assetManager.load(jsonFileName, JsonValue.class);
         assetManager.finishLoading();

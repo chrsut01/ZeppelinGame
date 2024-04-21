@@ -5,29 +5,31 @@ import com.badlogic.gdx.physics.box2d.World;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.mygdx.game.GameLevel;
+import com.mygdx.game.SideScroller;
 import com.mygdx.game.Entities.Plane;
 import com.mygdx.game.Entities.Zeppelin;
 import com.mygdx.game.TileMapHelper;
 import com.mygdx.game.ZeppelinGame;
 
-public class GameScreen extends ScreenAdapter {
+public class SideScrollerScreen extends ScreenAdapter {
+    private String tilemapFileName;
     private TileMapHelper tileMapHelper;
-    private GameLevel currentLevel;
+    private SideScroller currentLevel;
+    private ZeppelinGame game;
     private Zeppelin zeppelin;
     private Plane plane;
     private List<Plane> planes;
     private String tilmapFileName;
     private World world;
 
-    public GameScreen(ZeppelinGame game){
-        //this.zeppelin = new Zeppelin();
+    public SideScrollerScreen(){
         this.planes = new ArrayList<>();
 
         tileMapHelper = new TileMapHelper(this);
-        currentLevel = game.getCurrentLevel();
+        //currentLevel = game.getCurrentLevel();
         if (currentLevel != null) {
-            tileMapHelper.setupMap(currentLevel.getTilemapFileName());
+            this.tilemapFileName = currentLevel.getTilemapFileName(); // Update tilemapFileName
+            tileMapHelper.setupMap(this.tilemapFileName);
         } else {
             tileMapHelper.setupMap("ZepMap1.tmx");
         }
@@ -48,7 +50,7 @@ public class GameScreen extends ScreenAdapter {
         return world;
     }
 
-    public void setLevel(GameLevel gameLevel) {
+    public void setLevel(SideScroller gameLevel) {
         this.currentLevel = gameLevel;
         if (tileMapHelper != null && currentLevel != null) {
             tileMapHelper.setupMap(currentLevel.getTilemapFileName());

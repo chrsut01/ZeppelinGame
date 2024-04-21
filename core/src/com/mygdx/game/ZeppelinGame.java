@@ -6,24 +6,26 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Screens.ClosingScreen;
 import com.mygdx.game.Screens.DilemmaScreen;
-import com.mygdx.game.Screens.GameScreen;
+import com.mygdx.game.Screens.SideScrollerScreen;
 import com.mygdx.game.Screens.IntroScreen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ZeppelinGame extends Game {
 
+    private List<GameLevel> levels;
     public SpriteBatch batch;
     public BitmapFont font;
     private IntroScreen introScreen;
-    private GameScreen gameScreen;
+    private SideScrollerScreen sideScrollerScreen;
     private ClosingScreen closingScreen;
     private DilemmaScreen dilemmaScreen;
     public int playerProgress;
     private int currentLevelIndex;
-    public GameLevel GameLevelBulgaria;
-    private List<GameLevel> levels;
+    public SideScroller SideScrollerBulgaria;
+    private List<SideScroller> sideScrollers;
     private OrthographicCamera camera;
 
 
@@ -34,11 +36,11 @@ public class ZeppelinGame extends Game {
         camera = new OrthographicCamera();
         levels = new ArrayList<>();
        // GameLevel level1 = new GameLevel(/* parameters for level 1 */);
-        levels.add(GameLevelBulgaria);
+        levels.add(new GameLevel(SideScrollerBulgaria, new ArrayList<>()));
 
         introScreen = new IntroScreen(this);
         dilemmaScreen = new DilemmaScreen(this);
-        gameScreen = new GameScreen(this);
+        sideScrollerScreen = new SideScrollerScreen();
         closingScreen = new ClosingScreen(this);
 
         // Set the initial screen based on player progress
@@ -46,14 +48,14 @@ public class ZeppelinGame extends Game {
             setScreen(introScreen); // Show intro screen if game hasn't started yet
         } else if (playerProgress < levels.size()) {
             // Show the appropriate game screen if there are levels to play
-            createGameScreen(levels.get(playerProgress));
+            createSideScrollerScreen(levels.get(playerProgress));
         } else {
             setScreen(closingScreen); // Show closing screen if all levels are completed
         }
     }
 
-    public void createGameScreen(GameLevel gameLevel) {
-        setScreen(new GameScreen(this));
+    public void createSideScrollerScreen(GameLevel gameLevel) {
+        setScreen(new SideScrollerScreen());
     }
 
 
@@ -63,7 +65,7 @@ public class ZeppelinGame extends Game {
     }
 
     public void showGameScreen() {
-        setScreen(gameScreen);
+        setScreen(sideScrollerScreen);
     }
 
     public void showClosingScreen() {
@@ -84,11 +86,7 @@ public class ZeppelinGame extends Game {
         }
 
         // Set the current screen to the game screen with the next level
-        gameScreen.setLevel(levels.get(playerProgress));
-        setScreen(gameScreen);
+       // sideScrollerScreen.setLevel(levels.get(playerProgress));
+        setScreen(sideScrollerScreen);
     }
-
-    // Methods to handle player progress and game state
-
-    // Other methods as needed
 }
