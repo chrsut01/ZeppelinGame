@@ -19,24 +19,36 @@ import static com.mygdx.game.Constants.PPM;
 public class TileMapHelper {
 
     private SideScrollerScreen gameScreen;
+    private GameLevel gameLevel;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private SideScroller currentLevel;
+    private SideScrollerScreen currenSideScroller;
 
     public TileMapHelper(SideScrollerScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
 
-    public void setupMap(String mapFileName) {
-      //  tiledMap = new TmxMapLoader().load(mapFileName);    OR below: (?)
-        tiledMap = new TmxMapLoader().load(currentLevel.getTilemapFileName());
+    public OrthogonalTiledMapRenderer setupMap() {
+        tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
+
+        parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
+        parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());
+        parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
+        //parseMapObjects(tiledMap.getLayers().get("Tile Layer 1").getObjects());
+
+        return new OrthogonalTiledMapRenderer(tiledMap);
+
+
+
+     /* //  tiledMap = new TmxMapLoader().load(mapFileName);    OR below: (?)
+        tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
 
 
         parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
 
-        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+       // mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);*/
     }
 
     private void parseMapObjects(MapObjects mapObjects) {

@@ -24,8 +24,8 @@ public class ZeppelinGame extends Game {
     private DilemmaScreen dilemmaScreen;
     public int playerProgress;
     private int currentLevelIndex;
-    public SideScroller SideScrollerBulgaria;
-    private List<SideScroller> sideScrollers;
+    public SideScrollerScreen SideScrollerBulg;
+    private List<SideScrollerScreen> sideScrollers;
     private OrthographicCamera camera;
 
 
@@ -35,8 +35,10 @@ public class ZeppelinGame extends Game {
     public void create() {
         camera = new OrthographicCamera();
         levels = new ArrayList<>();
-       // GameLevel level1 = new GameLevel(/* parameters for level 1 */);
-        levels.add(new GameLevel(SideScrollerBulgaria, new ArrayList<>()));
+       // GameLevel level1 = new GameLevel(new SideScrollerBulg(), someListOfDilemmas);
+
+        // GameLevel level1 = new GameLevel(/* parameters for level 1 */);
+        levels.add(new GameLevel(SideScrollerBulg, new ArrayList<>()));
 
         introScreen = new IntroScreen(this);
         dilemmaScreen = new DilemmaScreen(this);
@@ -48,28 +50,25 @@ public class ZeppelinGame extends Game {
             setScreen(introScreen); // Show intro screen if game hasn't started yet
         } else if (playerProgress < levels.size()) {
             // Show the appropriate game screen if there are levels to play
-            createSideScrollerScreen(levels.get(playerProgress));
+            startSideScroller();
         } else {
             setScreen(closingScreen); // Show closing screen if all levels are completed
         }
     }
 
-    public void createSideScrollerScreen(GameLevel gameLevel) {
-        setScreen(new SideScrollerScreen());
+
+    public void showNextDilemma() {
+        Dilemma nextDilemma = getCurrentLevel().getNextDilemma();
+        if (nextDilemma != null) {
+            // Display the next dilemma...
+        } else {
+            // No more dilemmas in this level
+        }
     }
 
-
-    // Methods to switch between screens
-    public void showDilemmaScreen() {
-        setScreen(dilemmaScreen);
-    }
-
-    public void showGameScreen() {
-        setScreen(sideScrollerScreen);
-    }
-
-    public void showClosingScreen() {
-        setScreen(closingScreen);
+    public void startSideScroller() {
+        SideScrollerScreen currentSideScroller = getCurrentLevel().getSideScroller();
+        // Start the side scroller...
     }
 
     public GameLevel getCurrentLevel() {
@@ -78,7 +77,7 @@ public class ZeppelinGame extends Game {
         return levels.get(index);
     }
 
-    // Method for progressing to the next level
+     // Method for progressing to the next level
     public void progressToNextLevel() {
         playerProgress++;
         if (playerProgress >= levels.size()) {
@@ -88,5 +87,9 @@ public class ZeppelinGame extends Game {
         // Set the current screen to the game screen with the next level
        // sideScrollerScreen.setLevel(levels.get(playerProgress));
         setScreen(sideScrollerScreen);
+    }
+
+    public void showClosingScreen() {
+        setScreen(closingScreen);
     }
 }

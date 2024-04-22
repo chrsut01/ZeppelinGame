@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class Plane {
 
     private Texture planeImage;
-    Sound planeFlyingSound;
+    public Sound planeFlyingSound;
     public static final int width = 44;
     public static final int height = 44;
     //private static float x = GameConfig.SCREEN_WIDTH;
