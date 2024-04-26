@@ -1,4 +1,4 @@
-package com.mygdx.game.Entities;
+package com.mygdx.game.Rectangles;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

@@ -17,12 +17,13 @@ public class DilemmaFactory {
         assetManager = new AssetManager();
     }
 
-    public static Dilemma createDilemma(String question, List<String> answers, String imagePath, String consequence) {
+    public static Dilemma createDilemma(String question, List<String> answers, List<String> responses, String imagePath, int correctAnswerIndex) {
         Dilemma dilemma = new Dilemma();
         dilemma.setQuestion(question);
         dilemma.setAnswers(answers);
+        dilemma.setResponses(responses);
         dilemma.setImagePath(imagePath);
-        dilemma.setConsequence(consequence);
+        dilemma.setCorrectAnswerIndex(correctAnswerIndex);
         return dilemma;
     }
     private List<Dilemma> dilemmas;
@@ -39,21 +40,18 @@ public class DilemmaFactory {
             for (JsonValue answerData : dilemmaData.get("answers")) {
                 answers.add(answerData.asString());
             }
+            List<String> responses = new ArrayList<>();
+            for (JsonValue responseData : dilemmaData.get("responses")) {
+                responses.add(responseData.asString());
+            }
             String imagePath = dilemmaData.getString("imagePath");
-            String consequence = dilemmaData.getString("consequence");
+            int correctAnswerIndex = dilemmaData.getInt("correctAnswerIndex");
 
-            Dilemma dilemma = createDilemma(question, answers, imagePath, consequence);
+            Dilemma dilemma = createDilemma(question, answers, responses, imagePath, correctAnswerIndex);
             dilemmas.add(dilemma);
         }
         return dilemmas;
     }
-
-  /*  public void loadDilemma(String dilemmaFileName) {
-        assetManager.load("json/" + dilemmaFileName, JsonValue.class);
-        assetManager.finishLoading();
-        dilemmaData = assetManager.get("json/" + dilemmaFileName, JsonValue.class);
-    }*/
-
 
     public Dilemma getDilemma(int index) {
         return dilemmas.get(index);

@@ -18,10 +18,10 @@ import java.util.Random;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.Entities.StormCloud;
+import com.mygdx.game.Rectangles.StormCloud;
 import com.mygdx.game.GameConfig;
-import com.mygdx.game.Entities.Plane;
-import com.mygdx.game.Entities.Zeppelin;
+import com.mygdx.game.Rectangles.Plane;
+import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.TileMapHelper;
 import com.mygdx.game.ZeppelinGame;
 
@@ -31,7 +31,7 @@ import static com.mygdx.game.Constants.PPM;
 public class SideScrollerScreen extends ScreenAdapter {
     private String tilemapFileName;
     private TileMapHelper tileMapHelper;
-    private SideScrollerScreen currentLevel;
+    protected SideScrollerScreen sideScrollerScreen;
     private ZeppelinGame game;
     private Zeppelin zeppelin;
     private Plane plane;
@@ -70,8 +70,8 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         this.camera = camera;
         this.batch = new SpriteBatch();
-
-        zeppelin = new Zeppelin();
+      //  this.sideScrollerScreen = sideScrollerScreen;
+      //  zeppelin = new Zeppelin();
         planes = new ArrayList<>();
         stormClouds = new ArrayList<>();
         random = new Random();
@@ -116,7 +116,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             plane.render(batch);
         }
 
-        zeppelin.render(batch);
+      //  zeppelin.render(batch);
 
         for (StormCloud stormCloud : stormClouds) {
             stormCloud.render(batch);
@@ -193,18 +193,12 @@ public class SideScrollerScreen extends ScreenAdapter {
         return tilemapFileName;
     }
 
-
+    public void setTilemapFileName(String tilemapFileName) {
+        this.tilemapFileName = tilemapFileName;
+    }
     public World getWorld() {
         return world;
     }
 
-  /*  public void setLevel(SideScroller gameLevel) {
-        this.currentLevel = gameLevel;
-        if (tileMapHelper != null && currentLevel != null) {
-            tileMapHelper.setupMap(currentLevel.getTilemapFileName());
-        }
-    }*/
 
-   /* protected void setTilemapFileName(String s) {
-    }*/
 }

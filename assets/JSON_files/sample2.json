@@ -1,0 +1,11 @@
+{
+  "question": "What is the capital of France?",
+  "answers": ["Paris", "Berlin", "London"],
+  "responses": [
+    "Correct! Paris is the capital of France.",
+    "Incorrect. Berlin is the capital of Germany.",
+    "Incorrect. London is the capital of the United Kingdom."
+  ],
+  "imagePath": "badlogic.jpg",
+  "correctAnswerIndex": 0
+}

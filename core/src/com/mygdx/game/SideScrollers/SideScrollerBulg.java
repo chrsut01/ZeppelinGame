@@ -5,7 +5,8 @@ import com.mygdx.game.Screens.SideScrollerScreen;
 public class SideScrollerBulg extends SideScrollerScreen {
     public SideScrollerBulg() {
         super();
-       // this.setTilemapFileName("ZepMap1.tmx");
+        this.sideScrollerScreen = this;
+        this.setTilemapFileName("ZepMap1.tmx");
     }
 
     @Override
