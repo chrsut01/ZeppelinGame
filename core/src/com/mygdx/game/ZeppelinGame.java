@@ -7,14 +7,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.Screens.ClosingScreen;
 import com.mygdx.game.Screens.DilemmaScreen;
-import com.mygdx.game.Screens.SideScrollerScreen;
 import com.mygdx.game.Screens.IntroScreen;
+import com.mygdx.game.Screens.SideScrollerScreen;
 import com.mygdx.game.SideScrollers.SideScrollerBulg;
-import com.mygdx.game.SideScrollers.SideScrollerEgypt;
-import com.mygdx.game.SideScrollers.SideScrollerMed;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ZeppelinGame extends Game {
@@ -42,12 +39,16 @@ public class ZeppelinGame extends Game {
         zeppelin = new Zeppelin();
 
         introScreen = new IntroScreen(this);
-        dilemmaScreen = new DilemmaScreen(this);
+       // dilemmaScreen = new DilemmaScreen(this);
         closingScreen = new ClosingScreen(this);
 
-        gameLevels = new ArrayList<>();
+        DilemmaFactory dilemmaFactory = new DilemmaFactory();
+        // Load dilemmas for each level from JSON files
+        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromFile("sample2.json");
+        //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJson("dilemmas_med.json");
+        // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJson("dilemmas_egypt.json");
 
-        System.out.println("gameLevels ArrayList created");
+        System.out.println("Dilemmas loaded from JSON files");
 
         // Create instances of side scroller screens
         SideScrollerScreen sideScrollerBulg = new SideScrollerBulg();
@@ -56,14 +57,11 @@ public class ZeppelinGame extends Game {
 
         System.out.println("SideScrollerScreens created");
 
-        // Load dilemmas for each level from JSON files
-        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJson("sample.json");
-      //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJson("dilemmas_med.json");
-       // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJson("dilemmas_egypt.json");
 
-        System.out.println("Dilemmas loaded from JSON files");
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
+        gameLevels = new ArrayList<>();
+        System.out.println("gameLevels ArrayList created");
         gameLevels.add(gameLevelBulg);
         System.out.println("GameLevels1: " + gameLevels.toString());
      /*   GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
@@ -78,11 +76,11 @@ public class ZeppelinGame extends Game {
             setScreen(introScreen); // Show intro screen if game hasn't started yet
         } else if (playerProgress < gameLevels.size()) {
             // Get the current level and its associated dilemma
-            GameLevel currentLevel = gameLevels.get(playerProgress - 1); // Subtract 1 because list indices start from 0
+            currentLevel = gameLevels.get(playerProgress - 1); // Subtract 1 because list indices start from 0
             Dilemma currentDilemma = currentLevel.getNextDilemma();
 
             // Show the dilemma screen with the current dilemma
-            dilemmaScreen.setDilemma(currentDilemma);
+            dilemmaScreen = new DilemmaScreen(this, currentDilemma);
             setScreen(dilemmaScreen);
            // startSideScroller();
             playerProgress ++;

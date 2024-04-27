@@ -1,11 +1,10 @@
 package com.mygdx.game;
 
-import java.util.Dictionary;
 import java.util.List;
+import java.io.Serializable;
 
 
-
-public class Dilemma {
+public class Dilemma implements Serializable{
     private String question;
     private List<String> answers;
     private List<String> responses;

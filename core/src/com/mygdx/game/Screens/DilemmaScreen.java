@@ -2,12 +2,10 @@ package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,7 +30,7 @@ public class DilemmaScreen extends ScreenAdapter {
     private TextureRegionDrawable background;
     private boolean buttonClicked;
 
-    public DilemmaScreen(ZeppelinGame game) {
+    public DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
         this.stage = new Stage(new ScreenViewport());
 
         skin = new Skin();
