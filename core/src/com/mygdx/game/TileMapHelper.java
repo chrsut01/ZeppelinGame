@@ -22,21 +22,30 @@ public class TileMapHelper {
     private GameLevel gameLevel;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private SideScrollerScreen currenSideScroller;
+    private SideScrollerScreen sideScrollerScreen;
 
-    public TileMapHelper(SideScrollerScreen gameScreen) {
+    public TileMapHelper(SideScrollerScreen gameScreen, SideScrollerScreen sideScrollerScreen) {
         this.gameScreen = gameScreen;
+        this.sideScrollerScreen = sideScrollerScreen;
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
-        tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
+
+        tiledMap = new TmxMapLoader().load(sideScrollerScreen.getTilemapFileName());
+
+        System.out.println("tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
+
+
+       // tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
 
         parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
         //parseMapObjects(tiledMap.getLayers().get("Tile Layer 1").getObjects());
 
-        return new OrthogonalTiledMapRenderer(tiledMap);
+        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        return mapRenderer;
+        //return new OrthogonalTiledMapRenderer(tiledMap);
 
 
 

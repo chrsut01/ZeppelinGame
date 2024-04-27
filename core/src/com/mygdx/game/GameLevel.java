@@ -1,11 +1,7 @@
 package com.mygdx.game;
 
 import com.mygdx.game.Screens.SideScrollerScreen;
-import com.mygdx.game.SideScrollers.SideScrollerBulg;
-import com.mygdx.game.SideScrollers.SideScrollerEgypt;
-import com.mygdx.game.SideScrollers.SideScrollerMed;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GameLevel {
@@ -25,6 +21,9 @@ public class GameLevel {
     }*/
     public SideScrollerScreen getSideScroller() {
         return this.sideScrollerScreen;
+    }
+    public void setSideScroller(SideScrollerScreen sideScrollerScreen) {
+        this.sideScrollerScreen = sideScrollerScreen;
     }
 
     public Dilemma getNextDilemma() {

@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,12 +32,13 @@ public class ZeppelinGame extends Game {
     private int currentLevelIndex;
     private List<SideScrollerScreen> sideScrollers;
     private OrthographicCamera camera;
+    private TileMapHelper tileMapHelper;
+
 
     @Override
     public void create() {
-        System.out.println("create method called in ZeppelinGame");
+        batch = new SpriteBatch();
         camera = new OrthographicCamera();
-
         zeppelin = new Zeppelin();
 
         introScreen = new IntroScreen(this);
@@ -43,27 +46,25 @@ public class ZeppelinGame extends Game {
         closingScreen = new ClosingScreen(this);
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
-        // Load dilemmas for each level from JSON files
-        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromFile("sample2.json");
+
+        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/sample2.json");
         //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJson("dilemmas_med.json");
         // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJson("dilemmas_egypt.json");
 
-        System.out.println("Dilemmas loaded from JSON files");
+        System.out.println("ZeppelinGame: Dilemmas loaded from JSON files");
+        System.out.println("ZeppelinGame: DilemmasBulg: " + dilemmasBulg.toString());
 
-        // Create instances of side scroller screens
-        SideScrollerScreen sideScrollerBulg = new SideScrollerBulg();
+        SideScrollerBulg sideScrollerBulg = new SideScrollerBulg();
        // SideScrollerScreen sideScrollerMed = new SideScrollerMed();
        // SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt();
 
-        System.out.println("SideScrollerScreens created");
-
-
+        System.out.println("ZeppelinGame: SideScrollerBulg created");
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
+        System.out.println("ZeppelinGame: GameLevelBulg created");
         gameLevels = new ArrayList<>();
-        System.out.println("gameLevels ArrayList created");
         gameLevels.add(gameLevelBulg);
-        System.out.println("GameLevels1: " + gameLevels.toString());
+        System.out.println("ZeppelinGame: gameLevels ArrayList: " + gameLevels.toString());
      /*   GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
         gameLevels.add(gameLevelMed);
         System.out.println("GameLevels2: " + gameLevels.size());
@@ -71,17 +72,27 @@ public class ZeppelinGame extends Game {
         gameLevels.add(gameLevelEgypt);
         System.out.println("GameLevels3: " + gameLevels.size());*/
 
+        /*	@Override
+	public void create() {
+		batch = new SpriteBatch();
+		font = new BitmapFont(); // use libGDX's default Arial font
+		this.setScreen(new MainMenuScreen(this));
+	}*/
+
         // Set the initial screen based on player progress
         if (playerProgress == 0) {
-            setScreen(introScreen); // Show intro screen if game hasn't started yet
+            this.setScreen(introScreen); // Show intro screen if game hasn't started yet
         } else if (playerProgress < gameLevels.size()) {
             // Get the current level and its associated dilemma
             currentLevel = gameLevels.get(playerProgress - 1); // Subtract 1 because list indices start from 0
             Dilemma currentDilemma = currentLevel.getNextDilemma();
 
+            System.out.println("ZeppelinGame: Player's progress = " + playerProgress);
+            System.out.println("ZeppelinGame: currentLevel: " + currentLevel);
+
             // Show the dilemma screen with the current dilemma
             dilemmaScreen = new DilemmaScreen(this, currentDilemma);
-            setScreen(dilemmaScreen);
+            this.setScreen(dilemmaScreen);
            // startSideScroller();
             playerProgress ++;
         } else {
@@ -89,6 +100,18 @@ public class ZeppelinGame extends Game {
         }
     }
 
+    @Override
+    public void render() {
+        super.render(); // Call the superclass render method to render the current screen
+
+        handleInput(); // Handle input for the game
+    }
+
+    private void handleInput() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            Gdx.app.exit(); // Exit the game if the ESCAPE key is pressed
+        }
+    }
 
     public void showNextDilemma() {
         Dilemma nextDilemma = getCurrentLevel().getNextDilemma();

@@ -3,8 +3,10 @@ package com.mygdx.game.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameConfig;
 import com.mygdx.game.ZeppelinGame;
@@ -13,26 +15,26 @@ public class IntroScreen extends ScreenAdapter {
 
     final ZeppelinGame game;
     Texture backgroundImage;
-    //Music valkyriesMusic;
+    Music valkyriesMusic;
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
     private float backgroundX = 0;
     private float backgroundY = 0;
     public IntroScreen(ZeppelinGame game) {
-
             this.game = game;
             backgroundImage = new Texture(Gdx.files.internal("main-menu-background.png"));
-           // valkyriesMusic = Gdx.audio.newMusic(Gdx.files.internal("valkyries.mp3"));
+            valkyriesMusic = Gdx.audio.newMusic(Gdx.files.internal("valkyries.mp3"));
 
             camera = new OrthographicCamera();
             camera.setToOrtho(false, screenWidth, screenHeight);
 
+            game.font = new BitmapFont();
         }
 
         @Override
         public void show() {
-          //  valkyriesMusic.play();
+            valkyriesMusic.play();
         }
 
         @Override
@@ -86,6 +88,6 @@ public class IntroScreen extends ScreenAdapter {
         @Override
         public void dispose() {
             backgroundImage.dispose();
-            //valkyriesMusic.dispose();
+            valkyriesMusic.dispose();
         }
 }

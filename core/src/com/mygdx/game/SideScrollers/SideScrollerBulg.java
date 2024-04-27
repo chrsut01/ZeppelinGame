@@ -3,10 +3,9 @@ package com.mygdx.game.SideScrollers;
 import com.mygdx.game.Screens.SideScrollerScreen;
 
 public class SideScrollerBulg extends SideScrollerScreen {
+    private static final String tilemapFileName = "ZepMap1.tmx";
     public SideScrollerBulg() {
-        super();
-        this.sideScrollerScreen = this;
-        this.setTilemapFileName("ZepMap1.tmx");
+        super(tilemapFileName);
     }
 
     @Override
@@ -32,5 +31,11 @@ public class SideScrollerBulg extends SideScrollerScreen {
     @Override
     public void spawnStormCloud() {
         super.spawnStormCloud();
+    }
+
+    @Override
+    public String getTilemapFileName() {
+
+        return tilemapFileName;
     }
 }
