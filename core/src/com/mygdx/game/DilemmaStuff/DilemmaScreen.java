@@ -35,6 +35,8 @@ public class DilemmaScreen extends ScreenAdapter {
     private Skin skin;
     private TextButton[] answerButtons;
     private TextField responseTextField;
+    private float scaleX = 2.0f;
+    private float scaleY = 2.0f;
 
     private TextureRegionDrawable background;
     private boolean buttonClicked;
@@ -54,7 +56,8 @@ public class DilemmaScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
 
         BitmapFont font = new BitmapFont();
-       // background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("main-menu-background.png"))));
+        font.getData().setScale(scaleX, scaleY);
+        // background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("main-menu-background.png"))));
         Color fontColor = Color.WHITE;
         TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
         textFieldStyle.font = font;
@@ -63,7 +66,7 @@ public class DilemmaScreen extends ScreenAdapter {
 
         questionTextField = new TextField(dilemma.getQuestion(), skin);
         questionTextField.setPosition(100, Gdx.graphics.getHeight() - 100); // Set position
-        questionTextField.setSize(400, 50); // Set size
+        questionTextField.setSize(500, 50); // Set size
         stage.addActor(questionTextField);
 
         TextButton.TextButtonStyle squareStyle = new TextButton.TextButtonStyle();
@@ -109,7 +112,7 @@ public class DilemmaScreen extends ScreenAdapter {
         // Create and position response text field
         responseTextField = new TextField("", skin);
         responseTextField.setPosition(100, 100);
-        responseTextField.setSize(400, 50);
+        responseTextField.setSize(800, 50);
         stage.addActor(responseTextField);
     }
 
