@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.DilemmaStuff;
 
 import java.util.List;
 import java.io.Serializable;
@@ -36,5 +36,9 @@ public class Dilemma implements Serializable{
     }
 
     public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex;
+    }
+
+    public int getCorrectAnswerIndex() {
+        return correctAnswerIndex;
     }
 }

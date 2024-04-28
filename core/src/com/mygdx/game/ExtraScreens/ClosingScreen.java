@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.ExtraScreens;
 
 import com.badlogic.gdx.ScreenAdapter;
 import com.mygdx.game.ZeppelinGame;

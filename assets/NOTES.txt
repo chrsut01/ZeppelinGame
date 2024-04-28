@@ -70,7 +70,7 @@ if (consequence != null) {
 
     //Previous code for DilemmaScreen class
 
-    package com.mygdx.game.Screens;
+    package com.mygdx.game.ExtraScreens;
 
     import com.badlogic.gdx.Gdx;
     import com.badlogic.gdx.ScreenAdapter;
@@ -88,7 +88,7 @@ if (consequence != null) {
     import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
     import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
     import com.badlogic.gdx.utils.viewport.ScreenViewport;
-    import com.mygdx.game.Dilemma;
+    import com.mygdx.game.DilemmaStuff.Dilemma;
     import com.mygdx.game.ZeppelinGame;
 
     public class DilemmaScreen extends ScreenAdapter {

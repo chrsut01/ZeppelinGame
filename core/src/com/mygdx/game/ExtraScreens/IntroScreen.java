@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.ExtraScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -32,10 +32,6 @@ public class IntroScreen extends ScreenAdapter {
             game.font = new BitmapFont();
         }
 
-        @Override
-        public void show() {
-            valkyriesMusic.play();
-        }
 
         @Override
         public void render(float delta) {
@@ -57,13 +53,18 @@ public class IntroScreen extends ScreenAdapter {
             game.batch.end();
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                game.setScreen(new SideScrollerScreen());
+                game.progressToNextLevel();
                 dispose();
             }
 
             if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE))
                 Gdx.app.exit();
         }
+
+    @Override
+    public void show() {
+        valkyriesMusic.play();
+    }
 
         @Override
         public void resize(int width, int height) {

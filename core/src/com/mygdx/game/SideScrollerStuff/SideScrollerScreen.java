@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.SideScrollerStuff;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -76,10 +76,10 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.stormClouds = new ArrayList<>();
 
         this.random = new Random();
-        this.world = new World(new Vector2(0,0), false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
-        this.tileMapHelper = new TileMapHelper(this,this);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+     //   this.world = new World(new Vector2(0,0), false);
+     //   this.box2DDebugRenderer = new Box2DDebugRenderer();
+     //   this.tileMapHelper = new TileMapHelper(this,this);
+     //   this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
 
      //   this.mapImage = new Texture("map-to-afrika.png");
         // Calculate the maximum size based on the desired maximum width or height
@@ -99,10 +99,9 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.world = new World(new Vector2(0,0), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-
         this.tileMapHelper = new TileMapHelper(this,this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-        System.out.println("Tilemap loaded and setMap() called");
+        System.out.println("Tilemap loaded and setMap() called.");
     }
 
     // This may not be needed.
@@ -147,14 +146,10 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() >= 750) {
-
-            // code here for progressing to the next GameLevel
+        if (zeppelin.getX() >= 900) {
+            game.progressToNextLevel();
         }
-
     }
-
-
 
     public void cameraUpdate() {
         int mapWidth = GameConfig.TILEMAP_WIDTH;

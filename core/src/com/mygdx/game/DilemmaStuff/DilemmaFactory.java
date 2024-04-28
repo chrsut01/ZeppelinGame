@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.DilemmaStuff;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

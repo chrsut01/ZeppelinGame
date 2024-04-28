@@ -1,5 +1,5 @@
 /*
-import com.mygdx.game.Dilemma;
+import com.mygdx.game.DilemmaStuff.Dilemma;
 
 import java.io.*;
 

@@ -6,12 +6,14 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.DilemmaStuff.Dilemma;
+import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.Rectangles.Zeppelin;
-import com.mygdx.game.Screens.ClosingScreen;
-import com.mygdx.game.Screens.DilemmaScreen;
-import com.mygdx.game.Screens.IntroScreen;
-import com.mygdx.game.Screens.SideScrollerScreen;
-import com.mygdx.game.SideScrollers.SideScrollerBulg;
+import com.mygdx.game.ExtraScreens.ClosingScreen;
+import com.mygdx.game.DilemmaStuff.DilemmaScreen;
+import com.mygdx.game.ExtraScreens.IntroScreen;
+import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
+import com.mygdx.game.SideScrollerStuff.SideScrollerBulg;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +41,7 @@ public class ZeppelinGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        zeppelin = new Zeppelin();
+      //  zeppelin = new Zeppelin();
 
         introScreen = new IntroScreen(this);
        // dilemmaScreen = new DilemmaScreen(this);
@@ -58,10 +60,10 @@ public class ZeppelinGame extends Game {
        // SideScrollerScreen sideScrollerMed = new SideScrollerMed();
        // SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt();
 
-        System.out.println("ZeppelinGame: SideScrollerBulg created");
+        System.out.println("ZeppelinGame: SideScrollerBulg created: " + sideScrollerBulg.toString());
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
-        System.out.println("ZeppelinGame: GameLevelBulg created");
+        System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
         gameLevels = new ArrayList<>();
         gameLevels.add(gameLevelBulg);
         System.out.println("ZeppelinGame: gameLevels ArrayList: " + gameLevels.toString());
@@ -71,40 +73,33 @@ public class ZeppelinGame extends Game {
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
         gameLevels.add(gameLevelEgypt);
         System.out.println("GameLevels3: " + gameLevels.size());*/
-
-        /*	@Override
-	public void create() {
-		batch = new SpriteBatch();
-		font = new BitmapFont(); // use libGDX's default Arial font
-		this.setScreen(new MainMenuScreen(this));
-	}*/
-
-        // Set the initial screen based on player progress
         if (playerProgress == 0) {
-            this.setScreen(introScreen); // Show intro screen if game hasn't started yet
-        } else if (playerProgress < gameLevels.size()) {
-            // Get the current level and its associated dilemma
-            currentLevel = gameLevels.get(playerProgress - 1); // Subtract 1 because list indices start from 0
-            Dilemma currentDilemma = currentLevel.getNextDilemma();
+            setScreen(introScreen);
+        }
+    }
 
-            System.out.println("ZeppelinGame: Player's progress = " + playerProgress);
-            System.out.println("ZeppelinGame: currentLevel: " + currentLevel);
+    // Method for progressing to the next gameLevel until the player has completed all levels, then closingScreen
+    public void progressToNextLevel() {
+        playerProgress++;
+        System.out.println("ZeppelinGame: Player's progress = " + playerProgress);
+        // Check if playerProgress exceeds the bounds of gameLevels
+        if (playerProgress <= gameLevels.size()) {
+            System.out.println("ZeppelinGame: Player's progress <= gameLevels.size() = " + gameLevels.size());
+            // Get the current level based on playerProgress
+            currentLevel = gameLevels.get(playerProgress - 1);
 
-            // Show the dilemma screen with the current dilemma
-            dilemmaScreen = new DilemmaScreen(this, currentDilemma);
-            this.setScreen(dilemmaScreen);
-           // startSideScroller();
-            playerProgress ++;
+            dilemmaScreen = new DilemmaScreen(this, currentLevel.getNextDilemma());
+            setScreen(dilemmaScreen);
         } else {
-            setScreen(closingScreen); // Show closing screen if all levels are completed
+            // If playerProgress exceeds the bounds, show the closing screen
+            setScreen(closingScreen);
         }
     }
 
     @Override
     public void render() {
-        super.render(); // Call the superclass render method to render the current screen
-
-        handleInput(); // Handle input for the game
+        super.render();
+        handleInput();
     }
 
     private void handleInput() {
@@ -113,39 +108,18 @@ public class ZeppelinGame extends Game {
         }
     }
 
-    public void showNextDilemma() {
-        Dilemma nextDilemma = getCurrentLevel().getNextDilemma();
-        if (nextDilemma != null) {
-            // Display the next dilemma...
-        } else {
-            // No more dilemmas in this level
-        }
-    }
-
-  /*  public void startSideScroller() {
-        SideScrollerScreen currentSideScroller = getCurrentLevel().getSideScroller();
-        // Start the side scroller...
-    }*/
-
     public GameLevel getCurrentLevel() {
         // Ensure that playerProgress does not exceed the bounds of the levels list
         int index = Math.min(playerProgress, gameLevels.size() - 1);
         return gameLevels.get(index);
     }
 
-     // Method for progressing to the next level
-    public void progressToNextLevel() {
-        playerProgress++;
-        if (playerProgress >= gameLevels.size()) {
-            playerProgress = gameLevels.size() - 1;
+  /*  public void showNextDilemma() {
+        Dilemma nextDilemma = getCurrentLevel().getNextDilemma();
+        if (nextDilemma != null) {
+            // Display the next dilemma...
+        } else {
+            // No more dilemmas in this level
         }
-
-        // Set the current screen to the game screen with the next level
-       // sideScrollerScreen.setLevel(levels.get(playerProgress));
-        setScreen(sideScrollerScreen);
-    }
-
-    public void showClosingScreen() {
-        setScreen(closingScreen);
-    }
+    }*/
 }

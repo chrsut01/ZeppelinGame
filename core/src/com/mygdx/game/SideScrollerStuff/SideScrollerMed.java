@@ -1,6 +1,4 @@
-package com.mygdx.game.SideScrollers;
-
-import com.mygdx.game.Screens.SideScrollerScreen;
+package com.mygdx.game.SideScrollerStuff;
 
 public class SideScrollerMed extends SideScrollerScreen {
     public SideScrollerMed() {
