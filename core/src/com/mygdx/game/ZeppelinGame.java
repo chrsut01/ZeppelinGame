@@ -104,6 +104,7 @@ public class ZeppelinGame extends Game {
 
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            System.out.println("ZeppelinGame: ESCAPE key pressed");
             Gdx.app.exit(); // Exit the game if the ESCAPE key is pressed
         }
     }
