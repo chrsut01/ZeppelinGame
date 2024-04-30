@@ -24,29 +24,24 @@ public class GameLevel {
 
     public Dilemma getNextDilemma() {
         System.out.println("GameLevel getNextDilemma method called");
+        System.out.println("Current dilemma index before increase: " + currentDilemmaIndex);
+
         if (currentDilemmaIndex < dilemmas.size()) {
-
-            System.out.println("Current dilemma index: " + currentDilemmaIndex);
-            System.out.println("Dilemmas size: " + dilemmas.size());
-
             Dilemma nextDilemma = dilemmas.get(currentDilemmaIndex);
             currentDilemmaIndex++;
-            System.out.println("Current dilemma index: " + currentDilemmaIndex);
-            System.out.println("Next dilemma: first question: " + nextDilemma.getQuestion());
+            System.out.println("Current dilemma index after increase: " + currentDilemmaIndex);
+            System.out.println("Dilemmas size: " + dilemmas.size());
             return nextDilemma;
         } else {
+           // currentDilemmaIndex = 0;
+            System.out.println("getNextDilemma method returning null because currentDilemmaIndex is greater than dilemmas.size()");
             return null;
         }
     }
 
     public SideScrollerScreen getSideScroller() {
         System.out.println("GameLevel getSideScroller method called");
-        if (currentDilemmaIndex >= dilemmas.size()) {
-            System.out.println("GameLevel getSideScroller method called: currentDilemmaIndex >= dilemmas.size()");
                 return sideScrollerScreen;
-        } else {
-            return null;
-        }
     }
 
     public void setNextDilemma() {

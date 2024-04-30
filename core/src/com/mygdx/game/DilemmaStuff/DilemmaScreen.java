@@ -66,7 +66,7 @@ public class DilemmaScreen extends ScreenAdapter {
 
         questionTextField = new TextField(dilemma.getQuestion(), skin);
         questionTextField.setPosition(100, Gdx.graphics.getHeight() - 100); // Set position
-        questionTextField.setSize(500, 50); // Set size
+        questionTextField.setSize(1000, 50); // Set size
         stage.addActor(questionTextField);
 
         TextButton.TextButtonStyle squareStyle = new TextButton.TextButtonStyle();
@@ -94,16 +94,19 @@ public class DilemmaScreen extends ScreenAdapter {
                         Timer.schedule(new Timer.Task() {
                             @Override
                             public void run() {
-                                if(gameLevel.getNextDilemma() != null){
-                                    System.out.println("DilemmaScreen: getNextDilemma() " + gameLevel.getNextDilemma().getQuestion());
-                                    gameLevel.getNextDilemma();
+                                Dilemma nextDilemma = gameLevel.getNextDilemma();
+                                System.out.println("DilemmaScreen: clicked() and run() called.");
+
+                                if(nextDilemma != null){
+                                    DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
+                                    game.setScreen(nextDilemmaScreen);
                                 } else {
                                     System.out.println("DilemmaScreen: getNextDilemma() null");
                                     SideScrollerScreen sideScroller = gameLevel.getSideScroller();
                                     game.setScreen(sideScroller);
                                 }
                             }
-                        }, 2f);
+                        }, 1f);
                     }
                 }
             });
@@ -114,7 +117,7 @@ public class DilemmaScreen extends ScreenAdapter {
         // Create and position response text field
         responseTextField = new TextField("", skin);
         responseTextField.setPosition(100, 100);
-        responseTextField.setSize(800, 50);
+        responseTextField.setSize(1000, 50);
         stage.addActor(responseTextField);
     }
 

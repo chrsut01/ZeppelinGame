@@ -12,6 +12,7 @@ import com.mygdx.game.GameConfig;
 
 
 public class Zeppelin extends Rectangle {
+    private static Zeppelin instance;
     private static final float width = 783/2;
     private static final float height = 109/2;
     private static final float MAX_SPEED = 80; // Maximum speed of the zeppelin
@@ -27,8 +28,14 @@ public class Zeppelin extends Rectangle {
     private Sprite zeppelinSprite;
     private Sound engineSound;
 
-    public Zeppelin() {
+    private Zeppelin() {
         init();
+    }
+    public static Zeppelin getInstance() {
+        if (instance == null) {
+            instance = new Zeppelin();
+        }
+        return instance;
     }
 
     private void init() {

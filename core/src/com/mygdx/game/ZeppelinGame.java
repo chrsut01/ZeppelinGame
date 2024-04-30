@@ -53,20 +53,20 @@ public class ZeppelinGame extends Game {
         //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJson("dilemmas_med.json");
         // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJson("dilemmas_egypt.json");
 
-        System.out.println("ZeppelinGame: Dilemmas loaded from JSON files");
-        System.out.println("ZeppelinGame: DilemmasBulg: " + dilemmasBulg.toString());
+     //   System.out.println("ZeppelinGame: Dilemmas loaded from JSON files");
+     //   System.out.println("ZeppelinGame: DilemmasBulg: " + dilemmasBulg.toString());
 
         SideScrollerBulg sideScrollerBulg = new SideScrollerBulg();
        // SideScrollerScreen sideScrollerMed = new SideScrollerMed();
        // SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt();
 
-        System.out.println("ZeppelinGame: SideScrollerBulg created: " + sideScrollerBulg.toString());
+     //   System.out.println("ZeppelinGame: SideScrollerBulg created: " + sideScrollerBulg.toString());
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
-        System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
+     //   System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
         gameLevels = new ArrayList<>();
         gameLevels.add(gameLevelBulg);
-        System.out.println("ZeppelinGame: gameLevels ArrayList: " + gameLevels.toString());
+       // System.out.println("ZeppelinGame: gameLevels ArrayList: " + gameLevels.toString());
      /*   GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
         gameLevels.add(gameLevelMed);
         System.out.println("GameLevels2: " + gameLevels.size());
@@ -87,7 +87,6 @@ public class ZeppelinGame extends Game {
             System.out.println("ZeppelinGame: Player's progress <= gameLevels.size() = " + gameLevels.size());
             // Get the current level based on playerProgress
             currentLevel = gameLevels.get(playerProgress - 1);
-
             dilemmaScreen = new DilemmaScreen(this, currentLevel.getNextDilemma());
             setScreen(dilemmaScreen);
         } else {
@@ -104,7 +103,6 @@ public class ZeppelinGame extends Game {
 
     private void handleInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            System.out.println("ZeppelinGame: ESCAPE key pressed");
             Gdx.app.exit(); // Exit the game if the ESCAPE key is pressed
         }
     }
