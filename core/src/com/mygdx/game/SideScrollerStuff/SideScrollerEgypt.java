@@ -1,11 +1,10 @@
 package com.mygdx.game.SideScrollerStuff;
 
 public class SideScrollerEgypt extends SideScrollerScreen {
-
+    private static final String tilemapFileName = "ZepMap1.tmx";
     public SideScrollerEgypt() {
-        super();
+        super(tilemapFileName);
         this.sideScrollerScreen = this;
-        this.setTilemapFileName("ZepMap1.tmx");
     }
 
     @Override

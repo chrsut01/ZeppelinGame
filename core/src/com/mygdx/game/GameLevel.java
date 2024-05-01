@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.mygdx.game.DilemmaStuff.Dilemma;
 import com.mygdx.game.DilemmaStuff.DilemmaFactory;
+import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public class GameLevel {
     private DilemmaFactory dilemmaFactory;
     private List<Dilemma> dilemmas;
     private int currentDilemmaIndex;
+    public Zeppelin zeppelin;
 
     public GameLevel(SideScrollerScreen sideScrollerScreen, List<Dilemma> dilemmas) {
         this.sideScrollerScreen = sideScrollerScreen;
@@ -33,15 +35,15 @@ public class GameLevel {
             System.out.println("Dilemmas size: " + dilemmas.size());
             return nextDilemma;
         } else {
-           // currentDilemmaIndex = 0;
-            System.out.println("getNextDilemma method returning null because currentDilemmaIndex is greater than dilemmas.size()");
+            System.out.println("getNextDilemma method returning null (because currentDilemmaIndex is greater than dilemmas.size())");
             return null;
         }
     }
 
     public SideScrollerScreen getSideScroller() {
-        System.out.println("GameLevel getSideScroller method called");
-                return sideScrollerScreen;
+        System.out.println("GameLevel getSideScroller method called and returning: " + sideScrollerScreen);
+        System.out.println("GameLevel: " + this.sideScrollerScreen.toString() + "'s TileMap is: " + sideScrollerScreen.getTilemapFileName());
+        return sideScrollerScreen;
     }
 
     public void setNextDilemma() {
@@ -51,5 +53,8 @@ public class GameLevel {
         }
     }
 
+    public String getTilemapFileName() {
+        return sideScrollerScreen.getTilemapFileName();
+    }
     // Other methods...
 }

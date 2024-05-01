@@ -26,6 +26,8 @@ public class DilemmaScreen extends ScreenAdapter {
     private ZeppelinGame game;
     private GameLevel gameLevel;
     protected Dilemma dilemma;
+    private SideScrollerScreen sideScroller;
+
     private Stage stage;
     private OrthographicCamera camera;
     private Box2DDebugRenderer box2DDebugRenderer;
@@ -39,7 +41,8 @@ public class DilemmaScreen extends ScreenAdapter {
     private float scaleY = 2.0f;
 
     private TextureRegionDrawable background;
-    private boolean buttonClicked;
+
+
 
     public DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
         this.game = game;
@@ -87,7 +90,7 @@ public class DilemmaScreen extends ScreenAdapter {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    System.out.println("DilemmaScreen: Button clicked = " + index);
+                 //   System.out.println("DilemmaScreen: Button clicked = " + index);
                     responseTextField.setText(dilemma.getResponses().get(index)); // Display response
 
                     if(dilemma.getCorrectAnswerIndex() == index) {
@@ -95,14 +98,18 @@ public class DilemmaScreen extends ScreenAdapter {
                             @Override
                             public void run() {
                                 Dilemma nextDilemma = gameLevel.getNextDilemma();
-                                System.out.println("DilemmaScreen: clicked() and run() called.");
+                              //  System.out.println("DilemmaScreen: clicked() and run() called.");
 
                                 if(nextDilemma != null){
                                     DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
+                                    System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
                                     game.setScreen(nextDilemmaScreen);
                                 } else {
-                                    System.out.println("DilemmaScreen: getNextDilemma() null");
+                                    System.out.println("DilemmaScreen: getNextDilemma(): NULL");
                                     SideScrollerScreen sideScroller = gameLevel.getSideScroller();
+                                    dispose();
+                                    sideScroller.show();
+                                    sideScroller.initialize();
                                     game.setScreen(sideScroller);
                                 }
                             }
@@ -129,19 +136,17 @@ public class DilemmaScreen extends ScreenAdapter {
         stage.draw();
     }
 
-    @Override
-    public void dispose() {
-     //   background.getRegion().getTexture().dispose();
-        skin.dispose();
-        questionTextField.clear();
-        responseTextField.clear();
-        for (TextButton button : answerButtons) {
-            button.clear();
-        }
-        stage.dispose();
-    }
-
     public void setDilemma(Dilemma currentDilemma) {
         this.dilemma = currentDilemma;
+    }
+    @Override
+    public void dispose() {
+        //   background.getRegion().getTexture().dispose();
+       // game.dispose();
+        skin.dispose();
+        stage.dispose();
+        questionTextField.clear();
+        responseTextField.clear();
+        for (TextButton button : answerButtons) { button.clear(); }
     }
 }

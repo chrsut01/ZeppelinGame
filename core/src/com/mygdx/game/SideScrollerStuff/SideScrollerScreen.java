@@ -3,6 +3,7 @@ package com.mygdx.game.SideScrollerStuff;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -25,6 +26,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.badlogic.gdx.math.MathUtils.random;
+import static com.mygdx.game.Constants.PPM;
 
 public class SideScrollerScreen extends ScreenAdapter {
     private String tilemapFileName;
@@ -57,59 +59,117 @@ public class SideScrollerScreen extends ScreenAdapter {
     float stormCloudSpawnTimer;
     public static final float MIN_StormCloud_SPAWN_TIME = 5f;
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
+    private ArrayList<StormCloud> stormClouds;
 
  //   private Texture mapImage;
 
   //  private float mapWidth;
   //  private float mapHeight;
 
-    private ArrayList<StormCloud> stormClouds;
+
 
     public SideScrollerScreen (String tilemapFileName){
         this.tilemapFileName = tilemapFileName;
-    }
-    public SideScrollerScreen(){
         this.batch = new SpriteBatch();
-       // this.sideScrollerScreen = new SideScrollerScreen();
-      //  zeppelin = new Zeppelin();
+        this.world = new World(new Vector2(0,0), false);
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
-
         this.random = new Random();
-     //   this.world = new World(new Vector2(0,0), false);
-     //   this.box2DDebugRenderer = new Box2DDebugRenderer();
-     //   this.tileMapHelper = new TileMapHelper(this,this);
-     //   this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
 
-     //   this.mapImage = new Texture("map-to-afrika.png");
+        System.out.println("SideScrollerScreen initiated");
+    }
+    public SideScrollerScreen(){
+        this("default_tilemap.tmx");
+        //   this.mapImage = new Texture("map-to-afrika.png");
         // Calculate the maximum size based on the desired maximum width or height
      //   mapHeight = Gdx.graphics.getHeight() * 0.3f;
     //    float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
         // Calculate the scaling factor based on the maximum width or height
      //   mapWidth = mapHeight / aspectRatio;
-
-        initialize();
-        System.out.println("SideScrollerScreen initiated");
     }
 
     public void initialize() {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.camera.update();
-        this.world = new World(new Vector2(0,0), false);
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
         this.tileMapHelper = new TileMapHelper(this,this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-        System.out.println("Tilemap loaded and setMap() called.");
+        System.out.println("SideScrollerScreen: Tilemap loaded and setMap() called.");
+    }
+
+    public void render(float delta) {
+        this.update(delta);
+        Gdx.gl.glClearColor(0, 0, 0, 0);  // makes screen transparent
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        orthogonalTiledMapRenderer.setView(camera);
+
+        orthogonalTiledMapRenderer.render();
+
+        batch.begin();
+
+        for (Plane plane : planes) {
+            plane.render(batch);
+        }
+
+        zeppelin.render(batch);
+
+        for (StormCloud stormCloud : stormClouds) {
+            stormCloud.render(batch);
+        }
+
+        // Draw the map at the bottom left corner of the screen
+        float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
+        float mapY = camera.position.y - camera.viewportHeight / 2 + 20;
+       // batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
+
+        batch.end();
+
+        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
+
+        // Check for collision between player and polygon objects
+      /*  for (RectangleMapObject mapObject : tileMapHelper.getDilemmaObjects()) {
+            Rectangle rectangle = mapObject.getRectangle();
+            String polygonName = mapObject.getName();
+
+            if (zeppelin.getBoundingRectangle().overlaps(tileMapHelper.getDilemmaRectangle())) {
+                if (!dilemmaTriggered) {
+                    // Initialize the dilemma object
+                    dilemma = new DilemmaScreen();
+
+                    // Add the dilemma object to the stage for rendering
+                    dilemma.addToStage(new Actor());
+
+                    // Show the dilemma screen
+                    dilemma.showDilemmaScreen();
+
+                    dilemmaTriggered = true; // Mark dilemma as triggered to prevent repeated triggering
+                }
+            }
+        }*/
+
+        // ChatGPT suggested render method:
+     /*   update(delta);
+        batch.begin();
+        zeppelin.render(batch);
+        for (Plane plane : planes) {
+            plane.render(batch);
+        }
+        for (StormCloud stormCloud : stormClouds) {
+            stormCloud.render(batch);
+        }
+        batch.end();
+        orthogonalTiledMapRenderer.render();
+        box2DDebugRenderer.render(world, camera.combined);*/
     }
 
     // This may not be needed.
     public void update(float delta) {
-
-        // Update the world (physics simulation
         world.step(1/60f,6,2);
-        //zeppelin.update();
+        zeppelin.update();
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
@@ -146,7 +206,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() >= 900) {
+        if (zeppelin.getX() >= 1900) {
             game.progressToNextLevel();
         }
     }
@@ -172,7 +232,6 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
 
     public void spawnPlane() {
-
         float x = camera.position.x + camera.viewportWidth / 2;
         float minY = camera.position.y - camera.viewportHeight / 2;
         float maxY = camera.position.y + camera.viewportHeight / 2;
@@ -189,7 +248,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         plane = new Plane(x, y, yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
-
     }
 
     public void spawnStormCloud() {
@@ -202,21 +260,19 @@ public class SideScrollerScreen extends ScreenAdapter {
         stormClouds.add(stormCloud);
     }
 
-    @Override
-    public void show() {
-        // Load background image, tilemap, and other level-specific data
-    }
-
     public String getTilemapFileName() {
         return this.tilemapFileName;
     }
 
-    public void setTilemapFileName(String tilemapFileName) {
+ /*   public void setTilemapFileName(String tilemapFileName) {
         this.tilemapFileName = tilemapFileName;
+    }*/
+    @Override
+    public void show() {
+        System.out.println("SideScrollerScreen show() method called.");
+        this.zeppelin = Zeppelin.getInstance();
     }
     public World getWorld() {
         return world;
     }
-
-
 }

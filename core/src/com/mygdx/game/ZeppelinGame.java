@@ -8,12 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.DilemmaStuff.Dilemma;
 import com.mygdx.game.DilemmaStuff.DilemmaFactory;
-import com.mygdx.game.Rectangles.Zeppelin;
-import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
+import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
-import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
 import com.mygdx.game.SideScrollerStuff.SideScrollerBulg;
+import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class ZeppelinGame extends Game {
 
     private GameLevel currentLevel;
     private List<GameLevel> gameLevels;
-    private Zeppelin zeppelin;
+  //  private Zeppelin zeppelin;
     public SpriteBatch batch;
     public BitmapFont font;
     private IntroScreen introScreen;
@@ -41,7 +40,6 @@ public class ZeppelinGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-      //  zeppelin = new Zeppelin();
 
         introScreen = new IntroScreen(this);
        // dilemmaScreen = new DilemmaScreen(this);
@@ -57,13 +55,14 @@ public class ZeppelinGame extends Game {
      //   System.out.println("ZeppelinGame: DilemmasBulg: " + dilemmasBulg.toString());
 
         SideScrollerBulg sideScrollerBulg = new SideScrollerBulg();
+        System.out.println("ZeppelinGame: SideScrollerBulg: TileMap: " + sideScrollerBulg.getTilemapFileName());
        // SideScrollerScreen sideScrollerMed = new SideScrollerMed();
        // SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt();
 
      //   System.out.println("ZeppelinGame: SideScrollerBulg created: " + sideScrollerBulg.toString());
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
-     //   System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
+        System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
         gameLevels = new ArrayList<>();
         gameLevels.add(gameLevelBulg);
        // System.out.println("ZeppelinGame: gameLevels ArrayList: " + gameLevels.toString());
@@ -112,13 +111,4 @@ public class ZeppelinGame extends Game {
         int index = Math.min(playerProgress, gameLevels.size() - 1);
         return gameLevels.get(index);
     }
-
-  /*  public void showNextDilemma() {
-        Dilemma nextDilemma = getCurrentLevel().getNextDilemma();
-        if (nextDilemma != null) {
-            // Display the next dilemma...
-        } else {
-            // No more dilemmas in this level
-        }
-    }*/
 }

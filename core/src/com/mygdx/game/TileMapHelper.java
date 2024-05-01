@@ -30,37 +30,21 @@ public class TileMapHelper {
     }
 
     public OrthogonalTiledMapRenderer setupMap() {
-
         tiledMap = new TmxMapLoader().load(sideScrollerScreen.getTilemapFileName());
 
-        System.out.println("tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
+        System.out.println("TileMapHelper: tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
 
-
-       // tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
-
-        parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
+    /*    parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
+        parseMapObjects(tiledMap.getLayers().get("Background").getObjects());*/
         //parseMapObjects(tiledMap.getLayers().get("Tile Layer 1").getObjects());
 
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         return mapRenderer;
-        //return new OrthogonalTiledMapRenderer(tiledMap);
-
-
-
-     /* //  tiledMap = new TmxMapLoader().load(mapFileName);    OR below: (?)
-        tiledMap = new TmxMapLoader().load(gameLevel.getSideScroller().getTilemapFileName());
-
-
-        parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
-
-       // mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);*/
     }
 
     private void parseMapObjects(MapObjects mapObjects) {
+        System.out.println("TileMapHelper parseMapObjects method called");
         for (MapObject mapObject : mapObjects) {
             if (mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
@@ -69,6 +53,7 @@ public class TileMapHelper {
     }
 
     private void createStaticBody(PolygonMapObject polygonMapObject) {
+        System.out.println("TileMapHelper createStaticBody method called");
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         Body body = gameScreen.getWorld().createBody(bodyDef);
@@ -78,6 +63,7 @@ public class TileMapHelper {
     }
 
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
+
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
 

@@ -20,10 +20,8 @@ public class Zeppelin extends Rectangle {
     private static final float DECELERATION = 20f; // Deceleration factor
     private static final float MIN_SPEED = 1; // Minimum speed before stopping
 
-
     private float ySpeed = 0;
     private float xSpeed = 80;
-
 
     private Sprite zeppelinSprite;
     private Sound engineSound;
@@ -39,14 +37,13 @@ public class Zeppelin extends Rectangle {
     }
 
     private void init() {
+        System.out.println("Zeppelin init() called.");
         // Load textures and sounds
         zeppelinSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-image.png")));
         engineSound = Gdx.audio.newSound(Gdx.files.internal("ZeppelinEngine.mp3"));
 
-        // Resize the sprite to match the zeppelin's dimensions
         zeppelinSprite.setSize(width, height);
 
-        // Set default dimensions and position zeppelin in center of screen
         zeppelinSprite.setOrigin(width / 2, height / 2);
         zeppelinSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
                 GameConfig.SCREEN_HEIGHT / 2f - height / 2 + 500);
@@ -124,9 +121,6 @@ public class Zeppelin extends Rectangle {
 
     public Rectangle getBoundingRectangle() {
         return new Rectangle(zeppelinSprite.getX(), zeppelinSprite.getY(), zeppelinSprite.getWidth(), zeppelinSprite.getHeight());
-
     }
-
-
 }
 
