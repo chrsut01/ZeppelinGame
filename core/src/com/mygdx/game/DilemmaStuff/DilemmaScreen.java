@@ -10,12 +10,12 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameLevel;
 import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
@@ -67,10 +67,12 @@ public class DilemmaScreen extends ScreenAdapter {
         textFieldStyle.fontColor = fontColor;
         skin.add("default", textFieldStyle, TextField.TextFieldStyle.class);
 
-        questionTextField = new TextField(dilemma.getQuestion(), skin);
-        questionTextField.setPosition(100, Gdx.graphics.getHeight() - 100); // Set position
-        questionTextField.setSize(1000, 50); // Set size
-        stage.addActor(questionTextField);
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, fontColor);
+        Label questionLabel = new Label(dilemma.getQuestion(), labelStyle);
+        questionLabel.setPosition(100, Gdx.graphics.getHeight() - 200);
+        questionLabel.setSize(1000, 150);
+        questionLabel.setWrap(true); // Enable wrapping for multi-line text
+        stage.addActor(questionLabel);
 
         TextButton.TextButtonStyle squareStyle = new TextButton.TextButtonStyle();
         squareStyle.up = background;
@@ -81,7 +83,7 @@ public class DilemmaScreen extends ScreenAdapter {
         skin.add("default", buttonStyle);
 
         answerButtons = new TextButton[dilemma.getAnswers().size()];
-        float buttonY = Gdx.graphics.getHeight() - 200; // Initial Y position for buttons
+        float buttonY = Gdx.graphics.getHeight() - 280; // Initial Y position for buttons
         for (int i = 0; i < answerButtons.length; i++) {
             String answer = dilemma.getAnswers().get(i);
             final int index = i; // Declare final variable here
@@ -90,21 +92,30 @@ public class DilemmaScreen extends ScreenAdapter {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                 //   System.out.println("DilemmaScreen: Button clicked = " + index);
-                    responseTextField.setText(dilemma.getResponses().get(index)); // Display response
+                    // Display response
+                    responseTextField.setText(dilemma.getResponses().get(index));
 
-                    if(dilemma.getCorrectAnswerIndex() == index) {
-                        Timer.schedule(new Timer.Task() {
-                            @Override
-                            public void run() {
+                    // Check if the selected answer is correct
+                    if (dilemma.getCorrectAnswerIndex() == index) {
+                        // If correct, update the screen after a delay
+                        new Thread(() -> {
+                            try {
+                                // Pause execution for 1.5 seconds (adjust as needed)
+                                Thread.sleep(1500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                            // Update the screen based on whether there is a next dilemma
+                            Gdx.app.postRunnable(() -> {
                                 Dilemma nextDilemma = gameLevel.getNextDilemma();
-                              //  System.out.println("DilemmaScreen: clicked() and run() called.");
-
-                                if(nextDilemma != null){
+                                if (nextDilemma != null) {
+                                    // If there is a next dilemma, display it
                                     DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
                                     System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
                                     game.setScreen(nextDilemmaScreen);
                                 } else {
+                                    // If there is no next dilemma, transition to the side-scroller screen
                                     System.out.println("DilemmaScreen: getNextDilemma(): NULL");
                                     SideScrollerScreen sideScroller = gameLevel.getSideScroller();
                                     dispose();
@@ -112,9 +123,10 @@ public class DilemmaScreen extends ScreenAdapter {
                                     sideScroller.initialize();
                                     game.setScreen(sideScroller);
                                 }
-                            }
-                        }, 1f);
+                            });
+                        }).start();
                     }
+
                 }
             });
             answerButtons[i] = button;
@@ -124,7 +136,7 @@ public class DilemmaScreen extends ScreenAdapter {
         // Create and position response text field
         responseTextField = new TextField("", skin);
         responseTextField.setPosition(100, 100);
-        responseTextField.setSize(1000, 50);
+        responseTextField.setSize(1000, 150);
         stage.addActor(responseTextField);
     }
 
@@ -145,7 +157,7 @@ public class DilemmaScreen extends ScreenAdapter {
        // game.dispose();
         skin.dispose();
         stage.dispose();
-        questionTextField.clear();
+       // questionTextField.clear();
         responseTextField.clear();
         for (TextButton button : answerButtons) { button.clear(); }
     }

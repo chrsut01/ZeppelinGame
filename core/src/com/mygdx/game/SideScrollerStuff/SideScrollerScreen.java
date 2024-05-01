@@ -150,20 +150,6 @@ public class SideScrollerScreen extends ScreenAdapter {
                 }
             }
         }*/
-
-        // ChatGPT suggested render method:
-     /*   update(delta);
-        batch.begin();
-        zeppelin.render(batch);
-        for (Plane plane : planes) {
-            plane.render(batch);
-        }
-        for (StormCloud stormCloud : stormClouds) {
-            stormCloud.render(batch);
-        }
-        batch.end();
-        orthogonalTiledMapRenderer.render();
-        box2DDebugRenderer.render(world, camera.combined);*/
     }
 
     // This may not be needed.

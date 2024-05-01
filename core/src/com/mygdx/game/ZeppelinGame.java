@@ -47,7 +47,9 @@ public class ZeppelinGame extends Game {
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
-        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/sample2.json");
+       // List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
+        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
+
         //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJson("dilemmas_med.json");
         // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJson("dilemmas_egypt.json");
 
