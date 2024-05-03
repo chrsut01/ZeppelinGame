@@ -1,4 +1,4 @@
-package com.mygdx.game.SideScrollerStuff;
+package com.mygdx.game.SideScrollers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -76,7 +76,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
 
-        System.out.println("SideScrollerScreen initiated");
+       // System.out.println("SideScrollerScreen initiated");
     }
     public SideScrollerScreen(){
         this("default_tilemap.tmx");
@@ -94,7 +94,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.camera.update();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-        this.tileMapHelper = new TileMapHelper(this,this);
+        this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
         System.out.println("SideScrollerScreen: Tilemap loaded and setMap() called.");
     }
@@ -105,7 +105,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.setView(camera);
-
         orthogonalTiledMapRenderer.render();
 
         batch.begin();
@@ -192,7 +191,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() >= 1900) {
+        if (zeppelin.getX() > 1200) {
             game.progressToNextLevel();
         }
     }
@@ -250,9 +249,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         return this.tilemapFileName;
     }
 
- /*   public void setTilemapFileName(String tilemapFileName) {
-        this.tilemapFileName = tilemapFileName;
-    }*/
     @Override
     public void show() {
         System.out.println("SideScrollerScreen show() method called.");
@@ -260,5 +256,15 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
     public World getWorld() {
         return world;
+    }
+
+    public void dispose(){
+        orthogonalTiledMapRenderer.dispose();
+        world.dispose();
+        box2DDebugRenderer.dispose();
+        batch.dispose();
+        planes.clear();
+        stormClouds.clear();
+        sideScrollerScreen.dispose();
     }
 }

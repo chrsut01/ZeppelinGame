@@ -16,9 +16,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.GameLevel;
-import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.SideScrollerScreen;
 import com.mygdx.game.ZeppelinGame;
 
 
@@ -42,8 +43,6 @@ public class DilemmaScreen extends ScreenAdapter {
 
     private TextureRegionDrawable background;
 
-
-
     public DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
         this.game = game;
         this.gameLevel = game.getCurrentLevel();
@@ -54,7 +53,7 @@ public class DilemmaScreen extends ScreenAdapter {
     }
 
     public void initializeUI(){
-        System.out.println("DilemmaScreen: initializeUI() method called");
+        System.out.println("DilemmaScreen: initializeUI() method called. gameLevel: " + gameLevel);
 
         Gdx.input.setInputProcessor(stage);
 
@@ -86,48 +85,40 @@ public class DilemmaScreen extends ScreenAdapter {
         float buttonY = Gdx.graphics.getHeight() - 280; // Initial Y position for buttons
         for (int i = 0; i < answerButtons.length; i++) {
             String answer = dilemma.getAnswers().get(i);
-            final int index = i; // Declare final variable here
+            int index = i; // Declare final variable here
             TextButton button = new TextButton(answer, skin);
             button.setPosition(100, buttonY - i * 50);
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    // Display response
                     responseTextField.setText(dilemma.getResponses().get(index));
 
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
-                        // If correct, update the screen after a delay
-                        new Thread(() -> {
-                            try {
-                                // Pause execution for 1.5 seconds (adjust as needed)
-                                Thread.sleep(1500);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-
-                            // Update the screen based on whether there is a next dilemma
-                            Gdx.app.postRunnable(() -> {
-                                Dilemma nextDilemma = gameLevel.getNextDilemma();
-                                if (nextDilemma != null) {
-                                    // If there is a next dilemma, display it
-                                    DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
-                                    System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
-                                    game.setScreen(nextDilemmaScreen);
-                                } else {
-                                    // If there is no next dilemma, transition to the side-scroller screen
-                                    System.out.println("DilemmaScreen: getNextDilemma(): NULL");
-                                    SideScrollerScreen sideScroller = gameLevel.getSideScroller();
-                                    dispose();
-                                    sideScroller.show();
-                                    sideScroller.initialize();
-                                    game.setScreen(sideScroller);
+                        System.out.println("Correct answer selected");
+                        Dilemma nextDilemma = gameLevel.getNextDilemma();
+                        if (nextDilemma != null) {
+                            System.out.println("nextDilemma != null");
+                            Timer.schedule(new Timer.Task() {
+                                @Override
+                                public void run() {
+                                    System.out.println("not-null Timer task run()");
+                                    setNextDilemma(nextDilemma);
+                                    System.out.println("DilemmaScreen, correct answer goToNextDilemma(nextDilemma) called");
                                 }
-                            });
-                        }).start();
+                            }, 0.5f);
+                        } else {
+                            Timer.schedule(new Timer.Task() {
+                                @Override
+                                public void run() {
+                                    System.out.println("null Timer task run()");
+                                    Gdx.app.postRunnable(() ->  setSideScroller());
+                                    System.out.println("DilemmaScreen, correct answer goToSideScroller() called");
+                                    }
+                                }, 0.5f);
+                            }
+                        }
                     }
-
-                }
             });
             answerButtons[i] = button;
             stage.addActor(button);
@@ -138,6 +129,23 @@ public class DilemmaScreen extends ScreenAdapter {
         responseTextField.setPosition(100, 100);
         responseTextField.setSize(1000, 150);
         stage.addActor(responseTextField);
+    }
+
+    private void setNextDilemma(Dilemma nextDilemma) {
+       // DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
+        DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
+
+        System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
+        game.setScreen(nextDilemmaScreen);
+    }
+
+    private void setSideScroller() {
+        System.out.println("DilemmaScreen: getNextDilemma(): NULL");
+        SideScrollerScreen sideScroller = gameLevel.getSideScroller();
+       // dispose();
+        sideScroller.show();
+        sideScroller.initialize();
+        game.setScreen(sideScroller);
     }
 
     @Override

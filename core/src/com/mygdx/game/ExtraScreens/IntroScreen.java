@@ -90,5 +90,6 @@ public class IntroScreen extends ScreenAdapter {
         public void dispose() {
             backgroundImage.dispose();
             valkyriesMusic.dispose();
+            game.font.dispose();
         }
 }

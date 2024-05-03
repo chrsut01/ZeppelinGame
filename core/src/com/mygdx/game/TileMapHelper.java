@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.SideScrollerScreen;
 
 import static com.mygdx.game.Constants.PPM;
 
@@ -24,8 +24,8 @@ public class TileMapHelper {
     private OrthogonalTiledMapRenderer mapRenderer;
     private SideScrollerScreen sideScrollerScreen;
 
-    public TileMapHelper(SideScrollerScreen gameScreen, SideScrollerScreen sideScrollerScreen) {
-        this.gameScreen = gameScreen;
+    public TileMapHelper(SideScrollerScreen sideScrollerScreen) {
+       // this.gameScreen = gameScreen;
         this.sideScrollerScreen = sideScrollerScreen;
     }
 

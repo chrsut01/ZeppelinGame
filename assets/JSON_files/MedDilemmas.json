@@ -1,0 +1,62 @@
+[
+  {
+  "question": "Med 1st Dilemma: Du er nået til kysten ved Grækenland, du ser tordenvejr ude i horisonten. Hvad gør du?",
+  "answers": ["Lukker vand ud", "Gør ingenting", "Lukker ilt ud"],
+  "responses": [
+    "Korrekt! Det vil få zeppelineren til at hæve sig over stormskyerne..",
+    "Incorrect. Prøv igen",
+    "Incorrect. Det vil få zeppelineren til at stige ned og risikere at blive ramt af lyn."
+  ],
+  "imagePath": "badlogic.jpg",
+  "correctAnswerIndex": 0
+  },
+
+  {
+    "question": "Med 2nd Dilemma: What is the capital of France?",
+    "answers": ["Paris", "Berlin", "London"],
+    "responses": [
+      "Correct! Paris is the capital of France.",
+      "Incorrect. Berlin is the capital of Germany.",
+      "Incorrect. London is the capital of the United Kingdom."
+    ],
+    "imagePath": "badlogic.jpg",
+    "correctAnswerIndex": 0
+  },
+
+  {
+    "question": "Med 3rd Dilemma: What is the capital of France?",
+    "answers": ["Paris", "Berlin", "London"],
+    "responses": [
+      "Correct! Paris is the capital of France.",
+      "Incorrect. Berlin is the capital of Germany.",
+      "Incorrect. London is the capital of the United Kingdom."
+    ],
+    "imagePath": "badlogic.jpg",
+    "correctAnswerIndex": 0
+  },
+
+  {
+    "question": "Med 4th Dilemma: What is the capital of France?",
+    "answers": ["Paris", "Berlin", "London"],
+    "responses": [
+      "Correct! Paris is the capital of France.",
+      "Incorrect. Berlin is the capital of Germany.",
+      "Incorrect. London is the capital of the United Kingdom."
+    ],
+    "imagePath": "badlogic.jpg",
+    "correctAnswerIndex": 0
+  },
+
+  {
+    "question": "Med 5th Dilemma: Correct answer is the third one?",
+    "answers": ["Not this one", "Also not this one", "Try this one"],
+    "responses": [
+      "Wrong!",
+      "Wrong!",
+      "Right!"
+    ],
+    "imagePath": "badlogic.jpg",
+    "correctAnswerIndex": 2
+  }
+
+]

@@ -10,6 +10,6 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setWindowedMode(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		config.setTitle("ZeppelinGame");
-		new Lwjgl3Application(new ZeppelinGame(), config);
+		new Lwjgl3Application(ZeppelinGame.getInstance(), config);
 	}
 }

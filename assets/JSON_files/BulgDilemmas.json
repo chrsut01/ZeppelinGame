@@ -1,6 +1,6 @@
 [
   {
-    "question": "Først og fremmest, skal vi bruge noget til at få vores zeppelin til at flyve. Hvad skal vi bruge?",
+    "question": "1st Bulg question: Først og fremmest, skal vi bruge noget til at få vores zeppelin til at flyve. Hvad skal vi bruge?",
     "answers": ["Helium", "Varm luft", "Hydrogen"],
     "responses": [
       "Not the correct answer. Too unstable.",
@@ -11,7 +11,7 @@
     "correctAnswerIndex": 2
   },
     {
-      "question": "Du skal bruge noget til at holde på hydrogenen, hvad vælger du?",
+      "question": "2nd Bulg question: Du skal bruge noget til at holde på hydrogenen, hvad vælger du?",
       "answers": ["Læder lavet af ko maver", "Gummi fra gummifigen", "Linned dækket i kanin hud lim"],
       "responses": [
         "Correct it is cow stomaches. It sealed the hydrogen in.",
@@ -22,7 +22,7 @@
       "correctAnswerIndex": 0
   },
     {
-      "question": "Du skal finde en måde at gøre så zeppelinen ikke flyver for højt op, som du sikkert kan droppe når du har brug for det, Hvad skal du bruge?",
+      "question": "3rd Bulg question: Du skal finde en måde at gøre så zeppelinen ikke flyver for højt op, som du sikkert kan droppe når du har brug for det, Hvad skal du bruge?",
       "answers": ["Sten", "Vand", "Sand"],
       "responses": [
         "Incorrect that is to dangerous to throw out.",

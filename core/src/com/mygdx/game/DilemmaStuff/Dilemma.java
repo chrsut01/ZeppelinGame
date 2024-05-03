@@ -18,6 +18,11 @@ public class Dilemma implements Serializable{
     public List<String> getAnswers() {
         return answers;
     }
+
+   public List<String> getResponses() { return responses; }
+
+    public int getCorrectAnswerIndex() { return correctAnswerIndex; }
+
     public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
@@ -25,9 +30,6 @@ public class Dilemma implements Serializable{
     public void setQuestion(String question) {
         this.question = question;
     }
-
-   public List<String> getResponses() { return responses; }
-
     public void setResponses(List<String> responses) {
         this.responses = responses;
     }
@@ -36,9 +38,5 @@ public class Dilemma implements Serializable{
     }
 
     public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex;
-    }
-
-    public int getCorrectAnswerIndex() {
-        return correctAnswerIndex;
     }
 }

@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import com.mygdx.game.SideScrollerStuff.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.SideScrollerScreen;
 
 import java.util.List;
 
