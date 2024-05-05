@@ -68,7 +68,9 @@ public class SideScrollerScreen extends ScreenAdapter {
 
 
 
-    public SideScrollerScreen (String tilemapFileName){
+    public SideScrollerScreen (String tilemapFileName, ZeppelinGame game){
+        System.out.println("SideScrollerScreen constructor called");
+        this.game = game;
         this.tilemapFileName = tilemapFileName;
         this.batch = new SpriteBatch();
         this.world = new World(new Vector2(0,0), false);
@@ -78,7 +80,7 @@ public class SideScrollerScreen extends ScreenAdapter {
 
        // System.out.println("SideScrollerScreen initiated");
     }
-    public SideScrollerScreen(){
+ /*   public SideScrollerScreen(){
         this("default_tilemap.tmx");
         //   this.mapImage = new Texture("map-to-afrika.png");
         // Calculate the maximum size based on the desired maximum width or height
@@ -86,9 +88,11 @@ public class SideScrollerScreen extends ScreenAdapter {
     //    float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
         // Calculate the scaling factor based on the maximum width or height
      //   mapWidth = mapHeight / aspectRatio;
-    }
+    }*/
+
 
     public void initialize() {
+        System.out.println("SideScrollerScreen initialize method called");
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.camera.update();
@@ -96,7 +100,7 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-        System.out.println("SideScrollerScreen: Tilemap loaded and setMap() called.");
+
     }
 
     public void render(float delta) {
@@ -192,7 +196,10 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
         if (zeppelin.getX() > 1200) {
+            System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
+            game.incrementCurrentLevelCount();
             game.progressToNextLevel();
+            //dispose();
         }
     }
 
@@ -233,6 +240,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         plane = new Plane(x, y, yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
+
     }
 
     public void spawnStormCloud() {
@@ -262,9 +270,13 @@ public class SideScrollerScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.dispose();
         world.dispose();
         box2DDebugRenderer.dispose();
+
         batch.dispose();
         planes.clear();
         stormClouds.clear();
-        sideScrollerScreen.dispose();
+        planes.forEach(Plane::dispose);
+        stormClouds.forEach(StormCloud::dispose);
+        zeppelin.dispose();
+       // sideScrollerScreen.dispose();
     }
 }

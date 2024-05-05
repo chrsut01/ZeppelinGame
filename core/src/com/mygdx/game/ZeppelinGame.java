@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,10 +12,7 @@ import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
-import com.mygdx.game.SideScrollers.SideScrollerBulg;
-import com.mygdx.game.SideScrollers.SideScrollerEgypt;
-import com.mygdx.game.SideScrollers.SideScrollerMed;
-import com.mygdx.game.SideScrollers.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +28,11 @@ public class ZeppelinGame extends Game {
     private ClosingScreen closingScreen;
     private DilemmaScreen dilemmaScreen;
 
-    //  public int playerProgress = 0;
-
     private List<SideScrollerScreen> sideScrollers;
     private OrthographicCamera camera;
     private TileMapHelper tileMapHelper;
+    private Screen currentScreen;
+    private boolean isProgressingToNextLevel = false;
 
         private static ZeppelinGame instance;
         private ZeppelinGame() {
@@ -45,12 +43,13 @@ public class ZeppelinGame extends Game {
             if (instance == null) {
                 instance = new ZeppelinGame();
             }
+            System.out.println("ZeppelinGame: getInstance() called. Returning instance: " + instance.toString());
             return instance;
         }
 
     @Override
     public void create() {
-        System.out.println("currentLevelCount at start of game: " + currentLevelCount);
+        System.out.println("ZeppelinGame create() called. currentLevelCount at start of game: " + currentLevelCount);
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
 
@@ -62,49 +61,90 @@ public class ZeppelinGame extends Game {
         List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
         List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
+        List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
-        SideScrollerBulg sideScrollerBulg = new SideScrollerBulg();
-        SideScrollerScreen sideScrollerMed = new SideScrollerMed();
-        SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt();
-
+        SideScrollerBulg sideScrollerBulg = new SideScrollerBulg(this);
+        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+        SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
+        SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
         GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
-        System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
+       // System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
         GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
-        System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
+       // System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
-        System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
+       // System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
+        GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
         gameLevels.add(gameLevelBulg);
         gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
+        gameLevels.add(gameLevelSudan);
 
-        if (currentLevelCount == 0) {
-            setScreen(introScreen);
-        }
+        setScreen(introScreen);
+
     }
+ /*   public void progressToNextLevel() {
+        System.out.println("ZeppelinGame: progressToNextLevel method called: currentLevelCount = " + currentLevelCount);
+
+        if (currentLevelCount < gameLevels.size()) {
+            GameLevel currentLevel = gameLevels.get(currentLevelCount);
+            Dilemma nextDilemma = currentLevel.getNextDilemma();
+            if (nextDilemma != null) {
+                DilemmaScreen dilemmaScreen = currentLevel.getCurrentDilemmaScreen();
+                if (dilemmaScreen == null) {
+                    dilemmaScreen = DilemmaScreen.getInstance(this, nextDilemma);
+                 //   dilemmaScreen.initializeUI();
+                    currentLevel.setCurrentDilemmaScreen(dilemmaScreen);
+                } else {
+                    dilemmaScreen.setDilemma(nextDilemma);
+                }
+                setScreen(dilemmaScreen);
+            } else {
+                SideScrollerScreen sideScrollerScreen = currentLevel.getSideScroller();
+                setScreen(sideScrollerScreen);
+                currentLevelCount++;
+            }
+        } else {
+            setScreen(closingScreen);
+        }
+    }*/
 
     // Method for progressing to the next gameLevel until the player has completed all levels, then closingScreen
     public void progressToNextLevel() {
-        System.out.println("ZeppelinGame: progressToNextLevel: currentLevelCount = " + currentLevelCount);
-        // Check if playerProgress exceeds the bounds of gameLevels
+        if (!isProgressingToNextLevel) {
+            // Set the flag to indicate that progression is in progress
+            isProgressingToNextLevel = true;
+        System.out.println("ZeppelinGame: progressToNextLevel method called: currentLevelCount = " + currentLevelCount);
         if (currentLevelCount < gameLevels.size()) {
-            System.out.println("ZeppelinGame: gameLevels.size() = " + gameLevels.size());
-            // Get the current level based on playerProgress
             currentLevel = gameLevels.get(currentLevelCount);
-            System.out.println("ZeppelinGame: progressToNextLevel(): currentLevel: " + currentLevel.toString());
-           // dilemmaScreen = new DilemmaScreen(this, currentLevel.getNextDilemma());
-            dilemmaScreen = new DilemmaScreen(this, currentLevel.getNextDilemma());
-            currentLevelCount++;
-            System.out.println("progressToNextLevel: currentLevelCount just incremented to = " + currentLevelCount);
-            setScreen(dilemmaScreen);
-        } else {
-            // If playerProgress exceeds the bounds, show the closing screen
-            setScreen(closingScreen);
+            System.out.println("ZeppelinGame: progressToNextLevel: currentLevel = " + currentLevel.toString());
+            dilemmaScreen = DilemmaScreen.getInstance(this, currentLevel.getNextDilemma());
+            switchScreen(dilemmaScreen);
+            isProgressingToNextLevel = false;
         }
+        } else {
+            switchScreen(closingScreen);
+        }
+    }
+    public void incrementCurrentLevelCount() {
+        currentLevelCount++;
+        System.out.println("ZeppelinGame: incrementCurrentLevelCount: currentLevelCount just incremented to = " + currentLevelCount);
+    }
+    public GameLevel getCurrentLevel() {
+        System.out.println("ZeppelinGame: getCurrentLevel() yields: " + currentLevel.toString());
+        return currentLevel;
+    }
+
+    public void switchScreen(Screen newScreen) {
+        if(currentScreen != null) {
+            currentScreen.dispose();
+        }
+        setScreen(newScreen);
+        currentScreen = newScreen;
     }
 
     @Override
@@ -117,18 +157,5 @@ public class ZeppelinGame extends Game {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit(); // Exit the game if the ESCAPE key is pressed
         }
-    }
-
-    public GameLevel getCurrentLevel() {
-    /*    if (currentLevelCount >= 0 && currentLevelCount < gameLevels.size()) {
-            return gameLevels.get(currentLevelCount);
-        } else {
-            return gameLevels.isEmpty() ? null : gameLevels.get(0);
-        }*/
-        // Previous version of the method
-        System.out.println("ZeppelinGame: getCurrentLevel() yields: " + currentLevel.toString());
-        // Ensure that playerProgress does not exceed the bounds of the levels list
-        int index = Math.min(currentLevelCount, gameLevels.size() - 1);
-        return gameLevels.get(index);
     }
 }

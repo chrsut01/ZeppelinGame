@@ -17,7 +17,6 @@ import com.mygdx.game.SideScrollers.SideScrollerScreen;
 import static com.mygdx.game.Constants.PPM;
 
 public class TileMapHelper {
-
     private SideScrollerScreen gameScreen;
     private GameLevel gameLevel;
     private TiledMap tiledMap;
@@ -32,7 +31,7 @@ public class TileMapHelper {
     public OrthogonalTiledMapRenderer setupMap() {
         tiledMap = new TmxMapLoader().load(sideScrollerScreen.getTilemapFileName());
 
-        System.out.println("TileMapHelper: tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
+        System.out.println("TileMapHelper: setupMap method called: tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
 
     /*    parseMapObjects(tiledMap.getLayers().get("Foreground").getObjects());
         parseMapObjects(tiledMap.getLayers().get("Midground").getObjects());

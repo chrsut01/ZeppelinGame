@@ -46,4 +46,7 @@ public class StormCloud extends Rectangle {
         zeppelin.triggerLightningStrike();
     }*/
 
+    public void dispose() {
+        stormCloudImage.dispose();
+    }
 }

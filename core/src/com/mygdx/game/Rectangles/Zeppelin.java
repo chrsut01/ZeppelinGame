@@ -13,8 +13,8 @@ import com.mygdx.game.GameConfig;
 
 public class Zeppelin extends Rectangle {
     private static Zeppelin instance;
-    private static final float width = 783/2;
-    private static final float height = 109/2;
+    private static final float width = 783/2f;
+    private static final float height = 109/2f;
     private static final float MAX_SPEED = 80; // Maximum speed of the zeppelin
     private static final float ACCELERATION = 55f; // Acceleration factor
     private static final float DECELERATION = 20f; // Deceleration factor
@@ -122,5 +122,6 @@ public class Zeppelin extends Rectangle {
     public Rectangle getBoundingRectangle() {
         return new Rectangle(zeppelinSprite.getX(), zeppelinSprite.getY(), zeppelinSprite.getWidth(), zeppelinSprite.getHeight());
     }
+
 }
 

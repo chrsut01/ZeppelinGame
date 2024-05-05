@@ -24,26 +24,29 @@ import com.mygdx.game.ZeppelinGame;
 
 
 public class DilemmaScreen extends ScreenAdapter {
+    private static DilemmaScreen instance;
     private ZeppelinGame game;
     private GameLevel gameLevel;
     protected Dilemma dilemma;
-    private SideScrollerScreen sideScroller;
+   // private SideScrollerScreen sideScroller;
 
     private Stage stage;
-    private OrthographicCamera camera;
-    private Box2DDebugRenderer box2DDebugRenderer;
-    private World world;
 
-    private TextField questionTextField;
     private Skin skin;
     private TextButton[] answerButtons;
     private TextField responseTextField;
     private float scaleX = 2.0f;
     private float scaleY = 2.0f;
 
+    private Label questionLabel;
     private TextureRegionDrawable background;
+    private OrthographicCamera camera;
+    private Box2DDebugRenderer box2DDebugRenderer;
+    private World world;
+    private TextField questionTextField;
 
-    public DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
+    private DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
+        System.out.println("DilemmaScreen: constructor called");
         this.game = game;
         this.gameLevel = game.getCurrentLevel();
         this.dilemma = dilemma;
@@ -51,10 +54,17 @@ public class DilemmaScreen extends ScreenAdapter {
         this.skin = new Skin();
         initializeUI();
     }
+    public static DilemmaScreen getInstance(ZeppelinGame game, Dilemma dilemma) {
+        if (instance == null) {
+            instance = new DilemmaScreen(game, dilemma);
+        }
+        return instance;
+    }
 
     public void initializeUI(){
         System.out.println("DilemmaScreen: initializeUI() method called. gameLevel: " + gameLevel);
 
+        stage.clear();
         Gdx.input.setInputProcessor(stage);
 
         BitmapFont font = new BitmapFont();
@@ -83,6 +93,7 @@ public class DilemmaScreen extends ScreenAdapter {
 
         answerButtons = new TextButton[dilemma.getAnswers().size()];
         float buttonY = Gdx.graphics.getHeight() - 280; // Initial Y position for buttons
+
         for (int i = 0; i < answerButtons.length; i++) {
             String answer = dilemma.getAnswers().get(i);
             int index = i; // Declare final variable here
@@ -92,19 +103,19 @@ public class DilemmaScreen extends ScreenAdapter {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     responseTextField.setText(dilemma.getResponses().get(index));
-
+                    System.out.println("Answer button clicked");
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
                         System.out.println("Correct answer selected");
                         Dilemma nextDilemma = gameLevel.getNextDilemma();
                         if (nextDilemma != null) {
-                            System.out.println("nextDilemma != null");
+                            System.out.println("nextDilemma != null and index = " + nextDilemma.getQuestion());
                             Timer.schedule(new Timer.Task() {
                                 @Override
                                 public void run() {
                                     System.out.println("not-null Timer task run()");
                                     setNextDilemma(nextDilemma);
-                                    System.out.println("DilemmaScreen, correct answer goToNextDilemma(nextDilemma) called");
+                                  //  System.out.println("DilemmaScreen, correct answer goToNextDilemma(nextDilemma) called");
                                 }
                             }, 0.5f);
                         } else {
@@ -113,9 +124,8 @@ public class DilemmaScreen extends ScreenAdapter {
                                 public void run() {
                                     System.out.println("null Timer task run()");
                                     Gdx.app.postRunnable(() ->  setSideScroller());
-                                    System.out.println("DilemmaScreen, correct answer goToSideScroller() called");
                                     }
-                                }, 0.5f);
+                                }, 0.0f);
                             }
                         }
                     }
@@ -131,21 +141,20 @@ public class DilemmaScreen extends ScreenAdapter {
         stage.addActor(responseTextField);
     }
 
-    private void setNextDilemma(Dilemma nextDilemma) {
-       // DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
-        DilemmaScreen nextDilemmaScreen = new DilemmaScreen(game, nextDilemma);
 
-        System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
-        game.setScreen(nextDilemmaScreen);
+    private void setNextDilemma(Dilemma nextDilemma) {
+        System.out.println("DilemmaScreen: setNextDilemma() called.");
+        this.dilemma = nextDilemma;
+        initializeUI();
     }
 
+
     private void setSideScroller() {
-        System.out.println("DilemmaScreen: getNextDilemma(): NULL");
+        System.out.println("DilemmaScreen: setSideScroller() called" + gameLevel.getSideScroller());
         SideScrollerScreen sideScroller = gameLevel.getSideScroller();
-       // dispose();
-        sideScroller.show();
+        //sideScroller.show();
         sideScroller.initialize();
-        game.setScreen(sideScroller);
+        game.switchScreen(sideScroller);
     }
 
     @Override

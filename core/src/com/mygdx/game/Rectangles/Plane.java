@@ -49,4 +49,8 @@ public class Plane {
         planeSprite.setPosition(x, y);
         planeSprite.draw(batch);
     }
+    public void dispose() {
+        planeImage.dispose();
+        planeFlyingSound.dispose();
+    }
 }

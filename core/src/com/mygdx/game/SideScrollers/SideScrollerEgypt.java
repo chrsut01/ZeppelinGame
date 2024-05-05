@@ -2,6 +2,7 @@ package com.mygdx.game.SideScrollers;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
+import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerEgypt extends SideScrollerScreen {
     private static final String tilemapFileName = "maps/ZepMap1.tmx";
@@ -9,13 +10,13 @@ public class SideScrollerEgypt extends SideScrollerScreen {
     public Zeppelin zeppelin;
     private World world;
 
-    public SideScrollerEgypt() {
-        super(tilemapFileName);
+    public SideScrollerEgypt(ZeppelinGame game) {
+        super(tilemapFileName, game);
     }
 
     public void initialize() {
         this.zeppelin = Zeppelin.getInstance();
-        System.out.println("SideScrollerMed initialize() called.");
+        System.out.println("SideScrollerEgypt initialize() called.");
         super.initialize();
     }
 
@@ -50,7 +51,7 @@ public class SideScrollerEgypt extends SideScrollerScreen {
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerMed show() method called.");
+        System.out.println("SideScrollerEgypt show() method called.");
     }
 
     public World getWorld() {

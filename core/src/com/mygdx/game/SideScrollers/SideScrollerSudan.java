@@ -5,20 +5,21 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
-public class SideScrollerMed extends SideScrollerScreen {
+public class SideScrollerSudan extends SideScrollerScreen {
+
     private static final String tilemapFileName = "maps/ZepMap1.tmx";
 
     public Zeppelin zeppelin;
     private World world;
     private SpriteBatch batch;
 
-    public SideScrollerMed(ZeppelinGame game) {
+    public SideScrollerSudan(ZeppelinGame game) {
         super(tilemapFileName, game);
     }
 
     public void initialize() {
         this.zeppelin = Zeppelin.getInstance();
-        System.out.println("SideScrollerMed initialize() called.");
+        System.out.println("SideScrollerSudan initialize() called.");
         super.initialize();
     }
 
@@ -50,10 +51,11 @@ public class SideScrollerMed extends SideScrollerScreen {
     public String getTilemapFileName() {
         return tilemapFileName;
     }
+
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerMed show() method called.");
+        System.out.println("SideScrollerBulg show() method called.");
     }
 
     public World getWorld() {

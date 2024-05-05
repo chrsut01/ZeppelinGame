@@ -3,20 +3,21 @@ package com.mygdx.game.SideScrollers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
+import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerBulg extends SideScrollerScreen {
     private static final String tilemapFileName = "maps/ZepMap1.tmx";
-
+    //private ZeppelinGame game;
     public Zeppelin zeppelin;
     private World world;
     private SpriteBatch batch;
 
-    public SideScrollerBulg() {
-        super(tilemapFileName);
+    public SideScrollerBulg(ZeppelinGame game) {
+        super(tilemapFileName, game);
     }
 
     public void initialize() {
-        this.zeppelin = Zeppelin.getInstance();
+        //this.zeppelin = Zeppelin.getInstance();
         System.out.println("SideScrollerBulg initialize() called.");
         super.initialize();
     }
