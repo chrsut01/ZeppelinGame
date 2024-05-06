@@ -11,7 +11,7 @@ public class GameLevel {
     ZeppelinGame game;
     private SideScrollerScreen sideScrollerScreen;
     private Dilemma dilemma;
-    private List<Dilemma> dilemmas;
+    private final List<Dilemma> dilemmas;
     private int currentDilemmaIndex;
     private DilemmaScreen dilemmaScreen;
     private DilemmaScreen currentDilemmaScreen;

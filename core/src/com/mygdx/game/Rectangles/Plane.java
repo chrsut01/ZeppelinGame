@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Plane {
 
-    private Texture planeImage;
+    private final Texture planeImage;
     public Sound planeFlyingSound;
     public static final int width = 44;
     public static final int height = 44;
     //private static float x = GameConfig.SCREEN_WIDTH;
     private float x;
     private float y;
-    private int yAngle;
+    private final int yAngle;
     private final Sprite planeSprite;
 
 

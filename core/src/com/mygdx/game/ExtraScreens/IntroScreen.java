@@ -19,8 +19,8 @@ public class IntroScreen extends ScreenAdapter {
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
-    private float backgroundX = 0;
-    private float backgroundY = 0;
+    private final float backgroundX = 0;
+    private final float backgroundY = 0;
     private boolean isSpacePressed = false;
     public IntroScreen(ZeppelinGame game) {
             this.game = game;

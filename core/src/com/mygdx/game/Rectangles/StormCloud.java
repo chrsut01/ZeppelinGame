@@ -8,10 +8,10 @@ import com.badlogic.gdx.math.Vector2;
 
 public class StormCloud extends Rectangle {
     private Vector2 position;
-    private Texture stormCloudImage;
+    private final Texture stormCloudImage;
     private float radius;
-    private float width = 3364 * 0.4f; // 3364 (orig pixels)
-    private float height = 1564 * 0.4f; //1564 (orig pixels)
+    private final float width = 3364 * 0.4f; // 3364 (orig pixels)
+    private final float height = 1564 * 0.4f; //1564 (orig pixels)
 
     private final Sprite stormCloudSprite;
 

@@ -25,18 +25,18 @@ import com.mygdx.game.ZeppelinGame;
 
 public class DilemmaScreen extends ScreenAdapter {
     private static DilemmaScreen instance;
-    private ZeppelinGame game;
-    private GameLevel gameLevel;
+    private final ZeppelinGame game;
+    private final GameLevel gameLevel;
     protected Dilemma dilemma;
    // private SideScrollerScreen sideScroller;
 
-    private Stage stage;
+    private final Stage stage;
 
-    private Skin skin;
+    private final Skin skin;
     private TextButton[] answerButtons;
     private TextField responseTextField;
-    private float scaleX = 2.0f;
-    private float scaleY = 2.0f;
+    private final float scaleX = 2.0f;
+    private final float scaleY = 2.0f;
 
     private Label questionLabel;
     private TextureRegionDrawable background;

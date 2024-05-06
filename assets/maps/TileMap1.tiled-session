@@ -1,0 +1,67 @@
+{
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "C:/Users/chris/Downloads/Journey to Africa/Images.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/chris/Downloads/ZepEgypt..tmx": {
+            "scale": 0.12119485294117646,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 3919.3083573487033,
+                "y": 1283.0577885636278
+            }
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2520,
+                "y": 1788
+            }
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx#images": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "Journey to Africa/Images.tsx": {
+            "scaleInDock": 1
+        },
+        "ZepEgypt.tmx": {
+            "scale": 0.12,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 3766.666666666667,
+                "y": -237.5
+            }
+        },
+        "ZepEgypt.tmx#images": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "ZepMap1.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 3992,
+                "y": 1016
+            }
+        },
+        "images.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        }
+    },
+    "last.externalTilesetPath": "C:/Users/chris/IdeaProjects/LibGDX/ZeppelinGame/assets/maps",
+    "openFiles": [
+    ],
+    "project": "TileMap1.tiled-project",
+    "recentFiles": [
+        "C:/Users/chris/Downloads/ZepEgypt..tmx",
+        "ZepMap1.tmx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)"
+}

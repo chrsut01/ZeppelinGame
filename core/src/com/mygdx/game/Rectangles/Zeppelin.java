@@ -21,7 +21,7 @@ public class Zeppelin extends Rectangle {
     private static final float MIN_SPEED = 1; // Minimum speed before stopping
 
     private float ySpeed = 0;
-    private float xSpeed = 80;
+    private final float xSpeed = 80;
 
     private Sprite zeppelinSprite;
     private Sound engineSound;

@@ -21,7 +21,7 @@ public class TileMapHelper {
     private GameLevel gameLevel;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
-    private SideScrollerScreen sideScrollerScreen;
+    private final SideScrollerScreen sideScrollerScreen;
 
     public TileMapHelper(SideScrollerScreen sideScrollerScreen) {
        // this.gameScreen = gameScreen;

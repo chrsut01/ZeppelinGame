@@ -43,7 +43,7 @@ public class ZeppelinGame extends Game {
             if (instance == null) {
                 instance = new ZeppelinGame();
             }
-            System.out.println("ZeppelinGame: getInstance() called. Returning instance: " + instance.toString());
+            System.out.println("ZeppelinGame: getInstance() called. Returning instance: " + instance);
             return instance;
         }
 

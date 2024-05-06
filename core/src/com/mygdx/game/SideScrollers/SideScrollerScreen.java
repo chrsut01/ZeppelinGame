@@ -2,6 +2,7 @@ package com.mygdx.game.SideScrollers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -29,26 +30,26 @@ import static com.badlogic.gdx.math.MathUtils.random;
 import static com.mygdx.game.Constants.PPM;
 
 public class SideScrollerScreen extends ScreenAdapter {
-    private String tilemapFileName;
+    private final String tilemapFileName;
     private TileMapHelper tileMapHelper;
     protected SideScrollerScreen sideScrollerScreen;
-    private ZeppelinGame game;
+    private final ZeppelinGame game;
     private GameLevel gameLevel;
     private Zeppelin zeppelin;
     private Plane plane;
-    private List<Plane> planes;
-    private World world;
-    private Random random;
+    private final List<Plane> planes;
+    private final World world;
+    private final Random random;
     private static final int MIN_Y_ANGLE = 0;
     private static final int MAX_Y_ANGLE = 60;
     private OrthographicCamera camera;
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
 
     private Stage stage;
     private Box2DDebugRenderer box2DDebugRenderer;
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-
+    private Screen introScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
 
@@ -59,7 +60,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     float stormCloudSpawnTimer;
     public static final float MIN_StormCloud_SPAWN_TIME = 5f;
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
-    private ArrayList<StormCloud> stormClouds;
+    private final ArrayList<StormCloud> stormClouds;
 
  //   private Texture mapImage;
 
@@ -199,6 +200,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
             game.incrementCurrentLevelCount();
             game.progressToNextLevel();
+           // game.switchScreen(introScreen);
             //dispose();
         }
     }
