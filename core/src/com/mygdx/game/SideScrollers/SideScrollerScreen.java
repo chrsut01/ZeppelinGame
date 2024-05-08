@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.GameConfig;
 import com.mygdx.game.GameLevel;
 import com.mygdx.game.Rectangles.Bullet;
@@ -35,6 +37,10 @@ import static com.mygdx.game.Constants.PPM;
 
 public class SideScrollerScreen extends ScreenAdapter {
     private final String tilemapFileName;
+    private HealthBarRenderer healthBarRenderer;
+    HealthBar healthBar;
+    private Viewport uiViewport;
+    private SpriteBatch uiBatch;
     private TileMapHelper tileMapHelper;
     protected SideScrollerScreen sideScrollerScreen;
     private final ZeppelinGame game;
@@ -44,7 +50,6 @@ public class SideScrollerScreen extends ScreenAdapter {
     private final List<Plane> planes;
     private Bullet bullet;
     // 250 milliseconds (4 bullets per second)
-
 
 
     private final World world;
@@ -72,22 +77,26 @@ public class SideScrollerScreen extends ScreenAdapter {
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
     private final ArrayList<StormCloud> stormClouds;
 
- //   private Texture mapImage;
+    //   private Texture mapImage;
 
-  //  private float mapWidth;
-  //  private float mapHeight;
+    //  private float mapWidth;
+    //  private float mapHeight;
 
 
-
-    public SideScrollerScreen (String tilemapFileName, ZeppelinGame game){
+    public SideScrollerScreen(String tilemapFileName, ZeppelinGame game) {
         System.out.println("SideScrollerScreen constructor called");
         this.game = game;
         this.tilemapFileName = tilemapFileName;
         this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0,0), false);
+        this.world = new World(new Vector2(0, 0), false);
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
+        this.healthBar = new HealthBar(100);
+        this.healthBarRenderer = new HealthBarRenderer(healthBar);
+        // Create a Viewport for UI elements
+        this.uiViewport = new FitViewport(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+        this.uiBatch = new SpriteBatch();
     }
 
     public void initialize() {
@@ -96,6 +105,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.camera.update();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
+        healthBar = new HealthBar(100); // Initialize health bar with maximum health
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
@@ -103,11 +113,16 @@ public class SideScrollerScreen extends ScreenAdapter {
 
     public void render(float delta) {
         this.update(delta);
-        Gdx.gl.glClearColor(0, 0, 0, 0);  // makes screen transparent
+        Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         orthogonalTiledMapRenderer.setView(camera);
         orthogonalTiledMapRenderer.render();
+
+        float viewportX = camera.position.x - camera.viewportWidth / 2;
+        float viewportY = camera.position.y - camera.viewportHeight / 2;
+        float viewportWidth = camera.viewportWidth;
+        float viewportHeight = camera.viewportHeight;
 
         batch.begin();
 
@@ -125,21 +140,19 @@ public class SideScrollerScreen extends ScreenAdapter {
             bullet.render(batch);
         }
 
-      /*  for (Plane plane : planes) {
-            for (Bullet bullet : plane.bullets) {
-                bullet.render(batch);
-            }
-        }*/
-
-        // Draw the map at the bottom left corner of the screen
         float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
         float mapY = camera.position.y - camera.viewportHeight / 2 + 20;
-       // batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
 
         batch.end();
 
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
+        uiBatch.setProjectionMatrix(camera.combined); // Set UI batch projection matrix
+        uiBatch.begin();
+        healthBarRenderer.render(uiBatch, viewportX + viewportWidth - 120, viewportY + viewportHeight - 20);
+        uiBatch.end();
     }
+
 
     // This may not be needed.
     public void update(float delta) {
@@ -172,7 +185,10 @@ public class SideScrollerScreen extends ScreenAdapter {
             Plane plane = iter.next();
             if (plane.overlaps(zeppelin)) {
                 // Handle collision between plane and zeppelin
-                // planesHit++;
+                // Decrease health of the zeppelin
+                HealthBar.decreaseHealth(25); // Assuming each plane hit decreases health by 25 (adjust as needed)
+
+                // Play sound effects
                 plane.planeCrashSound.play();
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -180,11 +196,20 @@ public class SideScrollerScreen extends ScreenAdapter {
                         plane.planeFlyingSound.stop();
                     }
                 }, 0.25F); // 1 second delay
+
+                // Remove the plane
                 iter.remove();
+
+                // Check if zeppelin's health is 0
+                if (HealthBar.getCurrentHealth() <= 0) {
+                    // Zeppelin health is 0, end the game or take appropriate action
+                    sideScrollerScreen.closingScreen.show();
+                }
             }
         }
 
-        // Check for collision between zeppelin and polygon objects (not planes!) in tilemap
+
+    // Check for collision between zeppelin and polygon objects (not planes!) in tilemap
         for (PolygonMapObject polygonMapObject : tileMapHelper.getStaticBody()) {
             if (tileMapHelper.overlapsPolygon(polygonMapObject, zeppelin)) {
                 // plane.planeCrashSound.play();
@@ -228,6 +253,17 @@ public class SideScrollerScreen extends ScreenAdapter {
            // dispose();
         }
     }
+
+    @Override
+    public void resize(int width, int height) {
+        // Update the UI viewport to match the new window size
+        uiViewport.update(width, height, true);
+
+        // Center the camera within the viewport
+        camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        camera.update();
+    }
+
 
     public void cameraUpdate() {
         int mapWidth = GameConfig.TILEMAP_WIDTH;
