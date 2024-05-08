@@ -5,7 +5,7 @@ import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerEgypt extends SideScrollerScreen {
-    private static final String tilemapFileName = "maps/ZepMap1.tmx";
+    private static final String tilemapFileName = "maps/MapMed.tmx";
 
     public Zeppelin zeppelin;
     private World world;

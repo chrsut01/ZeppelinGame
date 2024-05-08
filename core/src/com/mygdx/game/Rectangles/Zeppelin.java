@@ -36,6 +36,10 @@ public class Zeppelin extends Rectangle {
         return instance;
     }
 
+    public static void setInstance(Zeppelin zepInstance) {
+        instance = zepInstance;
+    }
+
     private void init() {
         System.out.println("Zeppelin init() called.");
         // Load textures and sounds

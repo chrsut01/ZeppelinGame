@@ -7,6 +7,22 @@
         "C:/Users/chris/Downloads/Journey to Africa/Images.tsx": {
             "scaleInDock": 1
         },
+        "C:/Users/chris/Downloads/MapEgypt.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 3122,
+                "y": 2469.6666666666665
+            }
+        },
+        "C:/Users/chris/Downloads/MapTurkey.tmx": {
+            "scale": 0.12361874999999999,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 4004.2469285605953,
+                "y": 1282.1679559128372
+            }
+        },
         "C:/Users/chris/Downloads/ZepEgypt..tmx": {
             "scale": 0.12119485294117646,
             "selectedLayer": 3,
@@ -15,20 +31,71 @@
                 "y": 1283.0577885636278
             }
         },
-        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx": {
-            "scale": 0.125,
+        "C:/Users/chris/Downloads/ZepTurkey..tmx": {
+            "expandedObjectLayers": [
+                4
+            ],
+            "scale": 0.12109097587853558,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2520,
-                "y": 1788
+                "x": 3699.697659133424,
+                "y": 2258.632387886142
+            }
+        },
+        "C:/Users/chris/Downloads/images2.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps2/ZepMap2.tmx": {
+            "scale": 0.07726171875,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 6393.852065321806,
+                "y": 951.3119975731834
+            }
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps2/ground_tiles.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps2/zeppelin.tsx": {
+            "scaleInDock": 1
+        },
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx": {
+            "scale": 0.125,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 3680,
+                "y": 2748
             }
         },
         "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx#images": {
             "dynamicWrapping": false,
             "scaleInDock": 1
         },
+        "C:/Users/chris/IdeaProjects/testPlatformGame2/assets/maps/map0.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.7726171875,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 955.1949036857274,
+                "y": 447.1813539612721
+            }
+        },
+        "C:/Users/chris/IdeaProjects/testPlatformGame2/assets/maps/tiles.tsx": {
+            "scaleInDock": 1
+        },
         "Journey to Africa/Images.tsx": {
             "scaleInDock": 1
+        },
+        "MapTurkey.tmx": {
+            "scale": 0.0625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 416,
+                "y": 1968
+            }
         },
         "ZepEgypt.tmx": {
             "scale": 0.12,
@@ -42,12 +109,32 @@
             "dynamicWrapping": false,
             "scaleInDock": 1
         },
+        "ZepEgypt/Journey to Africa/Images.tsx": {
+            "scaleInDock": 1
+        },
+        "ZepEgypt/ZepEgypt.tmx": {
+            "expandedObjectLayers": [
+                5,
+                4
+            ],
+            "scale": 0.125,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 3504,
+                "y": 1464
+            }
+        },
+        "ZepEgypt/images.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "ZepMap1.tmx": {
             "scale": 0.125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 3992,
-                "y": 1016
+                "x": 3976,
+                "y": 1492
             }
         },
         "images.tsx": {
@@ -55,13 +142,26 @@
             "scaleInDock": 1
         }
     },
-    "last.externalTilesetPath": "C:/Users/chris/IdeaProjects/LibGDX/ZeppelinGame/assets/maps",
+    "last.exportedFilePath": "C:/Users/chris/IdeaProjects/LibGDX/ZeppelinGame/assets/maps",
+    "last.externalTilesetPath": "C:/Users/chris/IdeaProjects/LibGDX/ZeppelinGame/assets/maps/ZepEgypt",
+    "last.imagePath": "C:/Users/chris/IdeaProjects/LibGDX/ZeppelinGame/assets/maps/ZepEgypt",
+    "lastUsedTilesetExportFilter": "All Files (*)",
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
     ],
     "project": "TileMap1.tiled-project",
     "recentFiles": [
-        "C:/Users/chris/Downloads/ZepEgypt..tmx",
-        "ZepMap1.tmx"
+        "MapTurkey.tmx",
+        "C:/Users/chris/Downloads/ZepTurkey..tmx",
+        "C:/Users/chris/Downloads/images2.tsx",
+        "ZepEgypt/ZepEgypt.tmx",
+        "ZepEgypt/images.tsx",
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps3/ZepMap3.tmx",
+        "ZepMap1.tmx",
+        "C:/Users/chris/IdeaProjects/LibGDX/PlatformGame1/assets/maps2/ZepMap2.tmx",
+        "C:/Users/chris/IdeaProjects/testPlatformGame2/assets/maps/map0.tmx",
+        "C:/Users/chris/Downloads/ZepEgypt..tmx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)"
 }

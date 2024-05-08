@@ -7,6 +7,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -14,8 +15,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.GameConfig;
 import com.mygdx.game.GameLevel;
+import com.mygdx.game.Rectangles.Bullet;
 import com.mygdx.game.Rectangles.Plane;
 import com.mygdx.game.Rectangles.StormCloud;
 import com.mygdx.game.Rectangles.Zeppelin;
@@ -23,6 +26,7 @@ import com.mygdx.game.TileMapHelper;
 import com.mygdx.game.ZeppelinGame;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -38,6 +42,11 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Zeppelin zeppelin;
     private Plane plane;
     private final List<Plane> planes;
+    private Bullet bullet;
+    // 250 milliseconds (4 bullets per second)
+
+
+
     private final World world;
     private final Random random;
     private static final int MIN_Y_ANGLE = 0;
@@ -50,6 +59,7 @@ public class SideScrollerScreen extends ScreenAdapter {
 
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private Screen introScreen;
+    private Screen closingScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
 
@@ -78,19 +88,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
-
-       // System.out.println("SideScrollerScreen initiated");
     }
- /*   public SideScrollerScreen(){
-        this("default_tilemap.tmx");
-        //   this.mapImage = new Texture("map-to-afrika.png");
-        // Calculate the maximum size based on the desired maximum width or height
-     //   mapHeight = Gdx.graphics.getHeight() * 0.3f;
-    //    float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
-        // Calculate the scaling factor based on the maximum width or height
-     //   mapWidth = mapHeight / aspectRatio;
-    }*/
-
 
     public void initialize() {
         System.out.println("SideScrollerScreen initialize method called");
@@ -101,7 +99,6 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-
     }
 
     public void render(float delta) {
@@ -114,15 +111,25 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         batch.begin();
 
+        zeppelin.render(batch);
+
         for (Plane plane : planes) {
             plane.render(batch);
         }
 
-        zeppelin.render(batch);
-
         for (StormCloud stormCloud : stormClouds) {
             stormCloud.render(batch);
         }
+
+        for (Bullet bullet : plane.bullets) {
+            bullet.render(batch);
+        }
+
+      /*  for (Plane plane : planes) {
+            for (Bullet bullet : plane.bullets) {
+                bullet.render(batch);
+            }
+        }*/
 
         // Draw the map at the bottom left corner of the screen
         float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
@@ -132,33 +139,11 @@ public class SideScrollerScreen extends ScreenAdapter {
         batch.end();
 
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
-
-
-        // Check for collision between player and polygon objects
-      /*  for (RectangleMapObject mapObject : tileMapHelper.getDilemmaObjects()) {
-            Rectangle rectangle = mapObject.getRectangle();
-            String polygonName = mapObject.getName();
-
-            if (zeppelin.getBoundingRectangle().overlaps(tileMapHelper.getDilemmaRectangle())) {
-                if (!dilemmaTriggered) {
-                    // Initialize the dilemma object
-                    dilemma = new DilemmaScreen();
-
-                    // Add the dilemma object to the stage for rendering
-                    dilemma.addToStage(new Actor());
-
-                    // Show the dilemma screen
-                    dilemma.showDilemmaScreen();
-
-                    dilemmaTriggered = true; // Mark dilemma as triggered to prevent repeated triggering
-                }
-            }
-        }*/
     }
 
     // This may not be needed.
     public void update(float delta) {
-        world.step(1/60f,6,2);
+        world.step(1 / 60f, 6, 2);
         zeppelin.update();
         cameraUpdate();
 
@@ -182,26 +167,65 @@ public class SideScrollerScreen extends ScreenAdapter {
             plane.updatePosition(delta);
         }
 
-        // Check if it's time to spawn a cloud
+        // Check for collision between zeppelin and planes
+        for (Iterator<Plane> iter = planes.iterator(); iter.hasNext(); ) {
+            Plane plane = iter.next();
+            if (plane.overlaps(zeppelin)) {
+                // Handle collision between plane and zeppelin
+                // planesHit++;
+                plane.planeCrashSound.play();
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        plane.planeFlyingSound.stop();
+                    }
+                }, 0.25F); // 1 second delay
+                iter.remove();
+            }
+        }
+
+        // Check for collision between zeppelin and polygon objects (not planes!) in tilemap
+        for (PolygonMapObject polygonMapObject : tileMapHelper.getStaticBody()) {
+            if (tileMapHelper.overlapsPolygon(polygonMapObject, zeppelin)) {
+                // plane.planeCrashSound.play();
+                // Gdx.app.exit();
+            }
+        }
+
+
+        // STORM CLOUD SPAWNING TEMPORARILY DISABLED
+   /*     // Check if it's time to spawn a cloud
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
             spawnStormCloud();
             // Generate a new random spawn delay
-            stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 1000, MAX_StormCloud_SPAWN_TIME * 1000);
+            stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 10000, MAX_StormCloud_SPAWN_TIME * 30000);
             // Update the last storm cloud spawn time
             lastStormCloudTime = TimeUtils.millis();
         }
 
         for (StormCloud stormCloud : stormClouds) {
             stormCloud.updatePosition(delta);
+        }*/
+
+        // Check if it's time to spawn a bullet
+        if (plane.isFacing(zeppelin)) {
+            plane.shoot(delta);
+          //  plane.updateBullets(delta);
         }
+        plane.updateBullets(delta);
+
+            for (Bullet bullet : plane.bullets) {
+                bullet.updatePosition(delta);
+            }
+
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 1200) {
+        if (zeppelin.getX() > 6000) {
             System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
             game.incrementCurrentLevelCount();
             game.progressToNextLevel();
-           // game.switchScreen(introScreen);
-            //dispose();
+           // game.switchScreen(closingScreen);
+           // dispose();
         }
     }
 
@@ -242,8 +266,8 @@ public class SideScrollerScreen extends ScreenAdapter {
         plane = new Plane(x, y, yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
-
     }
+
 
     public void spawnStormCloud() {
         float x = camera.position.x + camera.viewportWidth / 2;
@@ -265,6 +289,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.zeppelin = Zeppelin.getInstance();
     }
     public World getWorld() {
+        System.out.println("SideScrollerScreen getWorld() method called.");
         return world;
     }
 
@@ -278,7 +303,23 @@ public class SideScrollerScreen extends ScreenAdapter {
         stormClouds.clear();
         planes.forEach(Plane::dispose);
         stormClouds.forEach(StormCloud::dispose);
-        zeppelin.dispose();
-       // sideScrollerScreen.dispose();
+        for (Plane plane : planes) {
+            if (plane != null) {
+                plane.dispose();
+            }
+        }
+        for (StormCloud stormCloud : stormClouds) {
+            if (stormCloud != null) {
+                stormCloud.dispose();
+            }
+        }
+        for (Bullet bullet : plane.bullets) {
+            if (bullet != null) {
+                bullet.dispose();
+            }
+        }
+            zeppelin.dispose();
+            Zeppelin.setInstance(null);
+
     }
 }

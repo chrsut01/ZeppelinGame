@@ -20,27 +20,5 @@
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 0
-  },
-  {
-    "question": "Egypt 3rd Question: What is the capital of Germany?",
-    "answers": ["Paris", "Berlin", "London"],
-    "responses": [
-      "No! Paris is the capital of France.",
-      "Correct! Berlin is the capital of Germany.",
-      "Incorrect. London is the capital of the United Kingdom."
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 1
-  },
-  {
-    "question": "Egypt 4th Question: What is the capital of the United Kingdom?",
-    "answers": ["Paris", "Berlin", "London"],
-    "responses": [
-      "No! Paris is the capital of France.",
-      "Incorrect. Berlin is the capital of Germany.",
-      "Correct! London is the capital of the United Kingdom."
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 2
   }
 ]

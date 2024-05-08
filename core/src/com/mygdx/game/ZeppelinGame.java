@@ -58,20 +58,20 @@ public class ZeppelinGame extends Game {
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
-        List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
-        List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+       // List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
+       // List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
         List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
-        SideScrollerBulg sideScrollerBulg = new SideScrollerBulg(this);
-        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+       // SideScrollerBulg sideScrollerBulg = new SideScrollerBulg(this);
+       // SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
         SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
-        GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
+    //    GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
        // System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
-        GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+    //    GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
        // System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
        // System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
@@ -79,8 +79,8 @@ public class ZeppelinGame extends Game {
 
         gameLevels = new ArrayList<>();
 
-        gameLevels.add(gameLevelBulg);
-        gameLevels.add(gameLevelMed);
+    //    gameLevels.add(gameLevelBulg);
+    //    gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
         gameLevels.add(gameLevelSudan);
 
@@ -130,6 +130,7 @@ public class ZeppelinGame extends Game {
             switchScreen(closingScreen);
         }
     }
+
     public void incrementCurrentLevelCount() {
         currentLevelCount++;
         System.out.println("ZeppelinGame: incrementCurrentLevelCount: currentLevelCount just incremented to = " + currentLevelCount);
