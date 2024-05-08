@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="125" height="40" tilewidth="64" tileheight="64" infinite="0" nextlayerid="4" nextobjectid="12">
+ <imagelayer id="2" name="Background">
+  <image source="../MediterraneanBackground.png" width="8000" height="2560"/>
+ </imagelayer>
+ <objectgroup id="3" name="Collision" opacity="0">
+  <object id="11" x="4" y="2486">
+   <polygon points="0,0 7996,4 3818,80"/>
+  </object>
+ </objectgroup>
+</map>
