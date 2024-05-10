@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -40,12 +41,15 @@ public class SideScrollerScreen extends ScreenAdapter {
     private final ZeppelinGame game;
     private GameLevel gameLevel;
     private Zeppelin zeppelin;
+    private static int highAltitude = 1800;
+    private static float highAltitudeStartTime = 0;
+    private static float MAX_HIGH_ALTITUDE_TIME = 6f;
+
+
     private Plane plane;
     private final List<Plane> planes;
     private Bullet bullet;
     // 250 milliseconds (4 bullets per second)
-
-
 
     private final World world;
     private final Random random;
@@ -56,7 +60,6 @@ public class SideScrollerScreen extends ScreenAdapter {
 
     private Stage stage;
     private Box2DDebugRenderer box2DDebugRenderer;
-
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private Screen introScreen;
     private Screen closingScreen;
@@ -66,16 +69,18 @@ public class SideScrollerScreen extends ScreenAdapter {
     public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
     public static final float MAX_PLANE_SPAWN_TIME = 10f;
 
+    private StormCloud stormCloud;
+    private final ArrayList<StormCloud> stormClouds;
     long lastStormCloudTime = TimeUtils.millis() + (long) (MIN_StormCloud_SPAWN_TIME * 1000);
     float stormCloudSpawnTimer;
     public static final float MIN_StormCloud_SPAWN_TIME = 5f;
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
-    private final ArrayList<StormCloud> stormClouds;
 
- //   private Texture mapImage;
 
-  //  private float mapWidth;
-  //  private float mapHeight;
+    private Texture mapImage;
+
+    private float mapWidth;
+    private float mapHeight;
 
 
 
@@ -88,6 +93,16 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
+
+        this.mapImage = new Texture("map-to-afrika.png");
+        // Calculate the maximum size based on the desired maximum width or height
+        mapHeight = Gdx.graphics.getHeight() * 0.3f;
+        float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
+        // Calculate the scaling factor based on the maximum width or height
+        mapWidth = mapHeight / aspectRatio;
+      //  zeppelin = Zeppelin.getInstance();
+      //  initialize();
+
     }
 
     public void initialize() {
@@ -96,9 +111,10 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.camera.setToOrtho(false, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         this.camera.update();
         this.box2DDebugRenderer = new Box2DDebugRenderer();
-
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+      //  zeppelinHitBox = new Rectangle(zeppelin.getX(), zeppelin.getY(), zeppelin.getWidth(), zeppelin.getHeight());
+
     }
 
     public void render(float delta) {
@@ -110,6 +126,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         orthogonalTiledMapRenderer.render();
 
         batch.begin();
+
 
         zeppelin.render(batch);
 
@@ -134,14 +151,13 @@ public class SideScrollerScreen extends ScreenAdapter {
         // Draw the map at the bottom left corner of the screen
         float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
         float mapY = camera.position.y - camera.viewportHeight / 2 + 20;
-       // batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
+        batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
 
         batch.end();
 
         box2DDebugRenderer.render(world, camera.combined.scl(PPM));
     }
 
-    // This may not be needed.
     public void update(float delta) {
         world.step(1 / 60f, 6, 2);
         zeppelin.update();
@@ -178,8 +194,9 @@ public class SideScrollerScreen extends ScreenAdapter {
                     @Override
                     public void run() {
                         plane.planeFlyingSound.stop();
+                        plane.setCanShoot(false);
                     }
-                }, 0.25F); // 1 second delay
+                }, 0.25F);
                 iter.remove();
             }
         }
@@ -193,24 +210,33 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
 
-        // STORM CLOUD SPAWNING TEMPORARILY DISABLED
-   /*     // Check if it's time to spawn a cloud
+        // Check if it's time to spawn a cloud
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
             spawnStormCloud();
             // Generate a new random spawn delay
-            stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 10000, MAX_StormCloud_SPAWN_TIME * 30000);
+            stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
             // Update the last storm cloud spawn time
             lastStormCloudTime = TimeUtils.millis();
         }
 
         for (StormCloud stormCloud : stormClouds) {
             stormCloud.updatePosition(delta);
-        }*/
+        }
+
+        // Check if zeppelin hits the stormCloudBounds
+        for (Iterator<StormCloud> iter = stormClouds.iterator(); iter.hasNext(); ) {
+            StormCloud stormCloud = iter.next();
+            if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()){
+                System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
+                stormCloud.lightningStrikeSound.play();
+                stormCloud.setLightningSoundPlayed(true);
+                System.out.println("stormCloud.stormCloudBounds.width ");
+            }
+        }
 
         // Check if it's time to spawn a bullet
         if (plane.isFacing(zeppelin)) {
-            plane.shoot(delta);
-          //  plane.updateBullets(delta);
+            plane.shootBullets(delta);
         }
         plane.updateBullets(delta);
 
@@ -218,6 +244,16 @@ public class SideScrollerScreen extends ScreenAdapter {
                 bullet.updatePosition(delta);
             }
 
+            // Check if zeppelin is flying too high (for too long)
+            if (zeppelin.getY() > highAltitude) {
+                highAltitudeStartTime += Gdx.graphics.getDeltaTime();
+                if(highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME) {
+                        showHighAltitudeWarning();
+                        highAltitudeStartTime = 0;
+                    }
+            } else {
+                highAltitudeStartTime = 0;
+            }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
         if (zeppelin.getX() > 6000) {
@@ -227,6 +263,11 @@ public class SideScrollerScreen extends ScreenAdapter {
            // game.switchScreen(closingScreen);
            // dispose();
         }
+    }
+
+    // method to show a pop-up dialogue box warning the player that the zeppelin is flying too high
+    private void showHighAltitudeWarning() {
+        System.out.println("ZEPPELIN IS FLYING TOO HIGH!!!!!");
     }
 
     public void cameraUpdate() {
@@ -263,6 +304,10 @@ public class SideScrollerScreen extends ScreenAdapter {
         } else {
             yAngle = -random(MIN_Y_ANGLE, MAX_Y_ANGLE); // Plane starts below or at the middle of the screen
         }
+        // to keep planes below a certain altitude
+        if (x > GameConfig.TILEMAP_HEIGHT - 1000) {
+            x = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
+        }
         plane = new Plane(x, y, yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
@@ -275,7 +320,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         float maxY = GameConfig.TILEMAP_HEIGHT - 800;
         float y = MathUtils.random(minY, maxY);
 
-        StormCloud stormCloud = new StormCloud(x, y);
+        stormCloud = new StormCloud(x, y);
         stormClouds.add(stormCloud);
     }
 
@@ -318,8 +363,8 @@ public class SideScrollerScreen extends ScreenAdapter {
                 bullet.dispose();
             }
         }
-            zeppelin.dispose();
-            Zeppelin.setInstance(null);
+      //  zeppelin.dispose();
+      //  Zeppelin.setInstance(null);
 
     }
 }

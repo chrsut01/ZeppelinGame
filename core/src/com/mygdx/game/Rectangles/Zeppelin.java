@@ -26,6 +26,7 @@ public class Zeppelin extends Rectangle {
     private Sprite zeppelinSprite;
     private Sound engineSound;
 
+
     private Zeppelin() {
         init();
     }
@@ -50,9 +51,7 @@ public class Zeppelin extends Rectangle {
 
         zeppelinSprite.setOrigin(width / 2, height / 2);
         zeppelinSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
-                GameConfig.SCREEN_HEIGHT / 2f - height / 2 + 500);
-
-        playEngineSound(2.2f); // Set the initial volume (you can change this value)
+                GameConfig.TILEMAP_HEIGHT / 2f - height / 2);
     }
 
     public void update() {
@@ -69,6 +68,7 @@ public class Zeppelin extends Rectangle {
     }
 
     private void handleInput() {
+
         // Handle user input for zeppelin movement
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
             ySpeed += ACCELERATION * Gdx.graphics.getDeltaTime();
@@ -104,16 +104,13 @@ public class Zeppelin extends Rectangle {
         zeppelinSprite.setY(MathUtils.clamp(zeppelinSprite.getY(), minY, maxY));
     }
 
-    public void dispose() {
-        zeppelinSprite.getTexture().dispose();
-        engineSound.dispose();
-    }
+
 
     public float getWidth() {
-        return zeppelinSprite.getWidth();
+        return width;
     }
     public float getHeight() {
-        return  zeppelinSprite.getHeight();
+        return  height;
     }
     public float getX() {
         return zeppelinSprite.getX();
@@ -125,6 +122,10 @@ public class Zeppelin extends Rectangle {
 
     public Rectangle getBoundingRectangle() {
         return new Rectangle(zeppelinSprite.getX(), zeppelinSprite.getY(), zeppelinSprite.getWidth(), zeppelinSprite.getHeight());
+    }
+    public void dispose() {
+        zeppelinSprite.getTexture().dispose();
+        engineSound.dispose();
     }
 
 }
