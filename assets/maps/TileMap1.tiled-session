@@ -8,11 +8,33 @@
             "scaleInDock": 1
         },
         "C:/Users/chris/Downloads/MapEgypt.tmx": {
-            "scale": 1.5,
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 3122,
-                "y": 2469.6666666666665
+                "x": 2166,
+                "y": 2303.5
+            }
+        },
+        "C:/Users/chris/Downloads/MapMediterranean.tmx": {
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 2636,
+                "y": 2117
+            }
+        },
+        "C:/Users/chris/Downloads/MapTurkey (1).tmx": {
+            "scale": 0.33,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 4357.575757575758,
+                "y": 1871.2121212121212
             }
         },
         "C:/Users/chris/Downloads/MapTurkey.tmx": {
@@ -90,11 +112,19 @@
             "scaleInDock": 1
         },
         "MapTurkey.tmx": {
-            "scale": 0.0625,
+            "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 416,
-                "y": 1968
+                "x": 4498,
+                "y": 1753
+            }
+        },
+        "MapTurkey2.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 3472,
+                "y": 1875
             }
         },
         "ZepEgypt.tmx": {
@@ -153,6 +183,7 @@
     "project": "TileMap1.tiled-project",
     "recentFiles": [
         "MapTurkey.tmx",
+        "MapTurkey2.tmx",
         "C:/Users/chris/Downloads/ZepTurkey..tmx",
         "C:/Users/chris/Downloads/images2.tsx",
         "ZepEgypt/ZepEgypt.tmx",

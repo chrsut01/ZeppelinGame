@@ -50,7 +50,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     private final List<Plane> planes;
     private Bullet bullet;
     // 250 milliseconds (4 bullets per second)
-
+    private boolean zepCrashSoundPlayed = false;
     private final World world;
     private final Random random;
     private static final int MIN_Y_ANGLE = 0;
@@ -203,16 +203,23 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         // Check for collision between zeppelin and polygon objects (not planes!) in tilemap
         for (PolygonMapObject polygonMapObject : tileMapHelper.getStaticBody()) {
-            if (tileMapHelper.overlapsPolygon(polygonMapObject, zeppelin)) {
-                // plane.planeCrashSound.play();
-                // Gdx.app.exit();
+            if (tileMapHelper.overlapsPolygon(polygonMapObject, zeppelin) && !isZepCrashSoundPlayed()) {
+                System.out.println("zeppelin getY() = " + zeppelin.getY() + " zeppelin getX() = " + zeppelin.getX());
+                plane.planeCrashSound.play();
+                zeppelin.playCrashSound();
+                setZepCrashSoundPlayed(true);
+                // code so that zeppelin freezes in place
+                //zeppelin.setY(zeppelin.getY());
+                zeppelin.xSpeed = 0;
+                zeppelin.ySpeed = 0;
             }
         }
+
 
         // Method temporarily disabled
         // Check if it's time to spawn a cloud
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
-  //          spawnStormCloud();
+            spawnStormCloud();
             // Generate a new random spawn delay
             stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
             // Update the last storm cloud spawn time
@@ -269,7 +276,13 @@ public class SideScrollerScreen extends ScreenAdapter {
     private void showHighAltitudeWarning() {
         System.out.println("ZEPPELIN IS FLYING TOO HIGH!!!!!");
     }
+    public boolean isZepCrashSoundPlayed() {
+        return zepCrashSoundPlayed;
+    }
 
+    public void setZepCrashSoundPlayed(boolean played) {
+        this.zepCrashSoundPlayed = played;
+    }
     public void cameraUpdate() {
         int mapWidth = GameConfig.TILEMAP_WIDTH;
         int mapHeight = GameConfig.TILEMAP_HEIGHT;
@@ -323,7 +336,15 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         stormCloud = new StormCloud(x, y);
         stormClouds.add(stormCloud);
-    }
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    stormCloud.showLightning = true;
+                }
+            }, 3.5f); // Delay before showing lightning (adjust as needed)
+        }
+
 
     public String getTilemapFileName() {
         return this.tilemapFileName;

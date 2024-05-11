@@ -66,7 +66,6 @@ public class TileMapHelper {
     }*/
 
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
-      //  System.out.println("TileMapHelper createPolygonShape method called");
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
         Vector2[] worldVertices = new Vector2[vertices.length / 2];
 
@@ -78,7 +77,25 @@ public class TileMapHelper {
         shape.set(worldVertices);
         return shape;
     }
-    public boolean overlapsPolygon(PolygonMapObject polygonMapObject, Zeppelin zeppelin) {
+
+  /*  public boolean overlapsPolygon(PolygonMapObject polygonMapObject, Zeppelin zeppelin) {
+        Polygon polygon = polygonMapObject.getPolygon();
+        float[] vertices = polygon.getTransformedVertices();
+
+        // Check if the zeppelin's bounding box intersects with the bounding box of the polygon
+        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX() + 15, zeppelin.getY() + 10, zeppelin.getWidth() - 32, zeppelin.getHeight() - 20);
+        Rectangle polygonBounds = new Rectangle();
+        polygonBounds.set(vertices[0], vertices[1], 0, 0); // Initialize bounds with first vertex
+        for (int i = 2; i < vertices.length; i += 2) {
+            polygonBounds.merge(vertices[i], vertices[i + 1]); // Expand bounds to include each vertex
+        }
+
+        return zeppelinBounds.overlaps(polygonBounds);
+    }*/
+
+
+
+     public boolean overlapsPolygon(PolygonMapObject polygonMapObject, Zeppelin zeppelin) {
         Shape polygonShape = createPolygonShape(polygonMapObject);
         Polygon polygon = polygonMapObject.getPolygon();
 
@@ -96,7 +113,7 @@ public class TileMapHelper {
         }
 
         Rectangle polygonBounds = new Rectangle(minX, minY, maxX - minX, maxY - minY);
-        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX(), zeppelin.getY(), zeppelin.getWidth(), zeppelin.getHeight());
+        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX() + 15, zeppelin.getY() + 10, zeppelin.getWidth() - 32, zeppelin.getHeight() - 20);
         boolean overlaps = polygonBounds.overlaps(zeppelinBounds);
         polygonShape.dispose();
         return overlaps;
@@ -108,7 +125,6 @@ public class TileMapHelper {
     }
 
     public PolygonMapObject[] getStaticBody() {
-      //  System.out.println("TileMapHelper getStaticBody method called");
         MapObjects mapObjects = tiledMap.getLayers().get("Collision").getObjects();
         PolygonMapObject[] staticBodies = new PolygonMapObject[mapObjects.getCount()];
         int i = 0;

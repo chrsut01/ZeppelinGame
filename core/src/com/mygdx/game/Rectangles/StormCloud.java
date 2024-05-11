@@ -22,7 +22,7 @@ public class StormCloud extends Rectangle {
     public Rectangle stormCloudHitBox;
     private final Texture lightningTexture = new Texture("lightning.png");
     public Sound lightningStrikeSound;
-    private boolean showLightning;
+    public boolean showLightning;
     private float lightningDuration = 1.0f;
     private float timeSinceSpawn = 0.0f;
     private boolean lightningSoundPlayed = false;
@@ -47,7 +47,7 @@ public class StormCloud extends Rectangle {
 
       timeSinceSpawn += deltaTime;
 
-      if (!showLightning && timeSinceSpawn >= 1.5f) {
+      if (!showLightning && timeSinceSpawn >= 3.5f) {
          showLightning = true;
          Timer.schedule(new Timer.Task() {
             @Override
