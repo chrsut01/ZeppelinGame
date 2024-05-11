@@ -68,11 +68,11 @@ public class Plane extends Rectangle{
     }
 
     public boolean overlaps(Zeppelin zeppelin) {
-        float xOffset = (width - zeppelin.getWidth()) / 2;
-        float yOffset = (height - zeppelin.getHeight()) / 2;
+      //  float xOffset = (width - zeppelin.getWidth()) / 2;
+      //  float yOffset = (height - zeppelin.getHeight()) / 2;
 
         Rectangle planeBounds = new Rectangle(x, y, width, height);
-        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX() + xOffset, zeppelin.getY() + yOffset, zeppelin.getWidth() - 10, zeppelin.getHeight() - 5);
+        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX() + 15, zeppelin.getY() + 10, zeppelin.getWidth() - 32, zeppelin.getHeight() - 20);
         return planeBounds.overlaps(zeppelinBounds);
     }
 

@@ -209,10 +209,10 @@ public class SideScrollerScreen extends ScreenAdapter {
             }
         }
 
-
+        // Method temporarily disabled
         // Check if it's time to spawn a cloud
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
-            spawnStormCloud();
+  //          spawnStormCloud();
             // Generate a new random spawn delay
             stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
             // Update the last storm cloud spawn time
@@ -305,15 +305,16 @@ public class SideScrollerScreen extends ScreenAdapter {
             yAngle = -random(MIN_Y_ANGLE, MAX_Y_ANGLE); // Plane starts below or at the middle of the screen
         }
         // to keep planes below a certain altitude
-        if (x > GameConfig.TILEMAP_HEIGHT - 1000) {
-            x = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
+        if (y > GameConfig.TILEMAP_HEIGHT - 1000) {
+            y = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
         }
         plane = new Plane(x, y, yAngle);
+        System.out.println("Plane created at x: " + x + " y: " + y + " yAngle: " + yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
     }
 
-
+    // method to spawn a storm cloud temporarily disabled (also line 215 that calls this method)
     public void spawnStormCloud() {
         float x = camera.position.x + camera.viewportWidth / 2;
         float minY = 400;
