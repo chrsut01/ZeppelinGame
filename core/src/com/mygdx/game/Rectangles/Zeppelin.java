@@ -135,6 +135,8 @@ public class Zeppelin extends Rectangle {
     public void dispose() {
         zeppelinSprite.getTexture().dispose();
         engineSound.dispose();
+        zeppelinCrashSound.dispose();
+
     }
 
 }

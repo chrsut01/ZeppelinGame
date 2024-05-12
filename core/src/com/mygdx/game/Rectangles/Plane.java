@@ -2,6 +2,7 @@ package com.mygdx.game.Rectangles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,10 +11,12 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Plane extends Rectangle{
 
+    private OrthographicCamera camera;
     private final Texture planeImage;
     public Sound planeFlyingSound;
 
@@ -21,19 +24,19 @@ public class Plane extends Rectangle{
     public Sound planeCrashSound;
     public static final int width = 89/2;
     public static final int height = 44/2;
-    //private static float x = GameConfig.SCREEN_WIDTH;
     private float x;
     private float y;
     private final int yAngle;
     private final Sprite planeSprite;
     public List<Bullet> bullets = new ArrayList<>();
-    private long lastBulletTime = 0;
-    private long startFacingTime = 0;
-    private static final long SHOOTING_TIME = 2500;
-    private static final long BULLET_SPAWN_INTERVAL = 250;
-    private boolean canShoot;
+    private static final int MAX_BULLETS = 10;
+    private int bulletsShot = 0;
 
-    private static final float BULLET_SPEED = - 400;
+    private boolean canShoot;
+    private boolean shootingStarted;
+    private float shootingTime;
+
+    private static final float BULLET_SPEED = - 200;
     public Sound shootingSound;
     private boolean shootingSoundStarted;
 
@@ -73,22 +76,78 @@ public class Plane extends Rectangle{
         return planeBounds.overlaps(zeppelinBounds);
     }
 
-    private boolean alreadyFacing = false;
+    private boolean isFacingZeppelin = false;
 
     public boolean isFacing(Zeppelin zeppelin) {
-        if (!alreadyFacing && zeppelin != null) {
+        if (!isFacingZeppelin && zeppelin != null) {
             float zepX = zeppelin.getX();
             float zepY = zeppelin.getY();
             if ((zepX < x && zepY < y && yAngle < 0) || (zepX < x && zepY > y && yAngle > 0)) {
                 System.out.println("Plane isFacing the zeppelin");
-                alreadyFacing = true; // Set the flag to true after the condition is met
+                isFacingZeppelin = true; // Set the flag to true after the condition is met
                 return true;
             }
         }
         return false;
     }
 
+    public void playShootingSound() {
+        if (shootingSound != null) {
+            System.out.println("playShootingSound method called");
+            shootingSound.play(); // Start the shooting sound
+            shootingSoundStarted = true; // Set flag to indicate that shooting sound has started
+        }
+    }
+
     public void shootBullets(float deltaTime) {
+        // Only shoot if the plane is facing the zeppelin and shooting hasn't started yet
+        if (canShoot && !shootingStarted && bulletsShot < MAX_BULLETS) {
+            System.out.println("Start shooting");
+            playShootingSound(); // Start the shooting sound
+            shootingStarted = true;
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (bulletsShot < MAX_BULLETS) {
+                        spawnBullet(deltaTime);
+                        bulletsShot++;
+                    } else {
+                        stopShooting();
+                    }
+                }
+            }, 0, 0.15f); // Interval can be adjusted
+        }
+    }
+    private void spawnBullet(float deltaTime) {
+        float velocityX = MathUtils.cosDeg(yAngle) * BULLET_SPEED;
+        float velocityY = MathUtils.sinDeg(yAngle) * BULLET_SPEED;
+        Bullet bullet = new Bullet(x, y, yAngle, velocityX, velocityY);
+        bullet.x = getX() + 5; // Set initial position
+        bullet.y = getY() + 10;
+        bullets.add(bullet);
+    }
+
+    private void stopShooting() {
+        System.out.println("Stop shooting");
+        shootingStarted = false;
+        shootingTime = 0;
+    }
+    public void updateBullets(float deltaTime) {
+        Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            Bullet bullet = iterator.next();
+            bullet.updatePosition(deltaTime);
+            // Remove bullet if it is off screen
+            if (bullet.isOutOfBounds()) {
+                iterator.remove();
+            }
+        }
+    }
+
+
+
+
+ /*   public void shootBullets(float deltaTime) {
         // Only shoot if the plane is facing the zeppelin and shooting hasn't started yet
         if (canShoot && !shootingSoundStarted) {
             System.out.println("shoot method: canShoot && !shootingSoundStarted");
@@ -100,57 +159,13 @@ public class Plane extends Rectangle{
                 public void run() {
                     updateBullets(deltaTime);
                 }
-            }, 0, 0.25f);
-// timer for shooting bullets every 0.25 seconds
+            }, 0, 0.25f);  // timer for shooting bullets every 0.25 seconds
         }
-    }
-    public void playShootingSound() {
-        if (shootingSound != null) {
-            System.out.println("playShootingSound method called");
-            shootingSound.play(); // Start the shooting sound
-            shootingSoundStarted = true; // Set flag to indicate that shooting sound has started
-        }
-    }
-
-
- /*   public void updateBullets(float deltaTime) {
-        // Create and add bullets if shooting has started
-        if (shootingSoundStarted) {
-            startFacingTime += deltaTime;
-            lastBulletTime += deltaTime;
-            // Check if it's time to stop shooting
-            if (startFacingTime <= SHOOTING_TIME) {
-
-                    // Check if it's time to spawn a bullet
-                    if (lastBulletTime >= BULLET_SPAWN_INTERVAL) {
-                        float velocityX = MathUtils.cosDeg(yAngle) * BULLET_SPEED;
-                        float velocityY = MathUtils.sinDeg(yAngle) * BULLET_SPEED;
-
-                        Bullet bullet = new Bullet(x, y, yAngle, velocityX, velocityY);
-                        bullet.x = getX() + 5; // Set initial position
-                        bullet.y = getY() + 10;
-                        bullets.add(bullet);
-
-                        lastBulletTime = 0; // Reset the timer
-                    }
-                }
-            if (startFacingTime >= SHOOTING_TIME) {
-                shootingSound.stop(); // Stop the shooting sound
-                shootingSoundStarted = false; // Set flag to indicate that shooting sound has stopped
-                startFacingTime = 0; // Reset the timer
-                lastBulletTime = 0; // Reset the timer
-            }
-                // Reset shooting time if necessary
-            /*    if (!shootingSoundStarted) {
-                    lastBulletTime = 0;
-                    startFacingTime = 0;
-                }
-            }
-        }*/
+    }*/
 
 
     //First updateBullets method
-    public void updateBullets(float deltaTime) {
+  /*  public void updateBullets(float deltaTime) {
       //  System.out.println("updateBullets method called, startFacingTime: " + startFacingTime);
         // Create and add bullets if shooting has started
         if (shootingSoundStarted && startFacingTime < SHOOTING_TIME) {
@@ -173,7 +188,7 @@ public class Plane extends Rectangle{
                 //bullet.yAngle = yAngle; // Set initial angle
 
                 bullets.add(bullet);
-                lastBulletTime -= BULLET_SPAWN_INTERVAL; // Reset the timer
+              //  lastBulletTime -= BULLET_SPAWN_INTERVAL; // Reset the timer
             }
 
             // Reset shooting time if necessary
@@ -185,7 +200,7 @@ public class Plane extends Rectangle{
             }
 
     }
-    }
+    }*/
 
     public void setCanShoot(boolean canShoot) {
         this.canShoot = canShoot;
@@ -204,6 +219,5 @@ public class Plane extends Rectangle{
         shootingSound.dispose();
         bullets.clear();
         planeSprite.getTexture().dispose();
-
     }
 }

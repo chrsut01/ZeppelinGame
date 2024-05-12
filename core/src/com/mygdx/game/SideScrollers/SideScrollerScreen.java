@@ -88,7 +88,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         System.out.println("SideScrollerScreen constructor called");
         this.game = game;
         this.tilemapFileName = tilemapFileName;
-        this.batch = new SpriteBatch();
+        this.batch = game.batch;
         this.world = new World(new Vector2(0,0), false);
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
@@ -198,6 +198,10 @@ public class SideScrollerScreen extends ScreenAdapter {
                     }
                 }, 0.25F);
                 iter.remove();
+            } else {
+                if (plane.isFacing(zeppelin)) {
+                    plane.shootBullets(delta);
+                }
             }
         }
 
@@ -215,8 +219,6 @@ public class SideScrollerScreen extends ScreenAdapter {
             }
         }
 
-
-        // Method temporarily disabled
         // Check if it's time to spawn a cloud
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
             spawnStormCloud();
@@ -235,17 +237,20 @@ public class SideScrollerScreen extends ScreenAdapter {
             StormCloud stormCloud = iter.next();
             if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()){
                 System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
-                stormCloud.lightningStrikeSound.play();
+                stormCloud.lightningStrikeSound.play(9.0f);
                 stormCloud.setLightningSoundPlayed(true);
-                System.out.println("stormCloud.stormCloudBounds.width ");
             }
         }
 
         // Check if it's time to spawn a bullet
-        if (plane.isFacing(zeppelin)) {
+      /*  if (plane.isFacing(zeppelin)) {
             plane.shootBullets(delta);
-        }
-        plane.updateBullets(delta);
+        }*/
+
+        for (Plane plane : planes) {
+            plane.updateBullets(delta);
+            }
+          //  plane.updateBullets(delta);
 
             for (Bullet bullet : plane.bullets) {
                 bullet.updatePosition(delta);
@@ -263,12 +268,12 @@ public class SideScrollerScreen extends ScreenAdapter {
             }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 6000) {
+        if (zeppelin.getX() > 4000) {
             System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
             game.incrementCurrentLevelCount();
-            game.progressToNextLevel();
-           // game.switchScreen(closingScreen);
-           // dispose();
+           // game.progressToNextLevel();
+            game.switchScreen(closingScreen);
+            dispose();
         }
     }
 
@@ -327,7 +332,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         planes.add(plane);
     }
 
-    // method to spawn a storm cloud temporarily disabled (also line 215 that calls this method)
     public void spawnStormCloud() {
         float x = camera.position.x + camera.viewportWidth / 2;
         float minY = 400;
@@ -337,14 +341,18 @@ public class SideScrollerScreen extends ScreenAdapter {
         stormCloud = new StormCloud(x, y);
         stormClouds.add(stormCloud);
 
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    stormCloud.showLightning = true;
-                }
-            }, 3.5f); // Delay before showing lightning (adjust as needed)
-        }
+        final float delayBeforeFlicker = MathUtils.random(2.5f, 3.5f);  // Random delay before starting flickering
+        final float totalFlickerDuration = MathUtils.random(0.9f, 1.3f);  // Random total duration for flickering
 
+        // Schedule a task to start flickering after the random delay
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                System.out.println("SideScrollerScreen: Starting flickering");
+                stormCloud.flickerLightning(totalFlickerDuration);
+            }
+        }, delayBeforeFlicker);
+    }
 
     public String getTilemapFileName() {
         return this.tilemapFileName;
@@ -361,32 +369,30 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
 
     public void dispose(){
-        orthogonalTiledMapRenderer.dispose();
-        world.dispose();
-        box2DDebugRenderer.dispose();
-
-        batch.dispose();
-        planes.clear();
-        stormClouds.clear();
-        planes.forEach(Plane::dispose);
-        stormClouds.forEach(StormCloud::dispose);
-        for (Plane plane : planes) {
-            if (plane != null) {
-                plane.dispose();
-            }
-        }
-        for (StormCloud stormCloud : stormClouds) {
-            if (stormCloud != null) {
-                stormCloud.dispose();
-            }
-        }
         for (Bullet bullet : plane.bullets) {
             if (bullet != null) {
-                bullet.dispose();
-            }
+                bullet.dispose();}
         }
-      //  zeppelin.dispose();
-      //  Zeppelin.setInstance(null);
+        planes.forEach(Plane::dispose);
+        planes.clear();
+        stormClouds.forEach(StormCloud::dispose);
+        stormClouds.clear();
+        tileMapHelper.dispose();
 
+        //   orthogonalTiledMapRenderer.dispose();
+
+      //  zeppelin.dispose();
+
+        // Dispose Box2D world
+        if (world != null) {
+            world.dispose();
+        }
+        // Dispose Box2D debug renderer
+        if (box2DDebugRenderer != null) {
+            box2DDebugRenderer.dispose();
+        }
+
+
+        Zeppelin.setInstance(null);
     }
 }

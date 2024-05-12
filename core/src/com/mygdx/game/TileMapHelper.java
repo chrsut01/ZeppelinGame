@@ -136,4 +136,9 @@ public class TileMapHelper {
         }
         return staticBodies;
     }
+    public void dispose() {
+       // tiledMap.dispose();
+      //  mapRenderer.dispose();
+       // sideScrollerScreen.dispose();
+    }
 }

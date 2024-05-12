@@ -12,7 +12,8 @@ import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
-import com.mygdx.game.SideScrollers.*;
+import com.mygdx.game.SideScrollers.SideScrollerEgypt;
+import com.mygdx.game.SideScrollers.SideScrollerScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,13 +62,13 @@ public class ZeppelinGame extends Game {
        // List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
        // List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
-        List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
+      //  List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
        // SideScrollerBulg sideScrollerBulg = new SideScrollerBulg(this);
        // SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
-        SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
+      //  SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
     //    GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
        // System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
@@ -75,14 +76,14 @@ public class ZeppelinGame extends Game {
        // System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
        // System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
-        GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
+    //    GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
     //    gameLevels.add(gameLevelBulg);
     //    gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
-        gameLevels.add(gameLevelSudan);
+     //   gameLevels.add(gameLevelSudan);
 
         setScreen(introScreen);
 
@@ -141,9 +142,14 @@ public class ZeppelinGame extends Game {
     }
 
     public void switchScreen(Screen newScreen) {
+        System.out.println("ZeppelinGame: switchScreen method called.");
         if(currentScreen != null) {
+            System.out.println("ZeppelinGame: switchScreen: currentScreen disposed.");
+            System.out.println("currentScreen = " + currentScreen);
             currentScreen.dispose();
         }
+        System.out.println("ZeppelinGame: switchScreen: newScreen set.");
+        System.out.println("newScreen = " + newScreen);
         setScreen(newScreen);
         currentScreen = newScreen;
     }
@@ -158,5 +164,9 @@ public class ZeppelinGame extends Game {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit(); // Exit the game if the ESCAPE key is pressed
         }
+    }
+    public void dispose(){
+        batch.dispose();
+        font.dispose();
     }
 }

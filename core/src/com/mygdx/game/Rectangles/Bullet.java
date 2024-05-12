@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Bullet extends Rectangle {
+    //private final OrthographicCamera camera;
     float x, y; // Position
     int yAngle;
     float velocityX, velocityY; // Velocity
@@ -14,6 +15,7 @@ public class Bullet extends Rectangle {
     private final Texture bulletImage;
    // public Sound shootingSound;
     public Sound bulletHitSound;
+    private Zeppelin zeppelin;
 
 
     public Bullet(float x, float y, int yAngle, float velocityX, float velocityY) {
@@ -25,6 +27,7 @@ public class Bullet extends Rectangle {
         bulletImage = new Texture("bullet.png");
         bulletSprite = new Sprite(bulletImage);
         bulletSprite.setSize(6, 2);
+       // this.camera = camera;
     }
 
     public void updatePosition(float deltaTime) {
@@ -57,4 +60,15 @@ public class Bullet extends Rectangle {
         //   shootingSound.dispose();
         bulletSprite.getTexture().dispose();
     }
+
+    public boolean isOutOfBounds() {
+        return x < this.x - 1200;
+    }
+  /*  public boolean isOutOfBounds() {
+        float cameraLeft = camera.position.x - camera.viewportWidth / 2;
+        float cameraBottom = camera.position.y - camera.viewportHeight / 2;
+        float cameraTop = camera.position.y + camera.viewportHeight / 2;
+
+        return x < cameraLeft || y < cameraBottom || y > cameraTop;
+    }*/
 }

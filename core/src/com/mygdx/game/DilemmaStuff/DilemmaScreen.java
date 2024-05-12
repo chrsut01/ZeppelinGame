@@ -177,5 +177,7 @@ public class DilemmaScreen extends ScreenAdapter {
        // questionTextField.clear();
         responseTextField.clear();
         for (TextButton button : answerButtons) { button.clear(); }
+       // Added to prevent memory leak ????
+        dilemma = null;
     }
 }
