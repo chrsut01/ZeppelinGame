@@ -21,7 +21,7 @@ public class SideScrollerEgypt extends SideScrollerScreen {
         System.out.println("SideScrollerEgypt initialize() called.");
         super.initialize();
         this.zeppelin = Zeppelin.getInstance();
-        this.zeppelin.playEngineSound(2.2f);
+        this.zeppelin.playEngineSound(1.5f);
       //  this.zeppelinHitBox = new Rectangle(zeppelin.getX(), zeppelin.getY(), zeppelin.getWidth(), zeppelin.getHeight());
 
     }

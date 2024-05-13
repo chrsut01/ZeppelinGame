@@ -78,11 +78,11 @@ public class Plane extends Rectangle{
 
     private boolean isFacingZeppelin = false;
 
-    public boolean isFacing(Zeppelin zeppelin) {
+   public boolean isFacing(Zeppelin zeppelin) {
         if (!isFacingZeppelin && zeppelin != null) {
             float zepX = zeppelin.getX();
             float zepY = zeppelin.getY();
-            if ((zepX < x && zepY < y && yAngle < 0) || (zepX < x && zepY > y && yAngle > 0)) {
+            if ((zepX < x && zepY < y && yAngle < -10) || (zepX < x && zepY > y && yAngle > 10) || (zepX < x && zepY == y && yAngle < 5) || (zepX < x && zepY == y && yAngle > -5)) {
                 System.out.println("Plane isFacing the zeppelin");
                 isFacingZeppelin = true; // Set the flag to true after the condition is met
                 return true;
@@ -91,10 +91,11 @@ public class Plane extends Rectangle{
         return false;
     }
 
+
     public void playShootingSound() {
         if (shootingSound != null) {
             System.out.println("playShootingSound method called");
-            shootingSound.play(); // Start the shooting sound
+            shootingSound.play(10f); // Start the shooting sound
             shootingSoundStarted = true; // Set flag to indicate that shooting sound has started
         }
     }
@@ -128,7 +129,6 @@ public class Plane extends Rectangle{
     }
 
     private void stopShooting() {
-        System.out.println("Stop shooting");
         shootingStarted = false;
         shootingTime = 0;
     }
@@ -143,64 +143,6 @@ public class Plane extends Rectangle{
             }
         }
     }
-
-
-
-
- /*   public void shootBullets(float deltaTime) {
-        // Only shoot if the plane is facing the zeppelin and shooting hasn't started yet
-        if (canShoot && !shootingSoundStarted) {
-            System.out.println("shoot method: canShoot && !shootingSoundStarted");
-            playShootingSound(); // Start the shooting sound
-            shootingSoundStarted = true;
-            // timer for shooting bullets for 2 seconds
-            Timer.schedule(new Timer.Task() {
-                @Override
-                public void run() {
-                    updateBullets(deltaTime);
-                }
-            }, 0, 0.25f);  // timer for shooting bullets every 0.25 seconds
-        }
-    }*/
-
-
-    //First updateBullets method
-  /*  public void updateBullets(float deltaTime) {
-      //  System.out.println("updateBullets method called, startFacingTime: " + startFacingTime);
-        // Create and add bullets if shooting has started
-        if (shootingSoundStarted && startFacingTime < SHOOTING_TIME) {
-            startFacingTime += Gdx.graphics.getDeltaTime();
-            lastBulletTime += Gdx.graphics.getDeltaTime();
-
-          //  System.out.println("deltaTime= " + deltaTime);
-
-            // Check if it's time to spawn a bullet
-              //  System.out.println("startFacingTime < SHOOTING_TIME " + startFacingTime + " " + SHOOTING_TIME);
-                if(lastBulletTime >= BULLET_SPAWN_INTERVAL) {
-                    System.out.println("lastBulletTime >= BULLET_SPAWN_INTERVAL" + lastBulletTime + " " + BULLET_SPAWN_INTERVAL);
-                float velocityX = MathUtils.cosDeg(yAngle) * BULLET_SPEED;
-                float velocityY = MathUtils.sinDeg(yAngle) * BULLET_SPEED;
-
-                Bullet bullet = new Bullet(x, y, yAngle, velocityX, velocityY);
-                bullet.x = getX() + 5; // Set initial position
-                bullet.y = getY() + 10;
-                System.out.println("new bullet created");
-                //bullet.yAngle = yAngle; // Set initial angle
-
-                bullets.add(bullet);
-              //  lastBulletTime -= BULLET_SPAWN_INTERVAL; // Reset the timer
-            }
-
-            // Reset shooting time if necessary
-            if (startFacingTime >= SHOOTING_TIME) {
-                System.out.println("startFacingTime >= SHOOTING_TIME " + startFacingTime + " " + SHOOTING_TIME);
-                lastBulletTime = 0;
-                startFacingTime = 0;
-                shootingSoundStarted = false;
-            }
-
-    }
-    }*/
 
     public void setCanShoot(boolean canShoot) {
         this.canShoot = canShoot;

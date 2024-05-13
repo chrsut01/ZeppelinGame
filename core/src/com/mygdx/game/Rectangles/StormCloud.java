@@ -98,7 +98,6 @@ public class StormCloud extends Rectangle {
                     setShowLightning(false);
                     return;
                 }
-
                 float flickerDuration = MathUtils.random(0.01f, 0.05f); // Random duration for each flicker
                 float opacity = MathUtils.random(0.01f, 0.1f); // Random opacity
 

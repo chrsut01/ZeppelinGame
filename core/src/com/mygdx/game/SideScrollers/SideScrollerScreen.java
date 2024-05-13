@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -43,9 +45,9 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Zeppelin zeppelin;
     private static int highAltitude = 1800;
     private static float highAltitudeStartTime = 0;
-    private static float MAX_HIGH_ALTITUDE_TIME = 6f;
-
-
+    private static float MAX_HIGH_ALTITUDE_TIME = 1f;
+    private boolean showHighAltitudeWarning = false;
+    private Sound altitudeAlarmSound;
     private Plane plane;
     private final List<Plane> planes;
     private Bullet bullet;
@@ -102,7 +104,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         mapWidth = mapHeight / aspectRatio;
       //  zeppelin = Zeppelin.getInstance();
       //  initialize();
-
     }
 
     public void initialize() {
@@ -113,8 +114,8 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.box2DDebugRenderer = new Box2DDebugRenderer();
         this.tileMapHelper = new TileMapHelper(this);
         this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
-      //  zeppelinHitBox = new Rectangle(zeppelin.getX(), zeppelin.getY(), zeppelin.getWidth(), zeppelin.getHeight());
-
+        game.font = new BitmapFont();
+        this.altitudeAlarmSound = Gdx.audio.newSound(Gdx.files.internal("alarmSound.mp3"));
     }
 
     public void render(float delta) {
@@ -127,8 +128,15 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         batch.begin();
 
+        if (showHighAltitudeWarning) {
+            showHighAltitudeWarning();
+        }
 
         zeppelin.render(batch);
+
+        game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
+
+
 
         for (Plane plane : planes) {
             plane.render(batch);
@@ -142,11 +150,6 @@ public class SideScrollerScreen extends ScreenAdapter {
             bullet.render(batch);
         }
 
-      /*  for (Plane plane : planes) {
-            for (Bullet bullet : plane.bullets) {
-                bullet.render(batch);
-            }
-        }*/
 
         // Draw the map at the bottom left corner of the screen
         float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
@@ -190,6 +193,8 @@ public class SideScrollerScreen extends ScreenAdapter {
                 // Handle collision between plane and zeppelin
                 // planesHit++;
                 plane.planeCrashSound.play();
+                game.health -= 20;
+
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
@@ -212,10 +217,11 @@ public class SideScrollerScreen extends ScreenAdapter {
                 plane.planeCrashSound.play();
                 zeppelin.playCrashSound();
                 setZepCrashSoundPlayed(true);
-                // code so that zeppelin freezes in place
-                //zeppelin.setY(zeppelin.getY());
+                // so that zeppelin freezes in place
                 zeppelin.xSpeed = 0;
                 zeppelin.ySpeed = 0;
+                game.health = 0;
+
             }
         }
 
@@ -237,8 +243,10 @@ public class SideScrollerScreen extends ScreenAdapter {
             StormCloud stormCloud = iter.next();
             if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()){
                 System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
-                stormCloud.lightningStrikeSound.play(9.0f);
+                stormCloud.lightningStrikeSound.play(15.0f);
                 stormCloud.setLightningSoundPlayed(true);
+                game.health -= 30;
+
             }
         }
 
@@ -256,15 +264,33 @@ public class SideScrollerScreen extends ScreenAdapter {
                 bullet.updatePosition(delta);
             }
 
-            // Check if zeppelin is flying too high (for too long)
+        // Check if bullet hits the zeppelin
+        for (Iterator<Bullet> iter = plane.bullets.iterator(); iter.hasNext(); ) {
+            Bullet bullet = iter.next();
+            if (bullet.overlaps(zeppelin)){
+                bullet.bulletHitSound.play(10f);
+                bullet.setBulletHitSound(true);
+                game.health -= 1;
+                iter.remove();
+            }
+        }
+
+      //  boolean isAlarmSounding = false;
+
+        // Check if zeppelin is flying too high (for too long)
             if (zeppelin.getY() > highAltitude) {
                 highAltitudeStartTime += Gdx.graphics.getDeltaTime();
-                if(highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME) {
-                        showHighAltitudeWarning();
+                if(highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME && !showHighAltitudeWarning) {
+                        showHighAltitudeWarning = true;
                         highAltitudeStartTime = 0;
+                        scheduleWarningBlinking();
+                        altitudeAlarmSound.play(0.5f);
+                       // isAlarmSounding = true;
                     }
             } else {
+                showHighAltitudeWarning = false;
                 highAltitudeStartTime = 0;
+                altitudeAlarmSound.stop();
             }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
@@ -277,10 +303,32 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
     }
 
-    // method to show a pop-up dialogue box warning the player that the zeppelin is flying too high
+    private boolean showWarning = true;
+    // show a warning the player that the zeppelin is flying too high
     private void showHighAltitudeWarning() {
-        System.out.println("ZEPPELIN IS FLYING TOO HIGH!!!!!");
+        if (showWarning){
+        String warning = "Højde advarsel!\nBesætningen bliver svimmel!\nLavere højde hurtigt!";
+        game.font.draw(batch, warning, camera.position.x - camera.viewportWidth / 2 + 30, camera.position.y + camera.viewportHeight / 2 - 30);
+        game.font.getData().setScale(1.5f);
+
+        }
     }
+
+    // Method to toggle warning visibility
+    private void toggleWarningVisibility() {
+        showWarning = !showWarning;
+    }
+
+    // Schedule a timer to toggle warning visibility every second
+    private void scheduleWarningBlinking() {
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                toggleWarningVisibility();
+            }
+        }, 0, 0.5f); // Toggle every...
+    }
+
     public boolean isZepCrashSoundPlayed() {
         return zepCrashSoundPlayed;
     }
@@ -341,8 +389,8 @@ public class SideScrollerScreen extends ScreenAdapter {
         stormCloud = new StormCloud(x, y);
         stormClouds.add(stormCloud);
 
-        final float delayBeforeFlicker = MathUtils.random(2.5f, 3.5f);  // Random delay before starting flickering
-        final float totalFlickerDuration = MathUtils.random(0.9f, 1.3f);  // Random total duration for flickering
+        final float delayBeforeFlicker = MathUtils.random(3f, 3.5f);  // Random delay before starting flickering
+        final float totalFlickerDuration = MathUtils.random(1.5f, 2f);  // Random total duration for flickering
 
         // Schedule a task to start flickering after the random delay
         Timer.schedule(new Timer.Task() {

@@ -34,6 +34,7 @@ public class ZeppelinGame extends Game {
     private TileMapHelper tileMapHelper;
     private Screen currentScreen;
     private boolean isProgressingToNextLevel = false;
+    public int health = 100;
 
         private static ZeppelinGame instance;
         private ZeppelinGame() {
