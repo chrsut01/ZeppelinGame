@@ -32,7 +32,7 @@ public class Plane extends Rectangle{
     private static final int MAX_BULLETS = 10;
     private int bulletsShot = 0;
 
-    private boolean canShoot;
+    public boolean canShoot;
     private boolean shootingStarted;
     private float shootingTime;
 

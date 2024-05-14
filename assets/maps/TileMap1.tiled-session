@@ -7,15 +7,23 @@
         "C:/Users/chris/Downloads/Journey to Africa/Images.tsx": {
             "scaleInDock": 1
         },
+        "C:/Users/chris/Downloads/MapEgypt (1).tmx": {
+            "scale": 0.12361874999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 4004.2469285605953,
+                "y": 1282.1679559128365
+            }
+        },
         "C:/Users/chris/Downloads/MapEgypt.tmx": {
             "expandedObjectLayers": [
                 3
             ],
-            "scale": 1,
+            "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2166,
-                "y": 2303.5
+                "x": 7769.333333333333,
+                "y": 2348.6666666666665
             }
         },
         "C:/Users/chris/Downloads/MapMediterranean.tmx": {
@@ -25,8 +33,8 @@
             "scale": 0.5,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 2636,
-                "y": 2117
+                "x": 2634,
+                "y": 2115
             }
         },
         "C:/Users/chris/Downloads/MapTurkey (1).tmx": {
@@ -112,11 +120,11 @@
             "scaleInDock": 1
         },
         "MapTurkey.tmx": {
-            "scale": 0.5,
+            "scale": 0.125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 4498,
-                "y": 1753
+                "x": 4280,
+                "y": 2076
             }
         },
         "MapTurkey2.tmx": {
@@ -182,6 +190,7 @@
     ],
     "project": "TileMap1.tiled-project",
     "recentFiles": [
+        "C:/Users/chris/Downloads/MapEgypt (1).tmx",
         "MapTurkey.tmx",
         "MapTurkey2.tmx",
         "C:/Users/chris/Downloads/ZepTurkey..tmx",

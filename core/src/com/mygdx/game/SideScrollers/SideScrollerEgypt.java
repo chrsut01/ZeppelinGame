@@ -1,6 +1,5 @@
 package com.mygdx.game.SideScrollers;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
@@ -9,7 +8,6 @@ public class SideScrollerEgypt extends SideScrollerScreen {
     private static final String tilemapFileName = "maps/MapTurkey.tmx";
 
     public Zeppelin zeppelin;
-    private Rectangle zeppelinHitBox;
     private World world;
 
     public SideScrollerEgypt(ZeppelinGame game) {
@@ -22,8 +20,6 @@ public class SideScrollerEgypt extends SideScrollerScreen {
         super.initialize();
         this.zeppelin = Zeppelin.getInstance();
         this.zeppelin.playEngineSound(1.5f);
-      //  this.zeppelinHitBox = new Rectangle(zeppelin.getX(), zeppelin.getY(), zeppelin.getWidth(), zeppelin.getHeight());
-
     }
 
     @Override

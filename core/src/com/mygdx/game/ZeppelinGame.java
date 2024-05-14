@@ -13,6 +13,7 @@ import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
 import com.mygdx.game.SideScrollers.SideScrollerEgypt;
+import com.mygdx.game.SideScrollers.SideScrollerMed;
 import com.mygdx.game.SideScrollers.SideScrollerScreen;
 
 import java.util.ArrayList;
@@ -60,20 +61,20 @@ public class ZeppelinGame extends Game {
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
-       // List<Dilemma> dilemmasBulg = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/BulgDilemmas.json");
-       // List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+       // List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
+        List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
       //  List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
-       // SideScrollerBulg sideScrollerBulg = new SideScrollerBulg(this);
-       // SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+       // SideScrollerBulg sideScrollerTurkey = new SideScrollerTukey(this);
+        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
       //  SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
-    //    GameLevel gameLevelBulg = new GameLevel(sideScrollerBulg, dilemmasBulg);
+    //    GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
        // System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
-    //    GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+        GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
        // System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
        // System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
@@ -81,8 +82,8 @@ public class ZeppelinGame extends Game {
 
         gameLevels = new ArrayList<>();
 
-    //    gameLevels.add(gameLevelBulg);
-    //    gameLevels.add(gameLevelMed);
+    //    gameLevels.add(gameLevelTurkey);
+        gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
      //   gameLevels.add(gameLevelSudan);
 

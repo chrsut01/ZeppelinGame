@@ -39,7 +39,7 @@ public class StormCloud extends Rectangle {
         lightningStrikeSound = Gdx.audio.newSound(Gdx.files.internal("lightning_strike.mp3"));
         stormCloudSprite = new Sprite(stormCloudImage);
         stormCloudSprite.setSize(width, height);
-        lightningTexture = new Texture("lightning_less_blue.png");
+        lightningTexture = new Texture("lightning.png");
         lightningSprite = new Sprite(lightningTexture);
         this.showLightning = false;
     }
@@ -51,15 +51,6 @@ public class StormCloud extends Rectangle {
 
       timeSinceSpawn += deltaTime;
 
-   /*   if (!showLightning && timeSinceSpawn >= 3.5f) {
-         showLightning = true;
-         Timer.schedule(new Timer.Task() {
-            @Override
-            public void run() {
-                showLightning = false;
-            }
-        }, lightningDuration); // Delay before showing lightning (adjust as needed)
-      }*/
   }
 
     public boolean overlaps(Zeppelin zeppelin) {
