@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.GameConfig;
@@ -20,11 +21,12 @@ public class Zeppelin extends Rectangle {
     private static final float DECELERATION = 20f; // Deceleration factor
     private static final float MIN_SPEED = 1; // Minimum speed before stopping
 
-    private float ySpeed = 0;
-    private final float xSpeed = 80;
+    public float ySpeed = 0;
+    public float xSpeed = 80;
 
     private Sprite zeppelinSprite;
     private Sound engineSound;
+    public Sound zeppelinCrashSound;
 
     private Zeppelin() {
         init();
@@ -50,9 +52,7 @@ public class Zeppelin extends Rectangle {
 
         zeppelinSprite.setOrigin(width / 2, height / 2);
         zeppelinSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
-                GameConfig.SCREEN_HEIGHT / 2f - height / 2 + 500);
-
-        playEngineSound(2.2f); // Set the initial volume (you can change this value)
+                GameConfig.TILEMAP_HEIGHT / 2f - height / 2);
     }
 
     public void update() {
@@ -67,8 +67,13 @@ public class Zeppelin extends Rectangle {
     public void playEngineSound(float volume) {
         engineSound.loop(volume);
     }
+    public void playCrashSound() {
+        zeppelinCrashSound = Gdx.audio.newSound(Gdx.files.internal("plane_crash.mp3"));
+        zeppelinCrashSound.play(1.0f);
+    }
 
     private void handleInput() {
+
         // Handle user input for zeppelin movement
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
             ySpeed += ACCELERATION * Gdx.graphics.getDeltaTime();
@@ -104,16 +109,17 @@ public class Zeppelin extends Rectangle {
         zeppelinSprite.setY(MathUtils.clamp(zeppelinSprite.getY(), minY, maxY));
     }
 
-    public void dispose() {
-        zeppelinSprite.getTexture().dispose();
-        engineSound.dispose();
+    // Check if zeppelin overlaps with a polygonMapObject
+    public boolean overlaps (PolygonMapObject polygonMapObject) {
+        Rectangle zeppelinBounds = new Rectangle(getX() + 15, getY() + 10, getWidth() - 32, getHeight() - 20);
+        return polygonMapObject.getPolygon().getBoundingRectangle().overlaps(getBoundingRectangle());
     }
 
     public float getWidth() {
-        return zeppelinSprite.getWidth();
+        return width;
     }
     public float getHeight() {
-        return  zeppelinSprite.getHeight();
+        return  height;
     }
     public float getX() {
         return zeppelinSprite.getX();
@@ -124,7 +130,13 @@ public class Zeppelin extends Rectangle {
     }
 
     public Rectangle getBoundingRectangle() {
-        return new Rectangle(zeppelinSprite.getX(), zeppelinSprite.getY(), zeppelinSprite.getWidth(), zeppelinSprite.getHeight());
+        return new Rectangle(zeppelinSprite.getX() + 15, zeppelinSprite.getY() + 10, zeppelinSprite.getWidth() - 32, zeppelinSprite.getHeight() - 20);
+    }
+    public void dispose() {
+        zeppelinSprite.getTexture().dispose();
+        engineSound.dispose();
+        zeppelinCrashSound.dispose();
+
     }
 
 }
