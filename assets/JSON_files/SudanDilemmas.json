@@ -1,33 +1,11 @@
 [
   {
-    "question": "Sudan 1st Question: Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
+    "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
     "answers": ["Sten", "Vand", "Sand"],
     "responses": [
       "Forkert, det er for farligt og smide ud.",
-      "Korrekt vand er den bedste løsning da det respresentere vaegt men også splitter sig når det falder ned.",
+      "Korrekt vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
       "Forkert, sand er for farligt og smide ud."
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 1
-  },
-  {
-    "question": "SUdan 2nd Question: What is the capital of France?",
-    "answers": ["Paris", "Berlin", "London"],
-    "responses": [
-      "Correct! Paris is the capital of France.",
-      "Incorrect. Berlin is the capital of Germany.",
-      "Incorrect. London is the capital of the United Kingdom."
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 0
-  },
-  {
-    "question": "Sudan 3rd Question: What is the capital of Germany?",
-    "answers": ["Paris", "Berlin", "London"],
-    "responses": [
-      "No! Paris is the capital of France.",
-      "Correct! Berlin is the capital of Germany.",
-      "Incorrect. London is the capital of the United Kingdom."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 1

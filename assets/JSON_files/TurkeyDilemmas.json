@@ -1,9 +1,9 @@
 [
   {
-    "question": "1st Bulg question: Foerst og fremmest, skal vi bruge noget til at faa vores zeppelin til at flyve. Hvad skal vi bruge?",
+    "question": "Foerst og fremmest, skal vi bruge noget til at faa vores zeppelin til at flyve. Hvad skal vi bruge?",
     "answers": ["Helium", "Varm luft", "Hydrogen"],
     "responses": [
-      "Det er ikke korrekt, det er for ustabilt.",
+      "Forkert, det er for ustabilt.",
       "Forkert varm luft ryger for hurtigt ud af ballonerne.",
       "Korrekt, Helium er det rigtige og bruge."
     ],
@@ -11,25 +11,36 @@
     "correctAnswerIndex": 2
   },
     {
-      "question": "2nd Bulg question: Du skal bruge noget til at holde på hydrogenen, hvad vaelger du?",
+      "question": "Du skal bruge noget til at holde på hydrogenen, hvad vaelger du?",
       "answers": ["Laeder lavet af ko maver", "Gummi fra gummifigen", "Linned daekket i kanin hud lim"],
       "responses": [
         "Korrekt ko maverne er gode til at holde på hydrogenen.",
         "Forkert, det er ikke gummi.",
-        "Forkert, det er ikke linned dækket i kanin hud lim."
+        "Forkert, det er ikke linned daekket i kanin hud lim."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 0
   },
     {
-      "question": "3rd Bulg question: Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
+      "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
       "answers": ["Sten", "Vand", "Sand"],
       "responses": [
         "Forkert, det er for farligt og smide ud.",
-        "Korrekt vand er den bedste løsning da det respresentere vaegt men også splitter sig når det falder ned.",
+        "Korrekt vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
         "Forkert, sand er for farligt og smide ud."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 1
+  },
+  {
+    "question": "Du er naaet til Tyrkiet du er kommet for langt op, hvad goer du?",
+    "answers": ["Lukker vand ud", "Goer ingenting", "Lukker hydrogen ud"],
+    "responses": [
+      "Forkert. Hvis du lukker vand ud kommer du laengere op.",
+      "Forkert. Saa kommer du ikke ned af.",
+      "Korrekt. Du skal lukke hydrogen ud for at falde i hoejden."
+    ],
+    "imagePath": "badlogic.jpg",
+    "correctAnswerIndex": 2
   }
 ]

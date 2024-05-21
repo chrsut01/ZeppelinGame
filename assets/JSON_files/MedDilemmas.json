@@ -1,26 +1,13 @@
 [
   {
-  "question": "Med 1st Dilemma: Du er naaet til kysten ved Graekenland, du ser tordenvejr ude i horisonten. Hvad goer du?",
+  "question": "Du er naaet til kysten ved Graekenland, du ser tordenvejr ude i horisonten. Hvad goer du?",
   "answers": ["Lukker vand ud", "Goer ingenting", "Lukker ilt ud"],
   "responses": [
     "Korrekt! Det vil faa zeppelineren til at haeve sig over stormskyerne..",
-    "Incorrect. Proev igen",
-    "Incorrect. Det vil få zeppelineren til at falde i hoejde og risikere du at blive ramt af lyn."
+    "Forkert. Proev igen",
+    "Forkert. Det vil faa zeppelineren til at falde i hoejde og du risikere at blive ramt af lyn."
   ],
   "imagePath": "badlogic.jpg",
   "correctAnswerIndex": 0
-  },
-
-  {
-    "question": "Med last Dilemma: Correct answer is the third one?",
-    "answers": ["Not this one", "Also not this one", "Try this one"],
-    "responses": [
-      "Wrong!",
-      "Wrong!",
-      "Right!"
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 2
   }
-
 ]

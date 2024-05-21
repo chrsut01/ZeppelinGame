@@ -1,24 +1,14 @@
 [
   {
-    "question": "Egypt 1st Question: Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
-    "answers": ["Sten", "Vand", "Sand"],
+    "question": "Du er naaet til Aegypten, temperaturen er steget en del, trykzonen har aendret sig, hvad goer du?",
+    "answers": ["Flyver op", "Forsaetter i samme hoejde", "Flyver ned af"],
     "responses": [
-      "Forkert, det er for farligt og smide ud.",
-      "Korrekt vand er den bedste løsning da det respresentere vaegt men også splitter sig når det falder ned.",
-      "Forkert, sand er for farligt og smide ud."
-    ],
-    "imagePath": "badlogic.jpg",
-    "correctAnswerIndex": 1
-  },
-  {
-    "question": "Egypt 2nd Question: What is the capital of France?",
-    "answers": ["Paris", "Berlin", "London"],
-    "responses": [
-      "Correct! Paris is the capital of France.",
-      "Incorrect. Berlin is the capital of Germany.",
-      "Incorrect. London is the capital of the United Kingdom."
+      "Korrekt. Du skal op naar det er varmt.",
+      "Forkert. Du vil flyve meget ustabilt.",
+      "Forkert. Det kan få alvorlige konsekvenser at vaere i den her trykzone."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 0
   }
+
 ]
