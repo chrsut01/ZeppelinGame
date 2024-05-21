@@ -1,33 +1,33 @@
 [
   {
-    "question": "1st Bulg question: Først og fremmest, skal vi bruge noget til at få vores zeppelin til at flyve. Hvad skal vi bruge?",
+    "question": "1st Bulg question: Foerst og fremmest, skal vi bruge noget til at faa vores zeppelin til at flyve. Hvad skal vi bruge?",
     "answers": ["Helium", "Varm luft", "Hydrogen"],
     "responses": [
-      "Not the correct answer. Too unstable.",
-      "Incorrect hot ait simply isen’t effective enough.",
-      "Correct. A Zeppelin can float with Helium."
+      "Det er ikke korrekt, det er for ustabilt.",
+      "Forkert varm luft ryger for hurtigt ud af ballonerne.",
+      "Korrekt, Helium er det rigtige og bruge."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 2
   },
     {
-      "question": "2nd Bulg question: Du skal bruge noget til at holde på hydrogenen, hvad vælger du?",
-      "answers": ["Læder lavet af ko maver", "Gummi fra gummifigen", "Linned dækket i kanin hud lim"],
+      "question": "2nd Bulg question: Du skal bruge noget til at holde på hydrogenen, hvad vaelger du?",
+      "answers": ["Laeder lavet af ko maver", "Gummi fra gummifigen", "Linned daekket i kanin hud lim"],
       "responses": [
-        "Correct it is cow stomaches. It sealed the hydrogen in.",
-        "Incorrect. Its not Gummi.",
-        "InCorrect! Its not linned covered in rabbit glue."
+        "Korrekt ko maverne er gode til at holde på hydrogenen.",
+        "Forkert, det er ikke gummi.",
+        "Forkert, det er ikke linned dækket i kanin hud lim."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 0
   },
     {
-      "question": "3rd Bulg question: Du skal finde en måde at gøre så zeppelinen ikke flyver for højt op, som du sikkert kan droppe når du har brug for det, Hvad skal du bruge?",
+      "question": "3rd Bulg question: Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
       "answers": ["Sten", "Vand", "Sand"],
       "responses": [
-        "Incorrect that is to dangerous to throw out.",
-        "Correct. Water is the perfect option and doesn't cause a trouble for anyone.",
-        "Incorrect sand is to dangerous to throw out."
+        "Forkert, det er for farligt og smide ud.",
+        "Korrekt vand er den bedste løsning da det respresentere vaegt men også splitter sig når det falder ned.",
+        "Forkert, sand er for farligt og smide ud."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 1

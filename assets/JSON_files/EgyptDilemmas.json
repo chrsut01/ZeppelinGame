@@ -1,11 +1,11 @@
 [
   {
-    "question": "Egypt 1st Question: Du skal finde en måde at gøre så zeppelinen ikke flyver for højt op, som du sikkert kan droppe når du har brug for det, Hvad skal du bruge?",
+    "question": "Egypt 1st Question: Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
     "answers": ["Sten", "Vand", "Sand"],
     "responses": [
-      "Incorrect that is to dangerous to throw out.",
-      "Correct. Water is the perfect option and doesn't cause a trouble for anyone.",
-      "Incorrect sand is to dangerous to throw out."
+      "Forkert, det er for farligt og smide ud.",
+      "Korrekt vand er den bedste løsning da det respresentere vaegt men også splitter sig når det falder ned.",
+      "Forkert, sand er for farligt og smide ud."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 1
