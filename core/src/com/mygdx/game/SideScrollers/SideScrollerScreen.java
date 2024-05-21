@@ -48,16 +48,16 @@ public class SideScrollerScreen extends ScreenAdapter {
     private static float MAX_HIGH_ALTITUDE_TIME = 1f;
     private boolean showHighAltitudeWarning = false;
     private Sound altitudeAlarmSound;
-    private Plane plane;
-    private final List<Plane> planes;
+    private Timer healthDecreaseTimer;
+    protected Plane plane;
+    protected final List<Plane> planes;
     private Bullet bullet;
-    // 250 milliseconds (4 bullets per second)
     private boolean zepCrashSoundPlayed = false;
     private final World world;
     private final Random random;
     private static final int MIN_Y_ANGLE = 0;
     private static final int MAX_Y_ANGLE = 60;
-    private OrthographicCamera camera;
+    protected OrthographicCamera camera;
     private final SpriteBatch batch;
 
     private Stage stage;
@@ -78,12 +78,9 @@ public class SideScrollerScreen extends ScreenAdapter {
     public static final float MIN_StormCloud_SPAWN_TIME = 5f;
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
 
-
     private Texture mapImage;
-
     private float mapWidth;
     private float mapHeight;
-
 
 
     public SideScrollerScreen (String tilemapFileName, ZeppelinGame game){
@@ -135,8 +132,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         zeppelin.render(batch);
 
         game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
-
-
+        game.font.getData().setScale(1.5f);
 
         for (Plane plane : planes) {
             plane.render(batch);
@@ -146,10 +142,11 @@ public class SideScrollerScreen extends ScreenAdapter {
             stormCloud.render(batch);
         }
 
+        if (plane != null && plane.bullets != null){
         for (Bullet bullet : plane.bullets) {
             bullet.render(batch);
+            }
         }
-
 
         // Draw the map at the bottom left corner of the screen
         float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
@@ -190,8 +187,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         for (Iterator<Plane> iter = planes.iterator(); iter.hasNext(); ) {
             Plane plane = iter.next();
             if (plane.overlaps(zeppelin)) {
-                // Handle collision between plane and zeppelin
-                // planesHit++;
                 plane.planeCrashSound.play();
                 game.health -= 20;
 
@@ -250,47 +245,53 @@ public class SideScrollerScreen extends ScreenAdapter {
             }
         }
 
-        // Check if it's time to spawn a bullet
-      /*  if (plane.isFacing(zeppelin)) {
-            plane.shootBullets(delta);
-        }*/
-
-        for (Plane plane : planes) {
-            plane.updateBullets(delta);
-            }
-          //  plane.updateBullets(delta);
-
+        if (plane != null && plane.canShoot && plane.bullets != null) {
             for (Bullet bullet : plane.bullets) {
                 bullet.updatePosition(delta);
             }
-
-        // Check if bullet hits the zeppelin
-        for (Iterator<Bullet> iter = plane.bullets.iterator(); iter.hasNext(); ) {
-            Bullet bullet = iter.next();
-            if (bullet.overlaps(zeppelin)){
-                bullet.bulletHitSound.play(10f);
-                bullet.setBulletHitSound(true);
-                game.health -= 1;
-                iter.remove();
-            }
         }
 
-      //  boolean isAlarmSounding = false;
+
+     /*   for (Plane plane : planes) {
+            plane.updateBullets(delta);
+            }
+
+            for (Bullet bullet : plane.bullets) {
+                bullet.updatePosition(delta);
+            }*/
+
+        // Check if bullet hits the zeppelin
+        if (plane != null && plane.bullets != null) {
+            for (Iterator<Bullet> iter = plane.bullets.iterator(); iter.hasNext(); ) {
+                Bullet bullet = iter.next();
+                if (bullet.overlaps(zeppelin)) {
+                    bullet.bulletHitSound.play(10f);
+                    bullet.setBulletHitSound(true);
+                    game.health -= 1;
+                    iter.remove();
+                }
+            }
+        }
 
         // Check if zeppelin is flying too high (for too long)
             if (zeppelin.getY() > highAltitude) {
                 highAltitudeStartTime += Gdx.graphics.getDeltaTime();
-                if(highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME && !showHighAltitudeWarning) {
-                        showHighAltitudeWarning = true;
-                        highAltitudeStartTime = 0;
-                        scheduleWarningBlinking();
-                        altitudeAlarmSound.play(0.5f);
-                       // isAlarmSounding = true;
-                    }
-            } else {
-                showHighAltitudeWarning = false;
-                highAltitudeStartTime = 0;
-                altitudeAlarmSound.stop();
+                if (highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME && !showHighAltitudeWarning) {
+                    showHighAltitudeWarning = true;
+                    highAltitudeStartTime = 0;
+                    scheduleWarningBlinking();
+                    altitudeAlarmSound.play(0.5f);
+                    startHealthDecreaseTimer();
+                }
+                } else {
+                    showHighAltitudeWarning = false;
+                    highAltitudeStartTime = 0;
+                    altitudeAlarmSound.stop();
+
+                if (healthDecreaseTimer != null) {
+                    healthDecreaseTimer.stop();
+                    healthDecreaseTimer = null;
+                }
             }
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
@@ -310,7 +311,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         String warning = "Højde advarsel!\nBesætningen bliver svimmel!\nLavere højde hurtigt!";
         game.font.draw(batch, warning, camera.position.x - camera.viewportWidth / 2 + 30, camera.position.y + camera.viewportHeight / 2 - 30);
         game.font.getData().setScale(1.5f);
-
         }
     }
 
@@ -327,6 +327,18 @@ public class SideScrollerScreen extends ScreenAdapter {
                 toggleWarningVisibility();
             }
         }, 0, 0.5f); // Toggle every...
+    }
+
+    // Method to start the timer for decreasing health at high altitude
+    private void startHealthDecreaseTimer() {
+        healthDecreaseTimer = new Timer();
+        healthDecreaseTimer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                // Decrease health points every second
+                game.health -= 2; // Adjust the amount as needed
+            }
+        }, 1, 1); // Start after 1 second and repeat every 1 second
     }
 
     public boolean isZepCrashSoundPlayed() {
@@ -375,7 +387,6 @@ public class SideScrollerScreen extends ScreenAdapter {
             y = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
         }
         plane = new Plane(x, y, yAngle);
-        System.out.println("Plane created at x: " + x + " y: " + y + " yAngle: " + yAngle);
         plane.planeFlyingSound.play();
         planes.add(plane);
     }
@@ -390,7 +401,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         stormClouds.add(stormCloud);
 
         final float delayBeforeFlicker = MathUtils.random(3f, 3.5f);  // Random delay before starting flickering
-        final float totalFlickerDuration = MathUtils.random(1.5f, 2f);  // Random total duration for flickering
+        final float totalFlickerDuration = MathUtils.random(3.5f, 5f);  // Random total duration for flickering
 
         // Schedule a task to start flickering after the random delay
         Timer.schedule(new Timer.Task() {
@@ -417,14 +428,20 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
 
     public void dispose(){
+        if (plane != null && plane.bullets != null){
         for (Bullet bullet : plane.bullets) {
             if (bullet != null) {
                 bullet.dispose();}
+            }
         }
         planes.forEach(Plane::dispose);
         planes.clear();
         stormClouds.forEach(StormCloud::dispose);
         stormClouds.clear();
+        altitudeAlarmSound.dispose();
+        game.font.dispose();
+        mapImage.dispose();
+
         tileMapHelper.dispose();
 
         //   orthogonalTiledMapRenderer.dispose();
@@ -439,7 +456,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         if (box2DDebugRenderer != null) {
             box2DDebugRenderer.dispose();
         }
-
 
         Zeppelin.setInstance(null);
     }

@@ -1,26 +1,25 @@
 package com.mygdx.game.SideScrollers;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerSudan extends SideScrollerScreen {
 
-    private static final String tilemapFileName = "maps/ZepMap1.tmx";
+    private static final String tilemapFileName = "maps/MapSudan.tmx";
 
     public Zeppelin zeppelin;
     private World world;
-    private SpriteBatch batch;
 
     public SideScrollerSudan(ZeppelinGame game) {
         super(tilemapFileName, game);
     }
 
     public void initialize() {
-        this.zeppelin = Zeppelin.getInstance();
         System.out.println("SideScrollerSudan initialize() called.");
         super.initialize();
+        this.zeppelin = Zeppelin.getInstance();
+        this.zeppelin.playEngineSound(1.5f);
     }
 
     @Override
@@ -55,7 +54,7 @@ public class SideScrollerSudan extends SideScrollerScreen {
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerBulg show() method called.");
+        System.out.println("SideScrollerSudan show() method called.");
     }
 
     public World getWorld() {
