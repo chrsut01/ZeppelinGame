@@ -58,6 +58,7 @@ public class SideScrollerTurkey extends SideScrollerScreen {
         plane = new Plane(x, y, yAngle);
         System.out.println("Plane x: " + x + " y: " + y + " yAngle: " + yAngle);
         plane.planeFlyingSound.play();
+        plane.canShoot = false;
         planes.add(plane);
     }
 

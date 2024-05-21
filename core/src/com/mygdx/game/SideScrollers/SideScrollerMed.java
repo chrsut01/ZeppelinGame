@@ -46,6 +46,7 @@ public class SideScrollerMed extends SideScrollerScreen {
     @Override
     public void spawnPlane() {
         super.spawnPlane();
+        plane.setCanShoot(false);
     }
 
     @Override
