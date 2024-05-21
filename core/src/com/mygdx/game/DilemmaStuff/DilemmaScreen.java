@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -28,7 +25,6 @@ public class DilemmaScreen extends ScreenAdapter {
     private final ZeppelinGame game;
     private final GameLevel gameLevel;
     protected Dilemma dilemma;
-   // private SideScrollerScreen sideScroller;
 
     private final Stage stage;
 
@@ -38,12 +34,12 @@ public class DilemmaScreen extends ScreenAdapter {
     private final float scaleX = 2.0f;
     private final float scaleY = 2.0f;
 
-    private Label questionLabel;
+   // private Label questionLabel;
     private TextureRegionDrawable background;
-    private OrthographicCamera camera;
-    private Box2DDebugRenderer box2DDebugRenderer;
-    private World world;
-    private TextField questionTextField;
+  //  private OrthographicCamera camera;
+  //  private Box2DDebugRenderer box2DDebugRenderer;
+  //  private World world;
+  //  private TextField questionTextField;
 
     private DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
         System.out.println("DilemmaScreen: constructor called");
@@ -94,6 +90,9 @@ public class DilemmaScreen extends ScreenAdapter {
         answerButtons = new TextButton[dilemma.getAnswers().size()];
         float buttonY = Gdx.graphics.getHeight() - 280; // Initial Y position for buttons
 
+        Label.LabelStyle responseLabelStyle = new Label.LabelStyle(font, fontColor);
+        Label responseLabel = new Label("", responseLabelStyle);
+
         for (int i = 0; i < answerButtons.length; i++) {
             String answer = dilemma.getAnswers().get(i);
             int index = i; // Declare final variable here
@@ -102,7 +101,7 @@ public class DilemmaScreen extends ScreenAdapter {
             button.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    responseTextField.setText(dilemma.getResponses().get(index));
+                    responseLabel.setText(dilemma.getResponses().get(index));
                     System.out.println("Answer button clicked");
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
@@ -117,7 +116,7 @@ public class DilemmaScreen extends ScreenAdapter {
                                     setNextDilemma(nextDilemma);
                                   //  System.out.println("DilemmaScreen, correct answer goToNextDilemma(nextDilemma) called");
                                 }
-                            }, 0.5f);
+                            }, 1f);
                         } else {
                             Timer.schedule(new Timer.Task() {
                                 @Override
@@ -134,11 +133,11 @@ public class DilemmaScreen extends ScreenAdapter {
             stage.addActor(button);
         }
 
-        // Create and position response text field
-        responseTextField = new TextField("", skin);
-        responseTextField.setPosition(100, 100);
-        responseTextField.setSize(1000, 150);
-        stage.addActor(responseTextField);
+        responseLabel.setPosition(100, 100);
+        responseLabel.setSize(1000, 150);
+        responseLabel.setWrap(true);
+        stage.addActor(responseLabel);
+
     }
 
 
@@ -170,12 +169,8 @@ public class DilemmaScreen extends ScreenAdapter {
     }
     @Override
     public void dispose() {
-        //   background.getRegion().getTexture().dispose();
-       // game.dispose();
         skin.dispose();
         stage.dispose();
-       // questionTextField.clear();
-        responseTextField.clear();
         for (TextButton button : answerButtons) { button.clear(); }
        // Added to prevent memory leak ????
         dilemma = null;

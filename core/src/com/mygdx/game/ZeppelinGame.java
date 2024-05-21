@@ -12,7 +12,9 @@ import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
-import com.mygdx.game.SideScrollers.*;
+import com.mygdx.game.SideScrollers.SideScrollerEgypt;
+import com.mygdx.game.SideScrollers.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.SideScrollerSudan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,12 @@ public class ZeppelinGame extends Game {
     private int currentLevelCount = 0;
     public SpriteBatch batch;
     public BitmapFont font;
-    private IntroScreen introScreen;
+  //  private IntroScreen introScreen;
+    private Screen IntroScreen;
     private SideScrollerScreen sideScrollerScreen;
-    private ClosingScreen closingScreen;
+   // private ClosingScreen closingScreen;
+    private Screen ClosingScreen;
+    private Screen GameOverScreen;
     private DilemmaScreen dilemmaScreen;
 
     private List<SideScrollerScreen> sideScrollers;
@@ -54,35 +59,37 @@ public class ZeppelinGame extends Game {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
 
-        introScreen = new IntroScreen(this);
-        closingScreen = new ClosingScreen(this);
+        IntroScreen = new IntroScreen(this);
+        ClosingScreen = new ClosingScreen(this);
+
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
       //  List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
-        List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+      //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
         List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
      //   SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
-        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+      //  SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
         SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
       //  GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
-        GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+      //  GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
         GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
       //  gameLevels.add(gameLevelTurkey);
-        gameLevels.add(gameLevelMed);
+      //  gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
         gameLevels.add(gameLevelSudan);
 
-        setScreen(introScreen);
+        setScreen(IntroScreen);
+
 
     }
  /*   public void progressToNextLevel() {
@@ -125,7 +132,7 @@ public class ZeppelinGame extends Game {
             isProgressingToNextLevel = false;
         }
         } else {
-            switchScreen(closingScreen);
+            switchScreen(ClosingScreen);
         }
     }
 

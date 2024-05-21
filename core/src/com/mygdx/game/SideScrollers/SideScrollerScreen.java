@@ -63,12 +63,13 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Stage stage;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private Screen introScreen;
-    private Screen closingScreen;
+    private Screen IntroScreen;
+    private Screen ClosingScreen;
+    private Screen GameOverScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
-    private static final float PLANE_SPAWN_DELAY = 5f; // Delay in seconds before planes can spawn
-    private static final float STORMCLOUD_SPAWN_DELAY = 10f; // Delay in seconds before storm clouds can spawn
+    private static final float PLANE_SPAWN_DELAY = 3f; // Delay in seconds before planes can spawn
+    private static final float STORMCLOUD_SPAWN_DELAY = 7f; // Delay in seconds before storm clouds can spawn
     private long screenStartTime;
     public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
     public static final float MAX_PLANE_SPAWN_TIME = 10f;
@@ -178,9 +179,9 @@ public class SideScrollerScreen extends ScreenAdapter {
         if (elapsedTimeSeconds > PLANE_SPAWN_DELAY) {
             if (TimeUtils.timeSinceMillis(lastPlaneTime) > planeSpawnTimer) {
                 spawnPlane();
-            // Generate a new random spawn delay
+                // Generate a new random spawn delay
                 planeSpawnTimer = MathUtils.random(MIN_PLANE_SPAWN_TIME * 1000, MAX_PLANE_SPAWN_TIME * 1000);
-            // Update the last plane spawn time
+                // Update the last plane spawn time
                 lastPlaneTime = TimeUtils.millis();
             }
         }
@@ -227,16 +228,16 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if it's time to spawn a cloud
-       // float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
+        // float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
         elapsedTimeSeconds = elapsedTime / 1_000_000_000.0f;
         // Check if it's time to spawn a plane
         if (elapsedTimeSeconds > STORMCLOUD_SPAWN_DELAY) {
-        if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
-            spawnStormCloud();
-            // Generate a new random spawn delay
-            stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
-            // Update the last storm cloud spawn time
-            lastStormCloudTime = TimeUtils.millis();
+            if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
+                spawnStormCloud();
+                // Generate a new random spawn delay
+                stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
+                // Update the last storm cloud spawn time
+                lastStormCloudTime = TimeUtils.millis();
             }
         }
 
@@ -247,7 +248,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         // Check if zeppelin hits the stormCloudBounds
         for (Iterator<StormCloud> iter = stormClouds.iterator(); iter.hasNext(); ) {
             StormCloud stormCloud = iter.next();
-            if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()){
+            if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()) {
                 System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
                 stormCloud.lightningStrikeSound.play(15.0f);
                 stormCloud.setLightningSoundPlayed(true);
@@ -263,14 +264,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
 
-     /*   for (Plane plane : planes) {
-            plane.updateBullets(delta);
-            }
-
-            for (Bullet bullet : plane.bullets) {
-                bullet.updatePosition(delta);
-            }*/
-
         // Check if bullet hits the zeppelin
         if (plane != null && plane.bullets != null) {
             for (Iterator<Bullet> iter = plane.bullets.iterator(); iter.hasNext(); ) {
@@ -285,33 +278,52 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if zeppelin is flying too high (for too long)
-            if (zeppelin.getY() > highAltitude) {
-                highAltitudeStartTime += Gdx.graphics.getDeltaTime();
-                if (highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME && !showHighAltitudeWarning) {
-                    showHighAltitudeWarning = true;
-                    highAltitudeStartTime = 0;
-                    scheduleWarningBlinking();
-                    altitudeAlarmSound.play(0.5f);
-                    startHealthDecreaseTimer();
-                }
-                } else {
-                    showHighAltitudeWarning = false;
-                    highAltitudeStartTime = 0;
-                    altitudeAlarmSound.stop();
-
-                if (healthDecreaseTimer != null) {
-                    healthDecreaseTimer.stop();
-                    healthDecreaseTimer = null;
-                }
+        if (zeppelin.getY() > highAltitude) {
+            highAltitudeStartTime += Gdx.graphics.getDeltaTime();
+            if (highAltitudeStartTime > MAX_HIGH_ALTITUDE_TIME && !showHighAltitudeWarning) {
+                showHighAltitudeWarning = true;
+                highAltitudeStartTime = 0;
+                scheduleWarningBlinking();
+                altitudeAlarmSound.play(0.5f);
+                startHealthDecreaseTimer();
             }
+        } else {
+            showHighAltitudeWarning = false;
+            highAltitudeStartTime = 0;
+            altitudeAlarmSound.stop();
+
+            if (healthDecreaseTimer != null) {
+                healthDecreaseTimer.stop();
+                healthDecreaseTimer = null;
+            }
+        }
+
+        // Check if the game health is zero and schedule the game over screen switch
+        if (game.health <= 0) {
+            game.health = 0;
+            System.out.println("From SideScroller: Health reaches 0 points. Game Over!");
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    game.switchScreen(GameOverScreen);
+                    dispose();
+                }
+            }, 2); // 2 seconds delay
+        }
+
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 4000) {
+        if (zeppelin.getX() > 6000) {
             System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
-            game.incrementCurrentLevelCount();
-            game.progressToNextLevel();
-           // game.switchScreen(closingScreen);
-            dispose();
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    game.incrementCurrentLevelCount();
+                    game.progressToNextLevel();
+                    // game.switchScreen(closingScreen);
+                    dispose();
+                }
+            }, 2);
         }
     }
 

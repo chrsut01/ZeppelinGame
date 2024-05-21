@@ -5,7 +5,7 @@
     "responses": [
       "Korrekt. Du skal op naar det er varmt.",
       "Forkert. Du vil flyve meget ustabilt.",
-      "Forkert. Det kan få alvorlige konsekvenser at vaere i den her trykzone."
+      "Forkert. Det kan faa alvorlige konsekvenser at vaere i den her trykzone."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 0
