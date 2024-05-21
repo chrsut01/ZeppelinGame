@@ -67,7 +67,9 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Screen closingScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
-
+    private static final float PLANE_SPAWN_DELAY = 5f; // Delay in seconds before planes can spawn
+    private static final float STORMCLOUD_SPAWN_DELAY = 10f; // Delay in seconds before storm clouds can spawn
+    private long screenStartTime;
     public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
     public static final float MAX_PLANE_SPAWN_TIME = 10f;
 
@@ -170,13 +172,17 @@ public class SideScrollerScreen extends ScreenAdapter {
             Gdx.app.exit();
         }
 
+        float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
+        float elapsedTimeSeconds = elapsedTime / 1_000_000_000.0f;
         // Check if it's time to spawn a plane
-        if (TimeUtils.timeSinceMillis(lastPlaneTime) > planeSpawnTimer) {
-            spawnPlane();
+        if (elapsedTimeSeconds > PLANE_SPAWN_DELAY) {
+            if (TimeUtils.timeSinceMillis(lastPlaneTime) > planeSpawnTimer) {
+                spawnPlane();
             // Generate a new random spawn delay
-            planeSpawnTimer = MathUtils.random(MIN_PLANE_SPAWN_TIME * 1000, MAX_PLANE_SPAWN_TIME * 1000);
+                planeSpawnTimer = MathUtils.random(MIN_PLANE_SPAWN_TIME * 1000, MAX_PLANE_SPAWN_TIME * 1000);
             // Update the last plane spawn time
-            lastPlaneTime = TimeUtils.millis();
+                lastPlaneTime = TimeUtils.millis();
+            }
         }
 
         for (Plane plane : planes) {
@@ -221,12 +227,17 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if it's time to spawn a cloud
+       // float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
+        elapsedTimeSeconds = elapsedTime / 1_000_000_000.0f;
+        // Check if it's time to spawn a plane
+        if (elapsedTimeSeconds > STORMCLOUD_SPAWN_DELAY) {
         if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
             spawnStormCloud();
             // Generate a new random spawn delay
             stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
             // Update the last storm cloud spawn time
             lastStormCloudTime = TimeUtils.millis();
+            }
         }
 
         for (StormCloud stormCloud : stormClouds) {
@@ -298,8 +309,8 @@ public class SideScrollerScreen extends ScreenAdapter {
         if (zeppelin.getX() > 4000) {
             System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
             game.incrementCurrentLevelCount();
-           // game.progressToNextLevel();
-            game.switchScreen(closingScreen);
+            game.progressToNextLevel();
+           // game.switchScreen(closingScreen);
             dispose();
         }
     }
@@ -421,6 +432,8 @@ public class SideScrollerScreen extends ScreenAdapter {
     public void show() {
         System.out.println("SideScrollerScreen show() method called.");
         this.zeppelin = Zeppelin.getInstance();
+        this.screenStartTime = TimeUtils.nanoTime();
+
     }
     public World getWorld() {
         System.out.println("SideScrollerScreen getWorld() method called.");

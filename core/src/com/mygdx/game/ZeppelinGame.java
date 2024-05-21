@@ -12,9 +12,7 @@ import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.ClosingScreen;
 import com.mygdx.game.ExtraScreens.IntroScreen;
-import com.mygdx.game.SideScrollers.SideScrollerEgypt;
-import com.mygdx.game.SideScrollers.SideScrollerMed;
-import com.mygdx.game.SideScrollers.SideScrollerScreen;
+import com.mygdx.game.SideScrollers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,31 +59,28 @@ public class ZeppelinGame extends Game {
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
-       // List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
+        List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
         List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
-      //  List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
+        List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
-       // SideScrollerBulg sideScrollerTurkey = new SideScrollerTukey(this);
+        SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
         SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
-      //  SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
+        SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
-    //    GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
-       // System.out.println("ZeppelinGame: GameLevelBulg created: " + gameLevelBulg.toString());
+        GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
         GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
-       // System.out.println("ZeppelinGame: GameLevelMed created: " + gameLevelMed.toString());
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
-       // System.out.println("ZeppelinGame: GameLevelEgypt created: " + gameLevelEgypt.toString());
-    //    GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
+        GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
-    //    gameLevels.add(gameLevelTurkey);
+        gameLevels.add(gameLevelTurkey);
         gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
-     //   gameLevels.add(gameLevelSudan);
+        gameLevels.add(gameLevelSudan);
 
         setScreen(introScreen);
 

@@ -11,10 +11,10 @@
     "correctAnswerIndex": 2
   },
     {
-      "question": "Du skal bruge noget til at holde på hydrogenen, hvad vaelger du?",
+      "question": "Du skal bruge noget til at holde paa hydrogenen, hvad vaelger du?",
       "answers": ["Laeder lavet af ko maver", "Gummi fra gummifigen", "Linned daekket i kanin hud lim"],
       "responses": [
-        "Korrekt ko maverne er gode til at holde på hydrogenen.",
+        "Korrekt ko maverne er gode til at holde paa hydrogenen.",
         "Forkert, det er ikke gummi.",
         "Forkert, det er ikke linned daekket i kanin hud lim."
     ],

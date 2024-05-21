@@ -1,12 +1,15 @@
 package com.mygdx.game.SideScrollers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.GameConfig;
+import com.mygdx.game.Rectangles.Plane;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerTurkey extends SideScrollerScreen {
-    private static final String tilemapFileName = "maps/ZepMap1.tmx";
+    private static final String tilemapFileName = "maps/MapTurkey.tmx";
     public Zeppelin zeppelin;
     private World world;
     private SpriteBatch batch;
@@ -38,7 +41,24 @@ public class SideScrollerTurkey extends SideScrollerScreen {
 
     @Override
     public void spawnPlane() {
-        super.spawnPlane();
+        // Override to make planes fly horizontally
+        float x = camera.position.x + camera.viewportWidth / 2;
+        float minY = camera.position.y - camera.viewportHeight / 2;
+        float maxY = camera.position.y + camera.viewportHeight / 2;
+        float y = MathUtils.random(minY + (camera.viewportHeight / 4), maxY - (camera.viewportHeight / 4));
+
+        // Set yAngle to 0 to make the plane fly straight horizontally
+        int yAngle = 0;
+
+        // Adjust the y coordinate if needed
+        if (y > GameConfig.TILEMAP_HEIGHT - 1000) {
+            y = GameConfig.TILEMAP_HEIGHT - 1000;
+        }
+
+        plane = new Plane(x, y, yAngle);
+        System.out.println("Plane x: " + x + " y: " + y + " yAngle: " + yAngle);
+        plane.planeFlyingSound.play();
+        planes.add(plane);
     }
 
     @Override
