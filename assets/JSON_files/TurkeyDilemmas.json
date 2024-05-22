@@ -3,9 +3,9 @@
     "question": "Foerst og fremmest, skal vi bruge noget til at faa vores zeppelin til at flyve. Hvad skal vi bruge?",
     "answers": ["Helium", "Varm luft", "Hydrogen"],
     "responses": [
-      "Forkert, det er for ustabilt.",
-      "Forkert varm luft ryger for hurtigt ud af ballonerne.",
-      "Korrekt, Helium er det rigtige og bruge."
+      "Forkert. Det er for ustabilt.",
+      "Forkert. Varm luft ryger for hurtigt ud af ballonerne.",
+      "Korrekt. Helium er det rigtige og bruge."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 2
@@ -14,26 +14,26 @@
       "question": "Du skal bruge noget til at holde paa hydrogenen, hvad vaelger du?",
       "answers": ["Laeder lavet af ko maver", "Gummi fra gummifigen", "Linned daekket i kanin hud lim"],
       "responses": [
-        "Korrekt ko maverne er gode til at holde paa hydrogenen.",
-        "Forkert, det er ikke gummi.",
-        "Forkert, det er ikke linned daekket i kanin hud lim."
+        "Korrekt. Ko maverne er gode til at holde paa hydrogenen.",
+        "Forkert. Det er ikke gummi.",
+        "Forkert. Det er ikke linned daekket i kanin hud lim."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 0
   },
     {
-      "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du sikkert kan droppe naar du har brug for det, Hvad skal du bruge?",
+      "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du kan sikkert droppe naar du har brug for det. Hvad skal du bruge?",
       "answers": ["Sten", "Vand", "Sand"],
       "responses": [
-        "Forkert, det er for farligt og smide ud.",
-        "Korrekt vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
-        "Forkert, sand er for farligt og smide ud."
+        "Forkert. Det er for farligt at smide ud.",
+        "Korrekt. Vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
+        "Forkert. Sand er for farligt at smide ud."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 1
   },
   {
-    "question": "Du er naaet til Tyrkiet du er kommet for langt op, hvad goer du?",
+    "question": "Du er naaet til Tyrkiet. Du er kommet for langt op. Hvad goer du?",
     "answers": ["Lukker vand ud", "Goer ingenting", "Lukker hydrogen ud"],
     "responses": [
       "Forkert. Hvis du lukker vand ud kommer du laengere op.",

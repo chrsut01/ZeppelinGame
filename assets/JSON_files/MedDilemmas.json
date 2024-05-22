@@ -1,9 +1,9 @@
 [
   {
-  "question": "Du er naaet til kysten ved Graekenland, du ser tordenvejr ude i horisonten. Hvad goer du?",
+  "question": "Du er naaet til kysten ved Graekenland. Ddu ser tordenvejr ude i horisonten. Hvad goer du?",
   "answers": ["Lukker vand ud", "Goer ingenting", "Lukker ilt ud"],
   "responses": [
-    "Korrekt! Det vil faa zeppelineren til at haeve sig over stormskyerne..",
+    "Korrekt! Det vil faa zeppelineren til at haeve sig over stormskyerne.",
     "Forkert. Proev igen",
     "Forkert. Det vil faa zeppelineren til at falde i hoejde og du risikere at blive ramt af lyn."
   ],
