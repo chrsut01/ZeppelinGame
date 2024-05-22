@@ -6,7 +6,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
@@ -75,18 +74,17 @@ public class Zeppelin extends Rectangle {
 
     public void renderFlicker(SpriteBatch batch) {
         if (showFlicker) {
-            System.out.println("Zeppelin: render() called: showFlicker.");
             flickerSprite.setPosition(zeppelinSprite.getX() - 10, zeppelinSprite.getY() - 10);
             flickerSprite.draw(batch);
         }
     }
 
     public void playEngineSound(float volume) {
-        engineSound.loop(volume);
+        engineSound.loop(0.5f);
     }
     public void playCrashSound() {
         zeppelinCrashSound = Gdx.audio.newSound(Gdx.files.internal("plane_crash.mp3"));
-        zeppelinCrashSound.play(1.0f);
+        zeppelinCrashSound.play();
     }
 
     private void handleInput() {
@@ -123,21 +121,20 @@ public class Zeppelin extends Rectangle {
     }
 
     // Check if zeppelin overlaps with a polygonMapObject
-    public boolean overlaps (PolygonMapObject polygonMapObject) {
+ /*   public boolean overlaps (PolygonMapObject polygonMapObject) {
         Rectangle zeppelinBounds = new Rectangle(getX() + 15, getY() + 10, getWidth() - 32, getHeight() - 20);
         return polygonMapObject.getPolygon().getBoundingRectangle().overlaps(getBoundingRectangle());
-    }
+    }*/
 
     public void setShowFlicker(boolean showFlicker) {
         this.showFlicker = showFlicker;
-        System.out.println("Zeppelin: setShowFlicker() called: showFlicker = " + showFlicker);
     }
+
     public void setFlickerOpacity(float opacity) {
         flickerSprite.setAlpha(opacity);
     }
 
     public void zeppelinFlicker(final float totalFlickerDuration) {
-        System.out.println("Zeppelin: zeppelinFlicker() called");
         final float[] elapsedTime = {0}; // Variable to track the elapsed time
         final float[] nextFlickerDelay = {0}; // Variable to track the delay before the next flicker
 

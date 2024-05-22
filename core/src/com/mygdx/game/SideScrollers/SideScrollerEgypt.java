@@ -22,7 +22,7 @@ public class SideScrollerEgypt extends SideScrollerScreen {
         System.out.println("SideScrollerEgypt initialize() called.");
         super.initialize();
         this.zeppelin = Zeppelin.getInstance();
-        this.zeppelin.playEngineSound(1.0f);
+        this.zeppelin.playEngineSound(0.4f);
     }
 
     @Override

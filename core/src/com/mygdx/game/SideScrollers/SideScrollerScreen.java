@@ -396,7 +396,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             y = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
         }
         plane = new Plane(x, y, yAngle);
-        plane.planeFlyingSound.play();
+        plane.planeFlyingSound.play(0.5f);
         planes.add(plane);
     }
 

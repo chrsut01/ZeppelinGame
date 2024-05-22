@@ -2,6 +2,7 @@ package com.mygdx.game.DilemmaStuff;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -33,13 +34,10 @@ public class DilemmaScreen extends ScreenAdapter {
     private TextField responseTextField;
     private final float scaleX = 2.0f;
     private final float scaleY = 2.0f;
-
-   // private Label questionLabel;
+    private Sound correctAnswerSound;
+    private Sound wrongAnswerSound;
     private TextureRegionDrawable background;
-  //  private OrthographicCamera camera;
-  //  private Box2DDebugRenderer box2DDebugRenderer;
-  //  private World world;
-  //  private TextField questionTextField;
+
 
     private DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
         this.game = game;
@@ -91,6 +89,9 @@ public class DilemmaScreen extends ScreenAdapter {
         Label.LabelStyle responseLabelStyle = new Label.LabelStyle(font, fontColor);
         Label responseLabel = new Label("", responseLabelStyle);
 
+        correctAnswerSound = Gdx.audio.newSound(Gdx.files.internal("correct-answer.mp3"));
+        wrongAnswerSound = Gdx.audio.newSound(Gdx.files.internal("wrong-answer.mp3"));
+
         for (int i = 0; i < answerButtons.length; i++) {
             String answer = dilemma.getAnswers().get(i);
             int index = i; // Declare final variable here
@@ -102,6 +103,7 @@ public class DilemmaScreen extends ScreenAdapter {
                     responseLabel.setText(dilemma.getResponses().get(index));
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
+                        correctAnswerSound.play(0.2f);
                         Dilemma nextDilemma = gameLevel.getNextDilemma();
                         if (nextDilemma != null) {
                             Timer.schedule(new Timer.Task() {
@@ -119,6 +121,8 @@ public class DilemmaScreen extends ScreenAdapter {
                                     }
                                 }, 0.0f);
                             }
+                        }else {
+                        wrongAnswerSound.play(0.2f);
                         }
                     }
             });
