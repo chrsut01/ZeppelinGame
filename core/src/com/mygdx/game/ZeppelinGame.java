@@ -10,8 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.DilemmaStuff.Dilemma;
 import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
-import com.mygdx.game.ExtraScreens.ClosingScreen;
-import com.mygdx.game.ExtraScreens.IntroScreen;
+import com.mygdx.game.ExtraScreens.*;
 import com.mygdx.game.SideScrollers.SideScrollerScreen;
 import com.mygdx.game.SideScrollers.SideScrollerSudan;
 import com.mygdx.game.SideScrollers.SideScrollerTurkey;
@@ -32,6 +31,11 @@ public class ZeppelinGame extends Game {
     private Screen ClosingScreen;
     private Screen GameOverScreen;
     private DilemmaScreen dilemmaScreen;
+    private Screen InfoScreen;
+
+    private Screen MissionScreen;
+
+    private Screen ManualScreen;
 
     private List<SideScrollerScreen> sideScrollers;
     private OrthographicCamera camera;
@@ -61,6 +65,10 @@ public class ZeppelinGame extends Game {
 
         IntroScreen = new IntroScreen(this);
         ClosingScreen = new ClosingScreen(this);
+        GameOverScreen = new GameOverScreen(this);
+        InfoScreen = new InfoScreen(this);
+        ManualScreen = new ManualScreen(this);
+        MissionScreen = new MissionScreen(this);
 
 
         DilemmaFactory dilemmaFactory = new DilemmaFactory();

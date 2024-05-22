@@ -10,8 +10,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameConfig;
 import com.mygdx.game.ZeppelinGame;
 
-public class ClosingScreen extends ScreenAdapter {
-
+public class ManualScreen extends ScreenAdapter {
 
     final ZeppelinGame game;
     Texture backgroundImage;
@@ -21,9 +20,9 @@ public class ClosingScreen extends ScreenAdapter {
     private final float backgroundX = 0;
     private final float backgroundY = 0;
     private boolean isSpacePressed = false;
-    public ClosingScreen(ZeppelinGame game) {
+    public ManualScreen(ZeppelinGame game) {
         this.game = game;
-        backgroundImage = new Texture(Gdx.files.internal("VendOmScreen.png"));
+        backgroundImage = new Texture(Gdx.files.internal("SpilManualScreen.png"));
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, screenWidth, screenHeight);
@@ -52,8 +51,8 @@ public class ClosingScreen extends ScreenAdapter {
         game.batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isSpacePressed) {
-            System.out.println("ClosingScreen: Space key pressed. Returning to ForsideScreen.");
-            game.setScreen(new IntroScreen(game));
+            System.out.println("SpilManualScreen: Space key pressed. Progressing to next level.");
+            game.progressToNextLevel();
             isSpacePressed = true;
             dispose();
         }
@@ -64,7 +63,7 @@ public class ClosingScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-       ;
+        ;
     }
 
     @Override

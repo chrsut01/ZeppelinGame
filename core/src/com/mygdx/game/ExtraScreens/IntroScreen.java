@@ -27,7 +27,7 @@ public class IntroScreen extends ScreenAdapter {
     public Screen closingScreen;
     public IntroScreen(ZeppelinGame game) {
             this.game = game;
-            backgroundImage = new Texture(Gdx.files.internal("main-menu-background.png"));
+            backgroundImage = new Texture(Gdx.files.internal("ForsideScreen.png"));
             valkyriesMusic = Gdx.audio.newMusic(Gdx.files.internal("valkyries.mp3"));
 
             camera = new OrthographicCamera();
@@ -48,8 +48,8 @@ public class IntroScreen extends ScreenAdapter {
 
             game.batch.draw(backgroundImage, 0, 0, screenWidth, screenHeight);
 
-            game.font.draw(game.batch, "Velkommen til Arika-Schiff!!! ", screenWidth / 2 -200, screenHeight / 2 + 25);
-            game.font.draw(game.batch, "Tryk på mellemrumstasten for at begynde!", screenWidth / 2 - 200, screenHeight / 2 - 50);
+            game.font.draw(game.batch, " ", screenWidth / 2 -200, screenHeight / 2 + 25);
+            game.font.draw(game.batch, " ", screenWidth / 2 - 200, screenHeight / 2 - 50);
 
             // Set the font size
             game.font.getData().setScale(2f);
@@ -57,7 +57,7 @@ public class IntroScreen extends ScreenAdapter {
             game.batch.end();
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isSpacePressed) {
-                System.out.println("IntroScreen: Space key pressed.");
+                System.out.println("ForsideScreen: Space key pressed.");
                 game.progressToNextLevel();
               //  game.switchScreen(closingScreen);
                 isSpacePressed = true;
