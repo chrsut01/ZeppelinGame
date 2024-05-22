@@ -69,7 +69,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     long lastPlaneTime;
     float planeSpawnTimer;
     private static final float PLANE_SPAWN_DELAY = 2f; // Delay in seconds before planes can spawn
-    private static final float STORMCLOUD_SPAWN_DELAY = 7f; // Delay in seconds before storm clouds can spawn
+    private static final float STORMCLOUD_SPAWN_DELAY = 3f; // Delay in seconds before storm clouds can spawn
     private long screenStartTime;
     public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
     public static final float MAX_PLANE_SPAWN_TIME = 5f;
@@ -95,14 +95,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.planes = new ArrayList<>();
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
-
-     //   this.mapImage = new Texture("map-to-afrika.png");
-        // Calculate the maximum size based on the desired maximum width or height
-     //   mapHeight = Gdx.graphics.getHeight() * 0.3f;
-    //    float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
-        // Calculate the scaling factor based on the maximum width or height
-     //   mapWidth = mapHeight / aspectRatio;
-
     }
 
     public void initialize() {
@@ -224,14 +216,12 @@ public class SideScrollerScreen extends ScreenAdapter {
         }
 
         // Check if it's time to spawn a cloud
-        // float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
         elapsedTimeSeconds = elapsedTime / 1_000_000_000.0f;
-        // Check if it's time to spawn a plane
         if (elapsedTimeSeconds > STORMCLOUD_SPAWN_DELAY) {
             if (TimeUtils.timeSinceMillis(lastStormCloudTime) > stormCloudSpawnTimer) {
                 spawnStormCloud();
                 // Generate a new random spawn delay
-                stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 5000, MAX_StormCloud_SPAWN_TIME * 5000);
+                stormCloudSpawnTimer = MathUtils.random(MIN_StormCloud_SPAWN_TIME * 2000, MAX_StormCloud_SPAWN_TIME * 3000);
                 // Update the last storm cloud spawn time
                 lastStormCloudTime = TimeUtils.millis();
             }
@@ -246,10 +236,10 @@ public class SideScrollerScreen extends ScreenAdapter {
             StormCloud stormCloud = iter.next();
             if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()) {
                 System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
+                zeppelin.zeppelinFlicker(1f);
                 stormCloud.lightningStrikeSound.play(15.0f);
                 stormCloud.setLightningSoundPlayed(true);
                 game.health -= 30;
-
             }
         }
 
@@ -297,7 +287,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         // Check if the game health is zero and schedule the game over screen switch
         if (game.health <= 0) {
             game.health = 0;
-            System.out.println("From SideScroller: Health reaches 0 points. Game Over!");
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -426,7 +415,6 @@ public class SideScrollerScreen extends ScreenAdapter {
         Timer.schedule(new Timer.Task() {
             @Override
             public void run() {
-                System.out.println("SideScrollerScreen: Starting flickering");
                 stormCloud.flickerLightning(totalFlickerDuration);
             }
         }, delayBeforeFlicker);
@@ -443,7 +431,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     protected void setMapImage(Texture mapImage) {
         this.mapImage = mapImage;
         if (mapImage != null) {
-            mapHeight = Gdx.graphics.getHeight() * 0.3f;
+            mapHeight = Gdx.graphics.getHeight() * 0.25f;
             float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
             mapWidth = mapHeight / aspectRatio;
         }
@@ -456,13 +444,11 @@ public class SideScrollerScreen extends ScreenAdapter {
 
     @Override
     public void show() {
-        System.out.println("SideScrollerScreen show() method called.");
         this.zeppelin = Zeppelin.getInstance();
         this.screenStartTime = TimeUtils.nanoTime();
 
     }
     public World getWorld() {
-        System.out.println("SideScrollerScreen getWorld() method called.");
         return world;
     }
 

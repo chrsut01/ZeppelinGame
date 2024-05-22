@@ -48,9 +48,7 @@ public class StormCloud extends Rectangle {
   public void updatePosition(float deltaTime) {
       // Move the cloud to the left
       x -= 50 * deltaTime;
-
       timeSinceSpawn += deltaTime;
-
   }
 
     public boolean overlaps(Zeppelin zeppelin) {
@@ -100,8 +98,6 @@ public class StormCloud extends Rectangle {
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
-                        System.out.println("StormCloud: FlickerHiding lightning");
-                        // Hide lightning
                         setShowLightning(false);
                     }
                 }, flickerDuration);

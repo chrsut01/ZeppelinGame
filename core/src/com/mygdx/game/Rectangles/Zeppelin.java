@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.GameConfig;
 
 
@@ -27,6 +28,9 @@ public class Zeppelin extends Rectangle {
     private Sprite zeppelinSprite;
     private Sound engineSound;
     public Sound zeppelinCrashSound;
+    public boolean showFlicker;
+    private Sprite flickerSprite;
+
 
     private Zeppelin() {
         init();
@@ -43,8 +47,6 @@ public class Zeppelin extends Rectangle {
     }
 
     private void init() {
-        System.out.println("Zeppelin init() called.");
-        // Load textures and sounds
         zeppelinSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-image.png")));
         engineSound = Gdx.audio.newSound(Gdx.files.internal("ZeppelinEngine.mp3"));
 
@@ -53,6 +55,7 @@ public class Zeppelin extends Rectangle {
         zeppelinSprite.setOrigin(width / 2, height / 2);
         zeppelinSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
                 GameConfig.TILEMAP_HEIGHT / 2f - height / 2);
+        flickerSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-shock-image.png")));
     }
 
     public void update() {
@@ -62,6 +65,11 @@ public class Zeppelin extends Rectangle {
 
     public void render(SpriteBatch batch) {
         zeppelinSprite.draw(batch);
+        if (showFlicker) {
+            System.out.println("Zeppelin: render() called: showFlicker.");
+            flickerSprite.setPosition(zeppelinSprite.getX() - 10, zeppelinSprite.getY() - 10);
+            flickerSprite.draw(batch);
+        }
     }
 
     public void playEngineSound(float volume) {
@@ -73,14 +81,10 @@ public class Zeppelin extends Rectangle {
     }
 
     private void handleInput() {
-
-        // Handle user input for zeppelin movement
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
             ySpeed += ACCELERATION * Gdx.graphics.getDeltaTime();
-        // ySpeed += 100 * Gdx.graphics.getDeltaTime();
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
             ySpeed -= ACCELERATION * Gdx.graphics.getDeltaTime();
-        // ySpeed -= 100 * Gdx.graphics.getDeltaTime();
         if (!Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             if (ySpeed > 0)
                 ySpeed -= DECELERATION * Gdx.graphics.getDeltaTime();
@@ -115,6 +119,48 @@ public class Zeppelin extends Rectangle {
         return polygonMapObject.getPolygon().getBoundingRectangle().overlaps(getBoundingRectangle());
     }
 
+    public void setShowFlicker(boolean showFlicker) {
+        this.showFlicker = showFlicker;
+    }
+    public void setFlickerOpacity(float opacity) {
+        flickerSprite.setAlpha(opacity);
+    }
+
+    public void zeppelinFlicker(final float totalFlickerDuration) {
+        System.out.println("Zeppelin: zeppelinFlicker() called");
+        final float[] elapsedTime = {0}; // Variable to track the elapsed time
+        final float[] nextFlickerDelay = {0}; // Variable to track the delay before the next flicker
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run(){
+                elapsedTime[0] += nextFlickerDelay[0];
+
+                if(elapsedTime[0] >= totalFlickerDuration){
+                    setShowFlicker(false);
+                    return;
+                }
+                float flickerDuration = MathUtils.random(0.01f, 0.05f); // Random duration for each flicker
+                float opacity = MathUtils.random(0.01f, 0.1f); // Random opacity
+
+                // Show lightning with random opacity
+                setShowFlicker(true);
+                setFlickerOpacity(opacity);
+
+                // Schedule a task to hide the lightning after the flicker duration
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        setShowFlicker(false);
+                    }
+                }, flickerDuration);
+
+                nextFlickerDelay[0] = MathUtils.random(0.05f, 0.1f); // Random delay before the next flicker
+            }
+        }, 0, MathUtils.random(0.05f, 0.1f));
+    }
+
+
     public float getWidth() {
         return width;
     }
@@ -136,6 +182,7 @@ public class Zeppelin extends Rectangle {
         zeppelinSprite.getTexture().dispose();
         engineSound.dispose();
         zeppelinCrashSound.dispose();
+        flickerSprite.getTexture().dispose();
 
     }
 
