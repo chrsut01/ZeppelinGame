@@ -47,24 +47,33 @@ public class Zeppelin extends Rectangle {
     }
 
     private void init() {
-        zeppelinSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-image.png")));
         engineSound = Gdx.audio.newSound(Gdx.files.internal("ZeppelinEngine.mp3"));
 
+        zeppelinSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-image.png")));
         zeppelinSprite.setSize(width, height);
-
         zeppelinSprite.setOrigin(width / 2, height / 2);
         zeppelinSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
                 GameConfig.TILEMAP_HEIGHT / 2f - height / 2);
-        flickerSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-shock-image.png")));
+
+        flickerSprite = new Sprite(new Texture(Gdx.files.internal("zeppelin-shock.png")));
+        flickerSprite.setSize(width, height);
+        flickerSprite.setOrigin(width / 2, height / 2);
+        flickerSprite.setPosition(GameConfig.SCREEN_WIDTH / 2f - width / 2,
+                GameConfig.TILEMAP_HEIGHT / 2f - height / 2);
+
     }
 
     public void update() {
         handleInput();
         zeppelinSprite.translateX(xSpeed * Gdx.graphics.getDeltaTime());
+        flickerSprite.translateX(xSpeed * Gdx.graphics.getDeltaTime());
     }
 
     public void render(SpriteBatch batch) {
         zeppelinSprite.draw(batch);
+    }
+
+    public void renderFlicker(SpriteBatch batch) {
         if (showFlicker) {
             System.out.println("Zeppelin: render() called: showFlicker.");
             flickerSprite.setPosition(zeppelinSprite.getX() - 10, zeppelinSprite.getY() - 10);
@@ -121,6 +130,7 @@ public class Zeppelin extends Rectangle {
 
     public void setShowFlicker(boolean showFlicker) {
         this.showFlicker = showFlicker;
+        System.out.println("Zeppelin: setShowFlicker() called: showFlicker = " + showFlicker);
     }
     public void setFlickerOpacity(float opacity) {
         flickerSprite.setAlpha(opacity);
@@ -141,7 +151,7 @@ public class Zeppelin extends Rectangle {
                     return;
                 }
                 float flickerDuration = MathUtils.random(0.01f, 0.05f); // Random duration for each flicker
-                float opacity = MathUtils.random(0.01f, 0.1f); // Random opacity
+                float opacity = MathUtils.random(1.0f, 0.1f); // Random opacity
 
                 // Show lightning with random opacity
                 setShowFlicker(true);

@@ -139,6 +139,8 @@ public class SideScrollerScreen extends ScreenAdapter {
             stormCloud.render(batch);
         }
 
+        zeppelin.renderFlicker(batch);
+
         game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
         game.font.getData().setScale(1.5f);
 
@@ -236,7 +238,8 @@ public class SideScrollerScreen extends ScreenAdapter {
             StormCloud stormCloud = iter.next();
             if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()) {
                 System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
-                zeppelin.zeppelinFlicker(1f);
+                zeppelin.showFlicker = true;
+                zeppelin.zeppelinFlicker(2.5f);
                 stormCloud.lightningStrikeSound.play(15.0f);
                 stormCloud.setLightningSoundPlayed(true);
                 game.health -= 30;
@@ -299,7 +302,6 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
         if (zeppelin.getX() > 6000) {
-            System.out.println("Zeppelin reached the end of the level and called progressToNextLevel() method");
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -313,7 +315,6 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
 
     private boolean showWarning = true;
-    // show a warning the player that the zeppelin is flying too high
     private void showHighAltitudeWarning() {
         if (showWarning){
         String warning = "Højde advarsel!\nBesætningen bliver svimmel!\nLavere højde hurtigt!";
