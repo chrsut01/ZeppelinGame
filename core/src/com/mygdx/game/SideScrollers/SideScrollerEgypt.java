@@ -1,25 +1,28 @@
 package com.mygdx.game.SideScrollers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerEgypt extends SideScrollerScreen {
-    private static final String tilemapFileName = "maps/MapTurkey.tmx";
+    private static final String tilemapFileName = "tileMaps/MapEgypt.tmx";
+    private Texture mapImage;
 
     public Zeppelin zeppelin;
     private World world;
 
+
     public SideScrollerEgypt(ZeppelinGame game) {
         super(tilemapFileName, game);
-
+        this.mapImage = new Texture("ProgMapEgypt.png");
     }
 
     public void initialize() {
         System.out.println("SideScrollerEgypt initialize() called.");
         super.initialize();
         this.zeppelin = Zeppelin.getInstance();
-        this.zeppelin.playEngineSound(1.5f);
+        this.zeppelin.playEngineSound(1.0f);
     }
 
     @Override
@@ -54,8 +57,9 @@ public class SideScrollerEgypt extends SideScrollerScreen {
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerEgypt show() method called.");
+        setMapImage(mapImage);
     }
+
 
     public World getWorld() {
         return world;
@@ -63,5 +67,6 @@ public class SideScrollerEgypt extends SideScrollerScreen {
 
     public void dispose(){
         super.dispose();
+        mapImage.dispose();
     }
 }

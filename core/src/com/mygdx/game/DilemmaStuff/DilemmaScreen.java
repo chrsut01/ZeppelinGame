@@ -42,7 +42,6 @@ public class DilemmaScreen extends ScreenAdapter {
   //  private TextField questionTextField;
 
     private DilemmaScreen(ZeppelinGame game, Dilemma dilemma) {
-        System.out.println("DilemmaScreen: constructor called");
         this.game = game;
         this.gameLevel = game.getCurrentLevel();
         this.dilemma = dilemma;
@@ -58,7 +57,6 @@ public class DilemmaScreen extends ScreenAdapter {
     }
 
     public void initializeUI(){
-        System.out.println("DilemmaScreen: initializeUI() method called. gameLevel: " + gameLevel);
 
         stage.clear();
         Gdx.input.setInputProcessor(stage);
@@ -102,17 +100,13 @@ public class DilemmaScreen extends ScreenAdapter {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     responseLabel.setText(dilemma.getResponses().get(index));
-                    System.out.println("Answer button clicked");
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
-                        System.out.println("Correct answer selected");
                         Dilemma nextDilemma = gameLevel.getNextDilemma();
                         if (nextDilemma != null) {
-                            System.out.println("nextDilemma != null and index = " + nextDilemma.getQuestion());
                             Timer.schedule(new Timer.Task() {
                                 @Override
                                 public void run() {
-                                    System.out.println("not-null Timer task run()");
                                     setNextDilemma(nextDilemma);
                                   //  System.out.println("DilemmaScreen, correct answer goToNextDilemma(nextDilemma) called");
                                 }
@@ -121,7 +115,6 @@ public class DilemmaScreen extends ScreenAdapter {
                             Timer.schedule(new Timer.Task() {
                                 @Override
                                 public void run() {
-                                    System.out.println("null Timer task run()");
                                     Gdx.app.postRunnable(() ->  setSideScroller());
                                     }
                                 }, 0.0f);

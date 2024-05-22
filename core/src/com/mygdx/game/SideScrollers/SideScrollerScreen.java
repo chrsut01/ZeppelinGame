@@ -58,7 +58,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     private static final int MIN_Y_ANGLE = 0;
     private static final int MAX_Y_ANGLE = 60;
     protected OrthographicCamera camera;
-    private final SpriteBatch batch;
+    protected SpriteBatch batch;
 
     private Stage stage;
     private Box2DDebugRenderer box2DDebugRenderer;
@@ -68,11 +68,11 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Screen GameOverScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
-    private static final float PLANE_SPAWN_DELAY = 3f; // Delay in seconds before planes can spawn
+    private static final float PLANE_SPAWN_DELAY = 2f; // Delay in seconds before planes can spawn
     private static final float STORMCLOUD_SPAWN_DELAY = 7f; // Delay in seconds before storm clouds can spawn
     private long screenStartTime;
     public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
-    public static final float MAX_PLANE_SPAWN_TIME = 10f;
+    public static final float MAX_PLANE_SPAWN_TIME = 5f;
 
     private StormCloud stormCloud;
     private final ArrayList<StormCloud> stormClouds;
@@ -81,9 +81,9 @@ public class SideScrollerScreen extends ScreenAdapter {
     public static final float MIN_StormCloud_SPAWN_TIME = 5f;
     public static final float MAX_StormCloud_SPAWN_TIME = 15f;
 
-    private Texture mapImage;
-    private float mapWidth;
-    private float mapHeight;
+    protected Texture mapImage;
+    protected float mapWidth;
+    protected float mapHeight;
 
 
     public SideScrollerScreen (String tilemapFileName, ZeppelinGame game){
@@ -96,14 +96,13 @@ public class SideScrollerScreen extends ScreenAdapter {
         this.stormClouds = new ArrayList<>();
         this.random = new Random();
 
-        this.mapImage = new Texture("map-to-afrika.png");
+     //   this.mapImage = new Texture("map-to-afrika.png");
         // Calculate the maximum size based on the desired maximum width or height
-        mapHeight = Gdx.graphics.getHeight() * 0.3f;
-        float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
+     //   mapHeight = Gdx.graphics.getHeight() * 0.3f;
+    //    float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
         // Calculate the scaling factor based on the maximum width or height
-        mapWidth = mapHeight / aspectRatio;
-      //  zeppelin = Zeppelin.getInstance();
-      //  initialize();
+     //   mapWidth = mapHeight / aspectRatio;
+
     }
 
     public void initialize() {
@@ -134,15 +133,8 @@ public class SideScrollerScreen extends ScreenAdapter {
 
         zeppelin.render(batch);
 
-        game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
-        game.font.getData().setScale(1.5f);
-
         for (Plane plane : planes) {
             plane.render(batch);
-        }
-
-        for (StormCloud stormCloud : stormClouds) {
-            stormCloud.render(batch);
         }
 
         if (plane != null && plane.bullets != null){
@@ -151,10 +143,14 @@ public class SideScrollerScreen extends ScreenAdapter {
             }
         }
 
-        // Draw the map at the bottom left corner of the screen
-        float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
-        float mapY = camera.position.y - camera.viewportHeight / 2 + 20;
-        batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
+        for (StormCloud stormCloud : stormClouds) {
+            stormCloud.render(batch);
+        }
+
+        game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
+        game.font.getData().setScale(1.5f);
+
+        renderMapImage();
 
         batch.end();
 
@@ -436,6 +432,24 @@ public class SideScrollerScreen extends ScreenAdapter {
         }, delayBeforeFlicker);
     }
 
+    protected void renderMapImage() {
+        if (mapImage != null) {
+            float mapX = camera.position.x - camera.viewportWidth / 2 + 20;
+            float mapY = camera.position.y - camera.viewportHeight / 2 + 20;
+            batch.draw(mapImage, mapX, mapY, mapWidth, mapHeight);
+        }
+    }
+
+    protected void setMapImage(Texture mapImage) {
+        this.mapImage = mapImage;
+        if (mapImage != null) {
+            mapHeight = Gdx.graphics.getHeight() * 0.3f;
+            float aspectRatio = (float) mapImage.getHeight() / (float) mapImage.getWidth();
+            mapWidth = mapHeight / aspectRatio;
+        }
+    }
+
+
     public String getTilemapFileName() {
         return this.tilemapFileName;
     }
@@ -466,12 +480,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         altitudeAlarmSound.dispose();
         game.font.dispose();
         mapImage.dispose();
-
         tileMapHelper.dispose();
-
-        //   orthogonalTiledMapRenderer.dispose();
-
-      //  zeppelin.dispose();
 
         // Dispose Box2D world
         if (world != null) {

@@ -1,5 +1,6 @@
 package com.mygdx.game.SideScrollers;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
@@ -9,13 +10,15 @@ import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerTurkey extends SideScrollerScreen {
-    private static final String tilemapFileName = "maps/MapTurkey.tmx";
+    private static final String tilemapFileName = "tileMaps/MapTurkey.tmx";
     public Zeppelin zeppelin;
     private World world;
     private SpriteBatch batch;
 
     public SideScrollerTurkey(ZeppelinGame game) {
         super(tilemapFileName, game);
+        this.mapImage = new Texture("ProgMapTurkey.png");
+
     }
 
     public void initialize() {
@@ -75,7 +78,7 @@ public class SideScrollerTurkey extends SideScrollerScreen {
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerTurkey show() method called.");
+        setMapImage(mapImage);
     }
 
     public World getWorld() {

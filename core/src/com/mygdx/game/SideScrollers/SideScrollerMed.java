@@ -1,25 +1,21 @@
 package com.mygdx.game.SideScrollers;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.Rectangles.Zeppelin;
 import com.mygdx.game.ZeppelinGame;
 
 public class SideScrollerMed extends SideScrollerScreen {
-    private static final String tilemapFileName = "maps/MapMed.tmx";
+    private static final String tilemapFileName = "tileMaps/MapMed.tmx";
 
     public Zeppelin zeppelin;
     private World world;
-  //  private OrthographicCamera camera;
- //   private Plane plane;
-  //  private final List<Plane> planes;
 
 
     public SideScrollerMed(ZeppelinGame game) {
         super(tilemapFileName, game);
-        this.world = new World(new Vector2(0,0), false);
-        this.camera = new OrthographicCamera();
+        this.mapImage = new Texture("ProgMapMed.png");
+
     }
 
     public void initialize() {
@@ -58,10 +54,11 @@ public class SideScrollerMed extends SideScrollerScreen {
     public String getTilemapFileName() {
         return tilemapFileName;
     }
+
     @Override
     public void show() {
         super.show();
-        System.out.println("SideScrollerMed show() method called.");
+        setMapImage(mapImage);
     }
 
     public World getWorld() {
