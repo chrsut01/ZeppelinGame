@@ -2,6 +2,7 @@ package com.mygdx.game.ExtraScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ public class MissionScreen extends ScreenAdapter {
     private final float backgroundX = 0;
     private final float backgroundY = 0;
     private boolean isSpacePressed = false;
+    private Screen ClosingScreen;
     public MissionScreen(ZeppelinGame game) {
         this.game = game;
         backgroundImage = new Texture(Gdx.files.internal("DinMissionScreen.png"));

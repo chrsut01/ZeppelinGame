@@ -24,7 +24,7 @@ public class IntroScreen extends ScreenAdapter {
     private final float backgroundY = 0;
     private boolean isSpacePressed = false;
 
-    public Screen closingScreen;
+    public Screen MissionScreen;
     public IntroScreen(ZeppelinGame game) {
             this.game = game;
             backgroundImage = new Texture(Gdx.files.internal("ForsideScreen.png"));
@@ -58,8 +58,7 @@ public class IntroScreen extends ScreenAdapter {
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isSpacePressed) {
                 System.out.println("ForsideScreen: Space key pressed.");
-                game.progressToNextLevel();
-              //  game.switchScreen(closingScreen);
+                game.setScreen(new ManualScreen(game));
                 isSpacePressed = true;
                 dispose();
             }

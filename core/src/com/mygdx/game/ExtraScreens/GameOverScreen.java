@@ -20,6 +20,7 @@ public class GameOverScreen extends ScreenAdapter {
     private final float backgroundX = 0;
     private final float backgroundY = 0;
     private boolean isSpacePressed = false;
+
     public GameOverScreen(ZeppelinGame game) {
         this.game = game;
         backgroundImage = new Texture(Gdx.files.internal("GameOverScreen.png"));

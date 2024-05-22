@@ -2,6 +2,7 @@ package com.mygdx.game.ExtraScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,6 +21,7 @@ public class InfoScreen extends ScreenAdapter {
     private final float backgroundX = 0;
     private final float backgroundY = 0;
     private boolean isSpacePressed = false;
+    private Screen MissionScreen;
     public InfoScreen(ZeppelinGame game) {
         this.game = game;
         backgroundImage = new Texture(Gdx.files.internal("InfoScreen.png"));
@@ -52,7 +54,7 @@ public class InfoScreen extends ScreenAdapter {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isSpacePressed) {
             System.out.println("InfoScreen: Space key pressed. Progressing to next level.");
-            game.progressToNextLevel();
+            game.setScreen(new MissionScreen(game));
             isSpacePressed = true;
             dispose();
         }
