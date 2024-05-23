@@ -299,10 +299,12 @@ public class SideScrollerScreen extends ScreenAdapter {
 
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 6000) {
+        if (zeppelin.getX() > 2000) {
+            System.out.println("TEST!!! Zeppelin reached the end of the level!");
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    System.out.println("TEST!!! Timer task initiated!");
                     game.incrementCurrentLevelCount();
                     game.progressToNextLevel();
                     // game.switchScreen(closingScreen);
@@ -475,7 +477,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         if (box2DDebugRenderer != null) {
             box2DDebugRenderer.dispose();
         }
-
+      //  zeppelin.dispose();
         Zeppelin.setInstance(null);
     }
 }

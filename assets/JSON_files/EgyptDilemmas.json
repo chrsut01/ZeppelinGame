@@ -3,9 +3,9 @@
     "question": "Du er naaet til Aegypten. Temperaturen er steget en del og trykzonen har aendret sig. Hvad goer du?",
     "answers": ["Flyver op", "Forsaetter i samme hoejde", "Flyver ned af"],
     "responses": [
-      "Korrekt. Du skal op naar det er varmt.",
-      "Forkert. Du vil flyve meget ustabilt.",
-      "Forkert. Det kan faa alvorlige konsekvenser at vaere i den her trykzone."
+      "Korrekt!",
+      "Forkert.",
+      "Forkert."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 0

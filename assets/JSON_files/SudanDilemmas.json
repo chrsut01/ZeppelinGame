@@ -3,9 +3,9 @@
     "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du kan sikkert droppe naar du har brug for det. Hvad skal du bruge?",
     "answers": ["Sten", "Vand", "Sand"],
     "responses": [
-      "Forkert. Det er for farligt og smide ud.",
-      "Korrekt. Vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
-      "Forkert. Sand er for farligt at smide ud."
+      "Forkert.",
+      "Korrekt!",
+      "Forkert."
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 1

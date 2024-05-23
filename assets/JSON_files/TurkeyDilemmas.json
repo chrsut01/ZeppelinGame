@@ -3,9 +3,9 @@
     "question": "Foerst og fremmest, skal vi bruge noget til at faa vores zeppelin til at flyve. Hvad skal vi bruge?",
     "answers": ["Helium", "Varm luft", "Hydrogen"],
     "responses": [
-      "Forkert. Det er for ustabilt.",
-      "Forkert. Varm luft ryger for hurtigt ud af ballonerne.",
-      "Korrekt. Helium er det rigtige og bruge."
+      "Forkert.",
+      "Forkert.",
+      "Korrekt!"
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 2
@@ -14,9 +14,9 @@
       "question": "Du skal bruge noget til at holde paa hydrogenen, hvad vaelger du?",
       "answers": ["Laeder lavet af ko maver", "Gummi fra gummifigen", "Linned daekket i kanin hud lim"],
       "responses": [
-        "Korrekt. Ko maverne er gode til at holde paa hydrogenen.",
-        "Forkert. Det er ikke gummi.",
-        "Forkert. Det er ikke linned daekket i kanin hud lim."
+        "Korrekt!",
+        "Forkert.",
+        "Forkert."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 0
@@ -25,9 +25,9 @@
       "question": "Du skal finde en maade at goere saa zeppelinen ikke flyver for hoejt op, som du kan sikkert droppe naar du har brug for det. Hvad skal du bruge?",
       "answers": ["Sten", "Vand", "Sand"],
       "responses": [
-        "Forkert. Det er for farligt at smide ud.",
-        "Korrekt. Vand er den bedste loesning da det respresentere vaegt men ogsaa splitter sig naar det falder ned.",
-        "Forkert. Sand er for farligt at smide ud."
+        "Forkert.",
+        "Korrekt!",
+        "Forkert."
     ],
       "imagePath": "badlogic.jpg",
       "correctAnswerIndex": 1
@@ -36,9 +36,9 @@
     "question": "Du er naaet til Tyrkiet. Du er kommet for langt op. Hvad goer du?",
     "answers": ["Lukker vand ud", "Goer ingenting", "Lukker hydrogen ud"],
     "responses": [
-      "Forkert. Hvis du lukker vand ud kommer du laengere op.",
-      "Forkert. Saa kommer du ikke ned af.",
-      "Korrekt. Du skal lukke hydrogen ud for at falde i hoejden."
+      "Forkert.",
+      "Forkert.",
+      "Korrekt!"
     ],
     "imagePath": "badlogic.jpg",
     "correctAnswerIndex": 2
