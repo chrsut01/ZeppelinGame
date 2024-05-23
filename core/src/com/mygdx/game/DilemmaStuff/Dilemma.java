@@ -23,7 +23,7 @@ public class Dilemma implements Serializable{
 
     public int getCorrectAnswerIndex() { return correctAnswerIndex; }
 
-    public void setAnswers(List<String> answers) {
+  /*  public void setAnswers(List<String> answers) {
         this.answers = answers;
     }
 
@@ -37,6 +37,5 @@ public class Dilemma implements Serializable{
         this.imagePath = imagePath;
     }
 
-    public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex;
-    }
+    //public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex;}*/
 }

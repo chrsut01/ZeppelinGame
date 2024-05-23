@@ -4,6 +4,13 @@ sourceSets.main.resources.srcDirs = ["../assets"]
 
 project.ext.mainClassName = "com.mygdx.game.DesktopLauncher"
 project.ext.assetsDir = new File("../assets")
+project(":desktop") {
+    // ...
+    tasks.withType(JavaExec) {
+        jvmArgs = ["-Xss1m"]
+    }
+}
+
 
 import org.gradle.internal.os.OperatingSystem
 

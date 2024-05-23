@@ -142,7 +142,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         zeppelin.renderFlicker(batch);
 
         game.font.draw(game.batch, "Health points: " + game.health, camera.position.x - camera.viewportWidth / 2 + 25, camera.position.y + 40);
-        game.font.getData().setScale(1.5f);
+        game.font.getData().setScale(2f);
 
         renderMapImage();
 
@@ -185,7 +185,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             Plane plane = iter.next();
             if (plane.overlaps(zeppelin)) {
                 plane.planeCrashSound.play();
-                game.health -= 20;
+                game.health -= 10;
 
                 Timer.schedule(new Timer.Task() {
                     @Override
@@ -213,7 +213,6 @@ public class SideScrollerScreen extends ScreenAdapter {
                 zeppelin.xSpeed = 0;
                 zeppelin.ySpeed = 0;
                 game.health = 0;
-
             }
         }
 
@@ -237,12 +236,11 @@ public class SideScrollerScreen extends ScreenAdapter {
         for (Iterator<StormCloud> iter = stormClouds.iterator(); iter.hasNext(); ) {
             StormCloud stormCloud = iter.next();
             if (stormCloud.overlaps(zeppelin) && !stormCloud.isLightningSoundPlayed()) {
-                System.out.println("ZEPP HIT STORM CLOUD Bounds!!!!!!!!!");
                 zeppelin.showFlicker = true;
                 zeppelin.zeppelinFlicker(2.5f);
                 stormCloud.lightningStrikeSound.play(15.0f);
                 stormCloud.setLightningSoundPlayed(true);
-                game.health -= 30;
+                game.health -= 20;
             }
         }
 
@@ -319,7 +317,7 @@ public class SideScrollerScreen extends ScreenAdapter {
         if (showWarning){
         String warning = "Højde advarsel!\nBesætningen bliver svimmel!\nLavere højde hurtigt!";
         game.font.draw(batch, warning, camera.position.x - camera.viewportWidth / 2 + 30, camera.position.y + camera.viewportHeight / 2 - 30);
-        game.font.getData().setScale(1.5f);
+        game.font.getData().setScale(2f);
         }
     }
 
@@ -345,7 +343,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             @Override
             public void run() {
                 // Decrease health points every second
-                game.health -= 2; // Adjust the amount as needed
+                game.health -= 1; // Adjust the amount as needed
             }
         }, 1, 1); // Start after 1 second and repeat every 1 second
     }
@@ -396,7 +394,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             y = GameConfig.TILEMAP_HEIGHT - 1000; // Adjust x coordinate if it's beyond the limit
         }
         plane = new Plane(x, y, yAngle);
-        plane.planeFlyingSound.play(0.5f);
+        plane.planeFlyingSound.play(0.2f);
         planes.add(plane);
     }
 

@@ -11,9 +11,7 @@ import com.mygdx.game.DilemmaStuff.Dilemma;
 import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.ExtraScreens.*;
-import com.mygdx.game.SideScrollers.SideScrollerScreen;
-import com.mygdx.game.SideScrollers.SideScrollerSudan;
-import com.mygdx.game.SideScrollers.SideScrollerTurkey;
+import com.mygdx.game.SideScrollers.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,26 +72,26 @@ public class ZeppelinGame extends Game {
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
         List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
-      //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
-       // List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
+     //   List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+        List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
         List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
         SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
-      //  SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
-      //  SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
+    //    SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+        SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
         SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
         GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
-      //  GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
-      //  GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
+     //   GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+        GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
         GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
         gameLevels.add(gameLevelTurkey);
-      //  gameLevels.add(gameLevelMed);
-      //  gameLevels.add(gameLevelEgypt);
+     //   gameLevels.add(gameLevelMed);
+        gameLevels.add(gameLevelEgypt);
         gameLevels.add(gameLevelSudan);
 
         setScreen(IntroScreen);

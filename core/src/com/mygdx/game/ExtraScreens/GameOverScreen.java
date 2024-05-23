@@ -17,8 +17,8 @@ public class GameOverScreen extends ScreenAdapter {
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
-    private final float backgroundX = 0;
-    private final float backgroundY = 0;
+  //  private final float backgroundX = 0;
+  //  private final float backgroundY = 0;
     private boolean isSpacePressed = false;
 
     public GameOverScreen(ZeppelinGame game) {

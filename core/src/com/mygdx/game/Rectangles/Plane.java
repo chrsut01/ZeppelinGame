@@ -28,7 +28,7 @@ public class Plane extends Rectangle{
     private float y;
     private final int yAngle;
     private final Sprite planeSprite;
-    public List<Bullet> bullets = new ArrayList<>();
+    public List<Bullet> bullets;
     private static final int MAX_BULLETS = 10;
     private int bulletsShot = 0;
 
@@ -52,6 +52,7 @@ public class Plane extends Rectangle{
         planeSprite.setSize(width, height);
         this.shootingSoundStarted = false;
         this.canShoot = true;
+        bullets = new ArrayList<>();
     }
 
     public float getX() {

@@ -31,11 +31,12 @@ public class DilemmaScreen extends ScreenAdapter {
 
     private final Skin skin;
     private TextButton[] answerButtons;
-    private TextField responseTextField;
+  //  private TextField responseTextField;
     private final float scaleX = 2.0f;
     private final float scaleY = 2.0f;
     private Sound correctAnswerSound;
     private Sound wrongAnswerSound;
+    private Sound dilemmaMusic;
     private TextureRegionDrawable background;
 
 
@@ -58,6 +59,9 @@ public class DilemmaScreen extends ScreenAdapter {
 
         stage.clear();
         Gdx.input.setInputProcessor(stage);
+
+        dilemmaMusic = Gdx.audio.newSound(Gdx.files.internal("dilemma-music.mp3"));
+        dilemmaMusic.play(0.1f);
 
         BitmapFont font = new BitmapFont();
         font.getData().setScale(scaleX, scaleY);
@@ -103,7 +107,7 @@ public class DilemmaScreen extends ScreenAdapter {
                     responseLabel.setText(dilemma.getResponses().get(index));
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
-                        correctAnswerSound.play(0.2f);
+                        correctAnswerSound.play(0.1f);
                         Dilemma nextDilemma = gameLevel.getNextDilemma();
                         if (nextDilemma != null) {
                             Timer.schedule(new Timer.Task() {
@@ -122,7 +126,7 @@ public class DilemmaScreen extends ScreenAdapter {
                                 }, 0.0f);
                             }
                         }else {
-                        wrongAnswerSound.play(0.2f);
+                        wrongAnswerSound.play(0.1f);
                         }
                     }
             });
@@ -171,5 +175,7 @@ public class DilemmaScreen extends ScreenAdapter {
         for (TextButton button : answerButtons) { button.clear(); }
        // Added to prevent memory leak ????
         dilemma = null;
+        correctAnswerSound.dispose();
+        wrongAnswerSound.dispose();
     }
 }
