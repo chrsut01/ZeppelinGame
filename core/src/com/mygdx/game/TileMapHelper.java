@@ -34,36 +34,9 @@ public class TileMapHelper {
 
         System.out.println("TileMapHelper: setupMap method called: tilemapFileName is: " + sideScrollerScreen.getTilemapFileName());
 
-       // parseMapObjects(tiledMap.getLayers().get("Object Layer").getObjects());
-      //  parseMapObjects(tiledMap.getLayers().get("Collision").getObjects());
-       // parseMapObjects(tiledMap.getLayers().get("Background").getObjects());
-        //parseMapObjects(tiledMap.getLayers().get("Tile Layer 1").getObjects());
-     //   parseMapObjects(tiledMap.getLayers().get("objects").getObjects());
-    //    return new OrthogonalTiledMapRenderer(tiledMap);
-
-
         mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         return mapRenderer;
     }
-
-/*    private void parseMapObjects(MapObjects mapObjects) {
-        System.out.println("TileMapHelper parseMapObjects method called");
-        for (MapObject mapObject : mapObjects) {
-            if (mapObject instanceof PolygonMapObject) {
-                createStaticBody((PolygonMapObject) mapObject);
-            }
-        }
-    }
-
-    private void createStaticBody(PolygonMapObject polygonMapObject) {
-       // System.out.println("TileMapHelper createStaticBody method called");
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        Body body = sideScrollerScreen.getWorld().createBody(bodyDef);
-        Shape shape = createPolygonShape(polygonMapObject);
-        body.createFixture(shape, 1000);
-        shape.dispose();
-    }*/
 
     private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
         float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
@@ -77,23 +50,6 @@ public class TileMapHelper {
         shape.set(worldVertices);
         return shape;
     }
-
-  /*  public boolean overlapsPolygon(PolygonMapObject polygonMapObject, Zeppelin zeppelin) {
-        Polygon polygon = polygonMapObject.getPolygon();
-        float[] vertices = polygon.getTransformedVertices();
-
-        // Check if the zeppelin's bounding box intersects with the bounding box of the polygon
-        Rectangle zeppelinBounds = new Rectangle(zeppelin.getX() + 15, zeppelin.getY() + 10, zeppelin.getWidth() - 32, zeppelin.getHeight() - 20);
-        Rectangle polygonBounds = new Rectangle();
-        polygonBounds.set(vertices[0], vertices[1], 0, 0); // Initialize bounds with first vertex
-        for (int i = 2; i < vertices.length; i += 2) {
-            polygonBounds.merge(vertices[i], vertices[i + 1]); // Expand bounds to include each vertex
-        }
-
-        return zeppelinBounds.overlaps(polygonBounds);
-    }*/
-
-
 
      public boolean overlapsPolygon(PolygonMapObject polygonMapObject, Zeppelin zeppelin) {
         Shape polygonShape = createPolygonShape(polygonMapObject);

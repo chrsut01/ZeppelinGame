@@ -11,7 +11,7 @@ public class GameLevel {
     ZeppelinGame game;
     private SideScrollerScreen sideScrollerScreen;
     private Dilemma dilemma;
-    private final List<Dilemma> dilemmas;
+    public final List<Dilemma> dilemmas;
     private int currentDilemmaIndex;
     private DilemmaScreen dilemmaScreen;
     private DilemmaScreen currentDilemmaScreen;
@@ -31,7 +31,7 @@ public class GameLevel {
         if (currentDilemmaIndex < dilemmas.size()) {
             Dilemma nextDilemma = dilemmas.get(currentDilemmaIndex);
             System.out.println("GameLevel: getNextDilemma method called" + dilemmas.get(currentDilemmaIndex).toString());
-            currentDilemmaIndex++;
+           // currentDilemmaIndex++;
             return nextDilemma;
         } else {
             System.out.println("GameLevel: getNextDilemma method returning null (because currentDilemmaIndex is greater than dilemmas.size())");
@@ -39,9 +39,18 @@ public class GameLevel {
         }
     }
 
+
+    public void incrementDilemmaIndex() {
+        currentDilemmaIndex++;
+    }
+
     public SideScrollerScreen getSideScroller() {
         System.out.println("GameLevel getSideScroller method called and returning: " + sideScrollerScreen);
         return this.sideScrollerScreen;
+    }
+
+    public int getCurrentDilemmaIndex() {
+        return this.currentDilemmaIndex;
     }
 
     public void setCurrentDilemmaScreen(DilemmaScreen dilemmaScreen) {
@@ -52,18 +61,6 @@ public class GameLevel {
         return currentDilemmaScreen;
     }
 
-  /*  public void setNextDilemma(Dilemma nextDilemma) {
-        // Update the dilemma instance
-        this.dilemma = nextDilemma;
-        // Re-initialize the UI with the new dilemma
-        currentDilemmaScreen.initializeUI();
-
-           // Previous version of this method:
-         DilemmaScreen nextDilemmaScreen = DilemmaScreen.getInstance(game, nextDilemma);
-        System.out.println("DilemmaScreen: getNextDilemma(): NOT NULL");
-        game.setScreen(nextDilemmaScreen);
-    }*/
-
     public void setSideScroller(SideScrollerScreen sideScrollerScreen) {
         this.sideScrollerScreen = sideScrollerScreen;
     }
@@ -71,5 +68,8 @@ public class GameLevel {
     public String getTilemapFileName() {
         return sideScrollerScreen.getTilemapFileName();
     }
-    // Other methods...
+
+    public void resetDilemmaIndex() {
+        currentDilemmaIndex = 0;
+    }
 }

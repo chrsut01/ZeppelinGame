@@ -80,7 +80,7 @@ public class Zeppelin extends Rectangle {
     }
 
     public void playEngineSound(float volume) {
-        engineSound.loop(0.5f);
+        engineSound.loop(0.2f);
     }
     public void playCrashSound() {
         zeppelinCrashSound = Gdx.audio.newSound(Gdx.files.internal("plane_crash.mp3"));

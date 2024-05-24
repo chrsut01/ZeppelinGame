@@ -25,7 +25,7 @@ public class SideScrollerTurkey extends SideScrollerScreen {
         System.out.println("SideScrollerTurkey initialize() called.");
         super.initialize();
         this.zeppelin = Zeppelin.getInstance();
-        this.zeppelin.playEngineSound(0.4f);
+        this.zeppelin.playEngineSound(0.2f);
     }
 
     @Override
@@ -59,7 +59,6 @@ public class SideScrollerTurkey extends SideScrollerScreen {
         }
 
         plane = new Plane(x, y, yAngle);
-        System.out.println("Plane x: " + x + " y: " + y + " yAngle: " + yAngle);
         plane.planeFlyingSound.play();
         plane.canShoot = false;
         planes.add(plane);

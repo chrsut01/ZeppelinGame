@@ -96,31 +96,6 @@ public class ZeppelinGame extends Game {
 
         setScreen(IntroScreen);
     }
- /*   public void progressToNextLevel() {
-        System.out.println("ZeppelinGame: progressToNextLevel method called: currentLevelCount = " + currentLevelCount);
-
-        if (currentLevelCount < gameLevels.size()) {
-            GameLevel currentLevel = gameLevels.get(currentLevelCount);
-            Dilemma nextDilemma = currentLevel.getNextDilemma();
-            if (nextDilemma != null) {
-                DilemmaScreen dilemmaScreen = currentLevel.getCurrentDilemmaScreen();
-                if (dilemmaScreen == null) {
-                    dilemmaScreen = DilemmaScreen.getInstance(this, nextDilemma);
-                 //   dilemmaScreen.initializeUI();
-                    currentLevel.setCurrentDilemmaScreen(dilemmaScreen);
-                } else {
-                    dilemmaScreen.setDilemma(nextDilemma);
-                }
-                setScreen(dilemmaScreen);
-            } else {
-                SideScrollerScreen sideScrollerScreen = currentLevel.getSideScroller();
-                setScreen(sideScrollerScreen);
-                currentLevelCount++;
-            }
-        } else {
-            setScreen(closingScreen);
-        }
-    }*/
 
     // Method for progressing to the next gameLevel until the player has completed all levels, then closingScreen
     public void progressToNextLevel() {
@@ -131,18 +106,25 @@ public class ZeppelinGame extends Game {
         if (currentLevelCount < gameLevels.size()) {
             currentLevel = gameLevels.get(currentLevelCount);
             System.out.println("ZeppelinGame: progressToNextLevel: currentLevel = " + currentLevel.toString());
+            System.out.println("progressToNextLevel: gameLevel currentDilemmaIndex = " + gameLevels.get(currentLevelCount).getCurrentDilemmaIndex());
             dilemmaScreen = DilemmaScreen.getInstance(this, currentLevel.getNextDilemma());
             switchScreen(dilemmaScreen);
-            isProgressingToNextLevel = false;
         }
         } else {
+            System.out.println("ZeppelinGame: progressToNextLevel(): else: switchScreen(ClosingScreen)");
             switchScreen(ClosingScreen);
         }
+        isProgressingToNextLevel = false;
     }
 
     public void incrementCurrentLevelCount() {
         currentLevelCount++;
         System.out.println("ZeppelinGame: incrementCurrentLevelCount: currentLevelCount just incremented to = " + currentLevelCount);
+        // Reset the current dilemma index for the new level
+        if (currentLevelCount < gameLevels.size()) {
+            currentLevel = gameLevels.get(currentLevelCount);
+            currentLevel.resetDilemmaIndex();
+        }
     }
     public GameLevel getCurrentLevel() {
         System.out.println("ZeppelinGame: getCurrentLevel() yields: " + currentLevel.toString());
@@ -150,14 +132,16 @@ public class ZeppelinGame extends Game {
     }
 
     public void switchScreen(Screen newScreen) {
-        System.out.println("ZeppelinGame: switchScreen method called.");
         if(currentScreen != null) {
-            System.out.println("ZeppelinGame: switchScreen: currentScreen disposed.");
+            System.out.println("ZeppelinGame: switchScreen(): currentScreen != null");
             System.out.println("currentScreen = " + currentScreen);
             currentScreen.dispose();
         }
-        System.out.println("ZeppelinGame: switchScreen: newScreen set.");
+        System.out.println("ZeppelinGame: switchScreen(): newScreen set.");
         System.out.println("newScreen = " + newScreen);
+        System.out.println("game level = " + gameLevels.get(currentLevelCount).toString());
+        System.out.println("gameLevel currentDilemmaIndex = " + gameLevels.get(currentLevelCount).getCurrentDilemmaIndex());
+        System.out.println("gameLevel dilemmas.size() = " + gameLevels.get(currentLevelCount).dilemmas.size());
         setScreen(newScreen);
         currentScreen = newScreen;
     }

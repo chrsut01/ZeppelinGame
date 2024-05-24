@@ -57,6 +57,8 @@ public class DilemmaScreen extends ScreenAdapter {
 
     public void initializeUI(){
 
+        System.out.println("DilemmaScreen: initializeUI() called.");
+
         stage.clear();
         Gdx.input.setInputProcessor(stage);
 
@@ -108,6 +110,7 @@ public class DilemmaScreen extends ScreenAdapter {
                     // Check if the selected answer is correct
                     if (dilemma.getCorrectAnswerIndex() == index) {
                         correctAnswerSound.play(0.1f);
+                        gameLevel.incrementDilemmaIndex();
                         Dilemma nextDilemma = gameLevel.getNextDilemma();
                         if (nextDilemma != null) {
                             Timer.schedule(new Timer.Task() {

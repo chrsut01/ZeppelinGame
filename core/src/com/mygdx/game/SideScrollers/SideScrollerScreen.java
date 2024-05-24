@@ -299,12 +299,10 @@ public class SideScrollerScreen extends ScreenAdapter {
 
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 2000) {
-            System.out.println("TEST!!! Zeppelin reached the end of the level!");
+        if (zeppelin.getX() > 1700) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
-                    System.out.println("TEST!!! Timer task initiated!");
                     game.incrementCurrentLevelCount();
                     game.progressToNextLevel();
                     // game.switchScreen(closingScreen);
