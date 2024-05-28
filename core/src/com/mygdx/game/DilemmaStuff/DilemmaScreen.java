@@ -174,7 +174,7 @@ public class DilemmaScreen extends ScreenAdapter {
     @Override
     public void dispose() {
         skin.dispose();
-        stage.dispose();
+       // stage.dispose();
         for (TextButton button : answerButtons) { button.clear(); }
        // Added to prevent memory leak ????
         dilemma = null;

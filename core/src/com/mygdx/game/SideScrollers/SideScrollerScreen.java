@@ -303,9 +303,10 @@ public class SideScrollerScreen extends ScreenAdapter {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    System.out.println("SideScrollerScreen: Zeppelin reached the end of the screen. Progressing to next level.");
                     game.incrementCurrentLevelCount();
                     game.progressToNextLevel();
-                    // game.switchScreen(closingScreen);
+                  //  game.switchScreen(ClosingScreen);
                     dispose();
                 }
             }, 2);
@@ -452,7 +453,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     }
 
     public void dispose(){
-        if (plane != null && plane.bullets != null){
+     /*   if (plane != null && plane.bullets != null){
         for (Bullet bullet : plane.bullets) {
             if (bullet != null) {
                 bullet.dispose();}
@@ -476,6 +477,6 @@ public class SideScrollerScreen extends ScreenAdapter {
             box2DDebugRenderer.dispose();
         }
       //  zeppelin.dispose();
-        Zeppelin.setInstance(null);
+        Zeppelin.setInstance(null);*/
     }
 }

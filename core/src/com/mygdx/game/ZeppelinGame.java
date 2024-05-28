@@ -72,25 +72,25 @@ public class ZeppelinGame extends Game {
         DilemmaFactory dilemmaFactory = new DilemmaFactory();
 
         List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
-     //   List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+        List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
       //  List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
         List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
 
         SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
-    //    SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
      //   SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
         SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
         GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
-     //   GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+        GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
       //  GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
         GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
         gameLevels.add(gameLevelTurkey);
-     //   gameLevels.add(gameLevelMed);
+        gameLevels.add(gameLevelMed);
      //   gameLevels.add(gameLevelEgypt);
         gameLevels.add(gameLevelSudan);
 
@@ -118,10 +118,10 @@ public class ZeppelinGame extends Game {
     }
 
     public void incrementCurrentLevelCount() {
-        currentLevelCount++;
-        System.out.println("ZeppelinGame: incrementCurrentLevelCount: currentLevelCount just incremented to = " + currentLevelCount);
         // Reset the current dilemma index for the new level
         if (currentLevelCount < gameLevels.size()) {
+            currentLevelCount++;
+            System.out.println("ZeppelinGame: incrementCurrentLevelCount: currentLevelCount just incremented to = " + currentLevelCount);
             currentLevel = gameLevels.get(currentLevelCount);
             currentLevel.resetDilemmaIndex();
         }
