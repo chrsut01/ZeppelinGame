@@ -71,7 +71,7 @@ public class SideScrollerScreen extends ScreenAdapter {
     private static final float PLANE_SPAWN_DELAY = 2f; // Delay in seconds before planes can spawn
     private static final float STORMCLOUD_SPAWN_DELAY = 3f; // Delay in seconds before storm clouds can spawn
     private long screenStartTime;
-    public static final float MIN_PLANE_SPAWN_TIME = 0.2f;
+    public static final float MIN_PLANE_SPAWN_TIME = 1f;
     public static final float MAX_PLANE_SPAWN_TIME = 5f;
 
     private StormCloud stormCloud;
@@ -163,6 +163,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             Gdx.app.exit();
         }
 
+        // Check if it is time to spawn a plane
         float elapsedTime = TimeUtils.nanoTime() - screenStartTime;
         float elapsedTimeSeconds = elapsedTime / 1_000_000_000.0f;
         // Check if it's time to spawn a plane
@@ -256,7 +257,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             for (Iterator<Bullet> iter = plane.bullets.iterator(); iter.hasNext(); ) {
                 Bullet bullet = iter.next();
                 if (bullet.overlaps(zeppelin)) {
-                    bullet.bulletHitSound.play(10f);
+                    bullet.bulletHitSound.play(0.2f);
                     bullet.setBulletHitSound(true);
                     game.health -= 1;
                     iter.remove();
@@ -299,7 +300,7 @@ public class SideScrollerScreen extends ScreenAdapter {
 
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 1700) {
+        if (zeppelin.getX() > 6000) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {

@@ -23,7 +23,7 @@ public class Bullet extends Rectangle {
         this.velocityX = velocityX;
         this.velocityY = velocityY;
         bulletImage = new Texture("bullet.png");
-        bulletHitSound = Gdx.audio.newSound(Gdx.files.internal("bullet_hit.mp3"));
+        bulletHitSound = Gdx.audio.newSound(Gdx.files.internal("bullet_hit4.mp3"));
         bulletSprite = new Sprite(bulletImage);
         bulletSprite.setSize(6, 2);
     }
