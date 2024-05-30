@@ -26,12 +26,9 @@ public class DilemmaScreen extends ScreenAdapter {
     private final ZeppelinGame game;
     private final GameLevel gameLevel;
     protected Dilemma dilemma;
-
     private final Stage stage;
-
     private final Skin skin;
     private TextButton[] answerButtons;
-  //  private TextField responseTextField;
     private final float scaleX = 2.0f;
     private final float scaleY = 2.0f;
     private Sound correctAnswerSound;
@@ -168,9 +165,6 @@ public class DilemmaScreen extends ScreenAdapter {
         stage.draw();
     }
 
-    public void setDilemma(Dilemma currentDilemma) {
-        this.dilemma = currentDilemma;
-    }
     @Override
     public void dispose() {
         skin.dispose();

@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.mygdx.game.DilemmaStuff.Dilemma;
-import com.mygdx.game.DilemmaStuff.DilemmaFactory;
 import com.mygdx.game.DilemmaStuff.DilemmaScreen;
 import com.mygdx.game.SideScrollers.SideScrollerScreen;
 
@@ -10,12 +9,12 @@ import java.util.List;
 public class GameLevel {
     ZeppelinGame game;
     private SideScrollerScreen sideScrollerScreen;
-    private Dilemma dilemma;
+  //  private Dilemma dilemma;
     public final List<Dilemma> dilemmas;
     private int currentDilemmaIndex;
-    private DilemmaScreen dilemmaScreen;
+   // private DilemmaScreen dilemmaScreen;
     private DilemmaScreen currentDilemmaScreen;
-    private DilemmaFactory dilemmaFactory;
+   // private DilemmaFactory dilemmaFactory;
 
 
     public GameLevel(SideScrollerScreen sideScrollerScreen, List<Dilemma> dilemmas) {
@@ -57,17 +56,7 @@ public class GameLevel {
         System.out.println("GameLevel setNextDilemma method called");
         this.currentDilemmaScreen = dilemmaScreen;
     }
-    public DilemmaScreen getCurrentDilemmaScreen() {
-        return currentDilemmaScreen;
-    }
 
-    public void setSideScroller(SideScrollerScreen sideScrollerScreen) {
-        this.sideScrollerScreen = sideScrollerScreen;
-    }
-
-    public String getTilemapFileName() {
-        return sideScrollerScreen.getTilemapFileName();
-    }
 
     public void resetDilemmaIndex() {
         currentDilemmaIndex = 0;

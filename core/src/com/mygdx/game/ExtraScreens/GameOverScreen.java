@@ -11,14 +11,11 @@ import com.mygdx.game.GameConfig;
 import com.mygdx.game.ZeppelinGame;
 
 public class GameOverScreen extends ScreenAdapter {
-
     final ZeppelinGame game;
     Texture backgroundImage;
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
-  //  private final float backgroundX = 0;
-  //  private final float backgroundY = 0;
     private boolean isSpacePressed = false;
 
     public GameOverScreen(ZeppelinGame game) {

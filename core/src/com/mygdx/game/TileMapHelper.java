@@ -18,14 +18,11 @@ import com.mygdx.game.SideScrollers.SideScrollerScreen;
 import static com.mygdx.game.Constants.PPM;
 
 public class TileMapHelper {
-    private SideScrollerScreen gameScreen;
-    private GameLevel gameLevel;
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer mapRenderer;
     private final SideScrollerScreen sideScrollerScreen;
 
     public TileMapHelper(SideScrollerScreen sideScrollerScreen) {
-        //this.gameScreen = gameScreen;
         this.sideScrollerScreen = sideScrollerScreen;
     }
 
@@ -93,8 +90,6 @@ public class TileMapHelper {
         return staticBodies;
     }
     public void dispose() {
-       // tiledMap.dispose();
-      //  mapRenderer.dispose();
-       // sideScrollerScreen.dispose();
+
     }
 }

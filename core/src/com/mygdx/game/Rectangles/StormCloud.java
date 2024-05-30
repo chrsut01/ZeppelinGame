@@ -7,32 +7,24 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Timer;
 
 public class StormCloud extends Rectangle {
-    private Vector2 position;
-
-    private float radius;
     private final float width = 3364 * 0.4f; // 3364 (orig pixels)
     private final float height = 1564 * 0.4f; //1564 (orig pixels)
     private final float boundsWidth = 672;
     private final float boundsHeight = 312;
     private final Texture stormCloudImage;
     private final Sprite stormCloudSprite;
-    public Rectangle stormCloudHitBox;
     private final Texture lightningTexture;
     private final Sprite lightningSprite;
     public Sound lightningStrikeSound;
     public boolean showLightning;
-    private float lightningDuration = 1.0f;
     private float timeSinceSpawn = 0.0f;
     private boolean lightningSoundPlayed = false;
 
 
     public StormCloud(float x, float y) {
-        // this.position = new Vector2(x, y);
-        // this.radius = radius;
         this.x = x;
         this.y = y;
         stormCloudImage = new Texture("storm-cloud.png");

@@ -63,16 +63,16 @@ public class SideScrollerScreen extends ScreenAdapter {
     private Stage stage;
     private Box2DDebugRenderer box2DDebugRenderer;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    private Screen IntroScreen;
-    private Screen ClosingScreen;
+ //   private Screen IntroScreen;
+ //   private Screen ClosingScreen;
     private Screen GameOverScreen;
     long lastPlaneTime;
     float planeSpawnTimer;
     private static final float PLANE_SPAWN_DELAY = 2f; // Delay in seconds before planes can spawn
     private static final float STORMCLOUD_SPAWN_DELAY = 3f; // Delay in seconds before storm clouds can spawn
     private long screenStartTime;
-    public static final float MIN_PLANE_SPAWN_TIME = 1f;
-    public static final float MAX_PLANE_SPAWN_TIME = 5f;
+    public static final float MIN_PLANE_SPAWN_TIME = 0.5f;
+    public static final float MAX_PLANE_SPAWN_TIME = 4f;
 
     private StormCloud stormCloud;
     private final ArrayList<StormCloud> stormClouds;
@@ -292,6 +292,7 @@ public class SideScrollerScreen extends ScreenAdapter {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    System.out.println("Health points reached zero. Switching to GameOverScreen.");
                     game.switchScreen(GameOverScreen);
                     dispose();
                 }
@@ -300,14 +301,13 @@ public class SideScrollerScreen extends ScreenAdapter {
 
 
         // Check if zeppelin reaches a certain x value, then next GameLevel initiated
-        if (zeppelin.getX() > 6000) {
+        if (zeppelin.getX() > 8000) {
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
                     System.out.println("SideScrollerScreen: Zeppelin reached the end of the screen. Progressing to next level.");
                     game.incrementCurrentLevelCount();
                     game.progressToNextLevel();
-                  //  game.switchScreen(ClosingScreen);
                     dispose();
                 }
             }, 2);

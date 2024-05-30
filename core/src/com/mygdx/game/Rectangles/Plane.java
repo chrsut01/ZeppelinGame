@@ -2,7 +2,6 @@ package com.mygdx.game.Rectangles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,16 +10,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Timer;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Plane extends Rectangle{
 
-    private OrthographicCamera camera;
+  //  private OrthographicCamera camera;
     private final Texture planeImage;
     public Sound planeFlyingSound;
 
-    private Zeppelin zeppelin;
+  //  private Zeppelin zeppelin;
     public Sound planeCrashSound;
     public static final int width = 89/2;
     public static final int height = 44/2;
@@ -31,10 +29,9 @@ public class Plane extends Rectangle{
     public List<Bullet> bullets;
     private static final int MAX_BULLETS = 10;
     private int bulletsShot = 0;
-
     public boolean canShoot;
     private boolean shootingStarted;
-    private float shootingTime;
+   // private float shootingTime;
 
     private static final float BULLET_SPEED = - 200;
     public Sound shootingSound;
@@ -62,9 +59,9 @@ public class Plane extends Rectangle{
         return y;
     }
 
-    public int getyAngle() {
+  /*  public int getyAngle() {
         return yAngle;
-    }
+    }*/
 
     public void updatePosition(float deltaTime) {
         y += yAngle * deltaTime;
@@ -110,11 +107,13 @@ public class Plane extends Rectangle{
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
+                    synchronized (Plane.this) {
                     if (bulletsShot < MAX_BULLETS) {
                         spawnBullet(deltaTime);
                         bulletsShot++;
                     } else {
                         stopShooting();
+                    }
                     }
                 }
             }, 0, 0.15f); // Interval can be adjusted
@@ -131,18 +130,7 @@ public class Plane extends Rectangle{
 
     private void stopShooting() {
         shootingStarted = false;
-        shootingTime = 0;
-    }
-    public void updateBullets(float deltaTime) {
-        Iterator<Bullet> iterator = bullets.iterator();
-        while (iterator.hasNext()) {
-            Bullet bullet = iterator.next();
-            bullet.updatePosition(deltaTime);
-            // Remove bullet if it is off screen
-            if (bullet.isOutOfBounds()) {
-                iterator.remove();
-            }
-        }
+       // shootingTime = 0;
     }
 
     public void setCanShoot(boolean canShoot) {

@@ -8,7 +8,6 @@ public class Dilemma implements Serializable{
     private String question;
     private List<String> answers;
     private List<String> responses;
-    private String imagePath;
     private int correctAnswerIndex;
 
     public String getQuestion() {
@@ -23,19 +22,5 @@ public class Dilemma implements Serializable{
 
     public int getCorrectAnswerIndex() { return correctAnswerIndex; }
 
-  /*  public void setAnswers(List<String> answers) {
-        this.answers = answers;
-    }
 
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-    public void setResponses(List<String> responses) {
-        this.responses = responses;
-    }
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    //public void setCorrectAnswerIndex(int correctAnswerIndex) { this.correctAnswerIndex = correctAnswerIndex;}*/
 }

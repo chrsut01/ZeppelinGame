@@ -22,10 +22,7 @@ public class ZeppelinGame extends Game {
     private int currentLevelCount = 0;
     public SpriteBatch batch;
     public BitmapFont font;
-  //  private IntroScreen introScreen;
     private Screen IntroScreen;
-    private SideScrollerScreen sideScrollerScreen;
-   // private ClosingScreen closingScreen;
     private Screen ClosingScreen;
     private Screen GameOverScreen;
     private DilemmaScreen dilemmaScreen;
@@ -35,9 +32,7 @@ public class ZeppelinGame extends Game {
 
     private Screen ManualScreen;
 
-    private List<SideScrollerScreen> sideScrollers;
     private OrthographicCamera camera;
-    private TileMapHelper tileMapHelper;
     private Screen currentScreen;
     private boolean isProgressingToNextLevel = false;
     public int health = 100;
@@ -68,29 +63,25 @@ public class ZeppelinGame extends Game {
         ManualScreen = new ManualScreen(this);
         MissionScreen = new MissionScreen(this);
 
-
-        DilemmaFactory dilemmaFactory = new DilemmaFactory();
-
-      //  List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
-      //  List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
+        List<Dilemma> dilemmasTurkey = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/TurkeyDilemmas.json");
+        List<Dilemma> dilemmasMed = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/MedDilemmas.json");
         List<Dilemma> dilemmasEgypt = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
         List<Dilemma> dilemmasSudan = DilemmaFactory.loadDilemmasFromJsonFile("assets/JSON_files/EgyptDilemmas.json");
 
-
-      //  SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
-      //  SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
+        SideScrollerScreen sideScrollerTurkey = new SideScrollerTurkey(this);
+        SideScrollerScreen sideScrollerMed = new SideScrollerMed(this);
         SideScrollerScreen sideScrollerEgypt = new SideScrollerEgypt(this);
         SideScrollerScreen sideScrollerSudan = new SideScrollerSudan(this);
 
-      //  GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
-      //  GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
+        GameLevel gameLevelTurkey = new GameLevel(sideScrollerTurkey, dilemmasTurkey);
+        GameLevel gameLevelMed = new GameLevel(sideScrollerMed, dilemmasMed);
         GameLevel gameLevelEgypt = new GameLevel(sideScrollerEgypt, dilemmasEgypt);
         GameLevel gameLevelSudan = new GameLevel(sideScrollerSudan, dilemmasSudan);
 
         gameLevels = new ArrayList<>();
 
-      //  gameLevels.add(gameLevelTurkey);
-      //  gameLevels.add(gameLevelMed);
+        gameLevels.add(gameLevelTurkey);
+        gameLevels.add(gameLevelMed);
         gameLevels.add(gameLevelEgypt);
         gameLevels.add(gameLevelSudan);
 

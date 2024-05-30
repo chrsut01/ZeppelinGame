@@ -11,17 +11,12 @@ import com.mygdx.game.GameConfig;
 import com.mygdx.game.ZeppelinGame;
 
 public class ClosingScreen extends ScreenAdapter {
-
-
     final ZeppelinGame game;
     Texture backgroundImage;
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
-   // private final float backgroundX = 0;
-  //  private final float backgroundY = 0;
     private boolean isSpacePressed = false;
-  //  private Screen GameOverScreen;
     public ClosingScreen(ZeppelinGame game) {
         this.game = game;
         backgroundImage = new Texture(Gdx.files.internal("VendOmScreen.png"));
@@ -70,7 +65,6 @@ public class ClosingScreen extends ScreenAdapter {
 
     @Override
     public void resize(int width, int height) {
-
     }
 
     @Override

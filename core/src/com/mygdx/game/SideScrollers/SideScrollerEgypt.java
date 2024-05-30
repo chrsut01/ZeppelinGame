@@ -8,7 +8,6 @@ import com.mygdx.game.ZeppelinGame;
 public class SideScrollerEgypt extends SideScrollerScreen {
     private static final String tilemapFileName = "tileMaps/MapEgypt.tmx";
     private Texture mapImage;
-
     public Zeppelin zeppelin;
     private World world;
 

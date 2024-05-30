@@ -2,7 +2,6 @@ package com.mygdx.game.ExtraScreens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,17 +11,13 @@ import com.mygdx.game.GameConfig;
 import com.mygdx.game.ZeppelinGame;
 
 public class ManualScreen extends ScreenAdapter {
-
     final ZeppelinGame game;
     Texture backgroundImage;
     OrthographicCamera camera;
     int screenWidth = GameConfig.SCREEN_WIDTH;
     int screenHeight = GameConfig.SCREEN_HEIGHT;
-    private final float backgroundX = 0;
-    private final float backgroundY = 0;
     private boolean isSpacePressed = false;
 
-    private Screen InfoScreen;
     public ManualScreen(ZeppelinGame game) {
         this.game = game;
         backgroundImage = new Texture(Gdx.files.internal("SpilManualScreen.png"));

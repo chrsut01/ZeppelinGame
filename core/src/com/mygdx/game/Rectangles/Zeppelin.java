@@ -41,9 +41,6 @@ public class Zeppelin extends Rectangle {
         return instance;
     }
 
-    public static void setInstance(Zeppelin zepInstance) {
-        instance = zepInstance;
-    }
 
     private void init() {
         engineSound = Gdx.audio.newSound(Gdx.files.internal("ZeppelinEngine.mp3"));
@@ -120,11 +117,6 @@ public class Zeppelin extends Rectangle {
         zeppelinSprite.setY(MathUtils.clamp(zeppelinSprite.getY(), minY, maxY));
     }
 
-    // Check if zeppelin overlaps with a polygonMapObject
- /*   public boolean overlaps (PolygonMapObject polygonMapObject) {
-        Rectangle zeppelinBounds = new Rectangle(getX() + 15, getY() + 10, getWidth() - 32, getHeight() - 20);
-        return polygonMapObject.getPolygon().getBoundingRectangle().overlaps(getBoundingRectangle());
-    }*/
 
     public void setShowFlicker(boolean showFlicker) {
         this.showFlicker = showFlicker;
